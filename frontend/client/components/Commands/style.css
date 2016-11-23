@@ -1,0 +1,25 @@
+.grid {
+    flex-wrap: wrap;
+    flex-flow: row wrap;
+    flex-direction: row;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    align-self: flex-end;
+    z-index: 999;
+}
+
+.bar {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 6em;
+    background-color: rgba(255, 255, 255, 0.0);
+    z-index: 999;
+}
+
+.command {
+    margin-bottom: 1em;
+    margin-right: 1em;
+}

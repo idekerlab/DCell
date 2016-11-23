@@ -1,0 +1,23 @@
+
+.grid {
+    flex-wrap: wrap;
+    flex-flow: row wrap;
+    display: flex;
+    height: 7em;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.title {
+    margin-left: 0.8em;
+
+}
+
+.url {
+    width: 100%;
+}
+
+.logo {
+    width: 4em;
+}

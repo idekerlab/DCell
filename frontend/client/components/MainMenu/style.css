@@ -1,0 +1,36 @@
+.grid {
+    flex-wrap: wrap;
+    flex-flow: row wrap;
+    display: flex;
+    width: 100%;
+
+}
+
+.top {
+    align-items: center;
+    justify-content: center;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+.title {
+    color: #777777;
+    font-weight: 300;
+    font-size: 2em;
+    margin-left: 0.6em;
+}
+
+.subtitle {
+    justify-content: center;
+    align-items: center;
+    color: red;
+    font-weight: 300;
+    font-size: 1.5em;
+    margin-left: 1em;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.icon {
+    width: 3em;
+}

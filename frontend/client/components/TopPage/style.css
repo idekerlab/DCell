@@ -1,0 +1,138 @@
+.top {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1F272A;
+
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+.grid {
+    flex-wrap: wrap;
+    flex-flow: row wrap;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.lineBreak {
+    width: 100%;
+}
+
+.box1 {
+    width: 100%;
+    height: 40%;
+    /*background-color: #0b97c4;*/
+}
+
+.boxGrid {
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+.gridCenter {
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.title {
+    display: flex;
+    max-width: 800px;
+    min-width: 750px;
+    align-items: center;
+    justify-content: center;
+}
+
+.logoCol {
+    width: 300px;
+}
+
+.logoIcon {
+    width: 100%;
+}
+
+.col2 {
+    flex: 1;
+    flex-direction: column;
+    padding-left: 2em;
+}
+
+.titleText {
+    height: 0.7em;
+    font-weight: 100;
+    font-size: 7em;
+    margin-left: -0.1em;
+    color: #FFFFFF;
+}
+
+.description {
+    width: 90%;
+    font-weight: 400;
+    font-size: 1.5em;
+    line-height: 1.5em;
+    color: #888888;
+}
+
+.buttonLocation {
+    width: 80%;
+    padding-top: 2em;
+}
+
+.start {
+    display: inline-flex;
+    flex-direction: row;
+    margin-top: 3em;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.startButton {
+    width: 30%;
+}
+
+.iconStyle {
+    margin-left: 0.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.2em;
+}
+
+.containerFooter {
+    display: flex;
+    margin: 0;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2.5em;
+    padding: 0.5em;
+    background-color: #adadad;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.containerFooter a {
+    font-size: 1.2em;
+    font-family: "Helvetica Neue", SansSerif;
+    font-weight: 500;
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+.containerFooter a:visited {
+    color: inherit;
+}

@@ -1,0 +1,21 @@
+.icon {
+    height: 10em;
+    width: 10em;
+    color: #FFFFFF;
+}
+
+.grid {
+    flex-wrap: wrap;
+    flex-flow: row wrap;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+.errorbar {
+    z-index: 1000;
+    height: 6em;
+    background-color: #ff0033;
+}
