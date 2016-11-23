@@ -1,0 +1,17 @@
+ 1: DB, database contributing the file (always "SGD" for this file).
+ 2: DB_Object_ID, SGDID (SGD's unique identifier for genes and features).
+ 3: DB_Object_Symbol, see below
+ 4: Qualifier (optional), one or more of 'NOT', 'contributes_to',
+ 5: GO ID, unique numeric identifier for the GO term
+ 6: DB:Reference(|DB:Reference), the reference associated with the GO
+ 7: Evidence, the evidence code for the GO annotation
+ 8: With (or) From (optional), any With or From qualifier for the GO
+ 9: Aspect, which ontology the GO term belongs (Function, Process or
+10: DB_Object_Name(|Name) (optional), a name for the gene product in
+11: DB_Object_Synonym(|Synonym) (optional), see below
+12: DB_Object_Type, type of object annotated, e.g. gene, protein, etc.
+13: taxon(|taxon), taxonomic identifier of species encoding gene
+14: Date, date GO annotation was defined in the format YYYYMMDD
+15: Assigned_by, source of the annotation (always "SGD" for this file)
+16: Annotation Extension, optional, Contains cross references to other
+17: Gene Product Form ID, optional, this field allows the annotation

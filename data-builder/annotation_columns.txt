@@ -1,0 +1,17 @@
+DB
+DB_Object_ID
+DB_Object_Symbol
+Qualifier
+GO_ID
+DB:Reference
+Evidence
+With_or_From
+Aspect
+DB_Object_Name
+DB_Object_Synonym
+DB_Object_Type
+taxon
+Date
+Assigned_by
+Annotation_Extension
+Gene_Product_Form_ID
