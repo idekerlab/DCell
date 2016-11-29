@@ -96,11 +96,6 @@ export default class NetworkViewer extends Component {
           uiState={uiState}
         />
 
-        <PropertyPanel
-          networks={networks}
-          downloadActions={downloadActions}
-          events={events}
-        />
 
 
         <Errorbar

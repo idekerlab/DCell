@@ -76,7 +76,7 @@ export default class ClosableAppBar extends Component {
     return (
       <div>
         <AppBar
-          title="AtgO v2"
+          title="Merged Gene Ontology"
           onLeftIconButtonTouchTap={this.openMenu}
           iconElementRight={
             <IconButton

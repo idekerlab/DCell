@@ -14,12 +14,10 @@ import FlatButton from 'material-ui/FlatButton'
 
 import style from './style.css'
 
-const cyjsUrl = 'https://raw.githubusercontent.com/idekerlab/ontology-data-generators/master/atgo.cyjs'
-
+const cyjsUrl = 'https://gist.githubusercontent.com/keiono/b7c047c1166681ef7170881217819938/raw/b81de1da63075ceb0e4c8d99adeacf83d0193cdb/goWOgenes.cyjs'
+// const cyjsUrl = 'https://raw.githubusercontent.com/idekerlab/ontology-data-generators/master/atgo.cyjs'
+// const cyjsUrl = 'https://gist.githubusercontent.com/keiono/004744a332451a472bf85c8beefba9db/raw/0955dddc4a3ea5a0e87423a349e5b2b16ec46fa2/gotree2.cyjs'
 const edgeColor = '#777777'
-
-
-
 
 
 
@@ -30,8 +28,8 @@ class NetworkPanel extends Component {
     console.log('Selected Node ID: ' + nodeIds)
     console.log(nodeProps)
     console.log(nodeProps[nodeIds[0]])
-    this.props.commandActions.findPath({startId:nodeIds[0], endId: '4464'})
-    this.props.eventActions.selected(nodeProps[nodeIds[0]])
+    this.props.commandActions.findPath({startId:nodeIds[0], endId: '4022'})
+    // this.props.eventActions.selected(nodeProps[nodeIds[0]])
   }
 
   selectEdges = (edgeIds, edgeProps) => {
@@ -98,8 +96,84 @@ class NetworkPanel extends Component {
     }
   }
 
-
   getVisualStyle = () => ({
+    style: [ {
+      "selector" : "node",
+      "css" : {
+        opacity: 0.4,
+        "width" : 10.0,
+        "text-valign" : "center",
+        "text-halign" : "right",
+        "shape" : "ellipse",
+        "color" : "#666666",
+        "background-color" : "rgb(204,204,204)",
+        "height" : 10.0,
+        "content" : "data(name)",
+        "min-zoomed-font-size": '2em',
+      }
+    }, {
+      "selector" : "node[namespace = 'biological_process']",
+      "css" : {
+        "background-color" : "rgb(0,153,204)"
+      }
+    }, {
+      "selector" : "node[namespace = 'cellular_component']",
+      "css" : {
+        "background-color" : "rgb(255,102,0)"
+      }
+    }, {
+      "selector" : "node[namespace = 'molecular_function']",
+      "css" : {
+        "background-color" : "rgb(0,204,153)"
+      }
+    }, {
+      "selector" : "node[Degree > 1][Degree <= 296]",
+      "css" : {
+        "font-size" : "mapData(Degree,1,296,4,100)"
+      }
+    }, {
+      "selector" : "node:selected",
+      "css" : {
+        opacity: 1,
+        "background-color" : "red",
+        "width" : 50.0,
+        "height" : 50.0,
+        "font-size" : 50,
+        "color" : "red"
+      }
+    }, {
+      "selector" : "edge",
+      "css" : {
+        "width" : 5.0,
+        opacity: 0.4,
+        "line-color" : "rgb(132,132,132)",
+      }
+    }, {
+      "selector" : "edge[branch = 'CC']",
+      "css" : {
+        "line-color" : "rgb(255,102,0)"
+      }
+    }, {
+      "selector" : "edge[branch = 'MF']",
+      "css" : {
+        "line-color" : "rgb(0,204,102)"
+      }
+    }, {
+      "selector" : "edge[branch = 'BP']",
+      "css" : {
+        "line-color" : "rgb(0,153,204)"
+      }
+    }, {
+      "selector" : "edge:selected",
+      "css" : {
+        "line-color" : "rgb(255,0,0)",
+        opacity: 1,
+        "width": 20
+      }
+    } ]
+  })
+
+  getVisualStyle2 = () => ({
     style: [
       {
         "selector": "node",
