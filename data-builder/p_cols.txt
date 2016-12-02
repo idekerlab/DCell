@@ -1,0 +1,14 @@
+Feature_Name
+Feature_Type
+Gene_Name
+SGDID
+Reference
+Experiment_Type
+Mutant_Type
+Allele
+Strain_Background
+Phenotype
+Chemical
+Condition
+Details
+Reporter

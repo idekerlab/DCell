@@ -1,0 +1,14 @@
+1) Feature Name (Mandatory)     		-The feature name of the gene
+2) Feature Type (Mandatory)     		-The feature type of the gene
+3) Gene Name (Optional) 			-The standard name of the gene
+4) SGDID (Mandatory)    			-The SGDID of the gene
+5) Reference (SGD_REF Required, PMID optional)  -PMID: #### SGD_REF: #### (separated by pipe)(one reference per row)
+6) Experiment Type (Mandatory)     		-The method used to detect and analyze the phenotype
+7) Mutant Type (Mandatory)      		-Description of the impact of the mutation on activity of the gene product
+8) Allele (Optional)    			-Allele name and description, if applicable
+9) Strain Background (Optional) 		-Genetic background in which the phenotype was analyzed
+10) Phenotype (Mandatory)       		-The feature observed and the direction of change relative to wild type
+11) Chemical (Optional) 			-Any chemicals relevant to the phenotype
+12) Condition (Optional)        		-Condition under which the phenotype was observed
+13) Details (Optional)  			-Details about the phenotype
+14) Reporter (Optional) 			-The protein(s) or RNA(s) used in an experiment to track a process
