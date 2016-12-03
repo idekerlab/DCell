@@ -29,7 +29,7 @@ class NetworkPanel extends Component {
     console.log(nodeProps)
     console.log(nodeProps[nodeIds[0]])
     this.props.commandActions.findPath({startId:nodeIds[0], endId: '4022'})
-    // this.props.eventActions.selected(nodeProps[nodeIds[0]])
+    this.props.eventActions.selected(nodeProps[nodeIds[0]])
   }
 
   selectEdges = (edgeIds, edgeProps) => {
@@ -126,11 +126,11 @@ class NetworkPanel extends Component {
       "css" : {
         "background-color" : "rgb(0,204,153)"
       }
-    }, {
-      "selector" : "node[Degree > 1][Degree <= 296]",
-      "css" : {
-        "font-size" : "mapData(Degree,1,296,4,100)"
-      }
+    // }, {
+    //   "selector" : "node[Degree > 1][Degree <= 296]",
+    //   "css" : {
+    //     "font-size" : "mapData(Degree,1,296,4,100)"
+    //   }
     }, {
       "selector" : "node:selected",
       "css" : {
@@ -138,7 +138,7 @@ class NetworkPanel extends Component {
         "background-color" : "red",
         "width" : 50.0,
         "height" : 50.0,
-        "font-size" : 50,
+        "font-size" : 30,
         "color" : "red"
       }
     }, {
