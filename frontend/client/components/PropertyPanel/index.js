@@ -1,15 +1,10 @@
 import React, {Component} from 'react'
 
-import CyViewer from 'cy-viewer'
-
 import TitleBar from './TitleBar'
-
 import * as colors from 'material-ui/styles/colors';
-
 import Drawer from 'material-ui/Drawer'
 import {List, ListItem} from 'material-ui/List';
 
-const cyjsUrl = 'https://raw.githubusercontent.com/cytoscape/cyREST/master/examples/python/basic/sample_data/yeast_network.json'
 
 class PropertyPanel extends Component {
 
@@ -28,11 +23,6 @@ class PropertyPanel extends Component {
     })
   }
 
-
-  // componentWillMount() {
-    // this.props.downloadActions.downloadBegin()
-    // this.props.downloadActions.fetchNetwork(cyjsUrl)
-  // }
 
   componentWillReceiveProps(nextProps, nextState) {
     const details = nextProps.events

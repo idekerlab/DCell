@@ -19,17 +19,28 @@ const cyjsUrl = 'https://gist.githubusercontent.com/keiono/b7c047c1166681ef71708
 // const cyjsUrl = 'https://gist.githubusercontent.com/keiono/004744a332451a472bf85c8beefba9db/raw/0955dddc4a3ea5a0e87423a349e5b2b16ec46fa2/gotree2.cyjs'
 const edgeColor = '#777777'
 
-
+const Worker = require("worker-loader!./worker");
 
 
 class NetworkPanel extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      updating: false
+    };
+  }
+
+
   selectNodes = (nodeIds, nodeProps) => {
     console.log('====== Custom node select function called! ========');
     console.log('Selected Node ID: ' + nodeIds)
-    console.log(nodeProps)
-    console.log(nodeProps[nodeIds[0]])
-    this.props.commandActions.findPath({startId:nodeIds[0], endId: '4022'})
-    this.props.eventActions.selected(nodeProps[nodeIds[0]])
+
+    window.setTimeout(()=> {
+      this.props.eventActions.selected(nodeProps[nodeIds[0]])
+      this.props.commandActions.findPath({startId:nodeIds[0], endId: '4022'})
+      console.log('## Panel done!')
+    }, 0)
   }
 
   selectEdges = (edgeIds, edgeProps) => {
