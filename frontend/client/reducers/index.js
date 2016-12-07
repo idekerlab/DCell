@@ -8,6 +8,7 @@ import cy_events from './cy-events'
 import ui_state from './ui-state'
 import background_color from './background-color'
 import datasource from './datasource'
+import property from './property'
 
 import networks from './networks'
 import networkDownload from './networkDownload'
@@ -23,7 +24,8 @@ const app_manager = combineReducers({
   cy_events: cy_events,
   ui_state: ui_state,
   background_color: background_color,
-  datasource: datasource
+  datasource: datasource,
+  property: property
 })
 
 

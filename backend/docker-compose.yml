@@ -1,5 +1,5 @@
 db:
-  image: elasticsearch:latest
+  build: elastic
   volumes:
     - esdata:/usr/share/elasticsearch/data
   ports:

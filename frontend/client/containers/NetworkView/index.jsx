@@ -14,6 +14,8 @@ import NetworkViewer from '../../components/NetworkViewer'
 import * as networkDownloadActions from '../../reducers/networkDownload'
 import * as networkActions from '../../reducers/networks'
 
+import * as propertyActions from '../../actions/property'
+
 import style from './style.css'
 import {grey50, grey800} from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -66,6 +68,7 @@ function mapStateToProps(state) {
     networks: state.cy_network.networks,
     networkDownload: state.cy_network.networkDownload,
     currentNetwork: state.app_manager.current_network,
+    property: state.app_manager.property,
     commands: state.app_manager.commands,
     events: state.app_manager.cy_events,
     uiState: state.app_manager.ui_state,
@@ -87,6 +90,8 @@ function mapDispatchToProps(dispatch) {
     vsActions: bindActionCreators(vsActions, dispatch),
     currentVsActions: bindActionCreators(currentVsActions, dispatch),
     backgroundColorActions: bindActionCreators(backgroundColorActions, dispatch),
+
+    propertyActions: bindActionCreators(propertyActions, dispatch),
   }
 }
 

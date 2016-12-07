@@ -48,7 +48,7 @@ export default class NetworkViewer extends Component {
       commands, commandActions,
       events, eventActions, networkId, uiState, uiStateActions,
       styles, currentVs, currentVsActions, backgroundColorActions,
-      backgroundColor, vsActions, datasource
+      backgroundColor, vsActions, datasource, property, propertyActions
     } = this.props
 
     let errorMsg = networkDownload.get('error')
@@ -89,6 +89,8 @@ export default class NetworkViewer extends Component {
           currentVsActions={currentVsActions}
           backgroundColor={backgroundColor}
           vsActions={vsActions}
+          property={property}
+          propertyActions={propertyActions}
         />
 
         <Commands
@@ -97,9 +99,7 @@ export default class NetworkViewer extends Component {
         />
 
         <PropertyPanel
-          networks={networks}
-          downloadActions={downloadActions}
-          events={events}
+          property={property}
         />
 
         <Errorbar
