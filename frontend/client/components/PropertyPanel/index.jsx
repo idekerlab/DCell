@@ -127,13 +127,14 @@ class PropertyPanel extends Component {
         open={this.state.open}>
 
 
+
         <div style={networkAreaStyle}>
           <CyViewer
             key={String(new Date())}
             network={treeData}
             networkType={'cyjs'}
             style={networkAreaStyleChild}
-            rendererOptions={{layout: 'concentric'}}
+            rendererOptions={{layout: 'grid'}}
           />
         </div>
 
