@@ -5,6 +5,7 @@ import ClosableAppBar from '../ClosableAppBar'
 import NetworkPanel from '../NetworkPanel'
 import PropertyPanel from '../PropertyPanel'
 import Errorbar from 'material-ui/Snackbar';
+import SearchPanel from '../SearchPanel'
 
 import Commands from '../Commands'
 
@@ -96,6 +97,9 @@ export default class NetworkViewer extends Component {
         <Commands
           commandActions={commandActions}
           uiState={uiState}
+        />
+
+        <SearchPanel
         />
 
         <PropertyPanel

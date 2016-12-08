@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 
-import IconButton from 'material-ui/IconButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import CloseIcon from 'material-ui/svg-icons/navigation/close';
 
@@ -18,7 +17,6 @@ class TitleBar extends Component {
       alignItems: 'center',
       justifyContent: 'flex-start',
       background: 'teal',
-      width: '100%',
       height: '6em',
 
       color: 'white',
@@ -26,21 +24,10 @@ class TitleBar extends Component {
       paddingLeft: '0.5em'
     }
 
-    const iconStyle = {
-      color: 'teal',
-    }
 
     return (
       <div style={style}>
-        <FloatingActionButton
-          onClick={this.handleClick}
-          iconStyle={iconStyle}
-          backgroundColor="#EFEFEF"
-        >
-          <CloseIcon/>
-        </FloatingActionButton>
-
-        <h2 style={{paddingLeft: '1.5em'}}>{this.props.title}</h2>
+        <h2 style={{paddingLeft: '1em'}}>{this.props.title}</h2>
       </div>
     )
   }

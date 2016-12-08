@@ -10,6 +10,9 @@ import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 
 import Drawer from 'material-ui/Drawer'
 
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+
 const dStyle = {
   padding: 10,
 }
@@ -21,7 +24,8 @@ export default class ClosableAppBar extends Component {
     super(props);
     this.state = {
       open: false,
-      shareDialogOpen: false
+      shareDialogOpen: false,
+      network: 1
     }
   }
 
@@ -32,6 +36,9 @@ export default class ClosableAppBar extends Component {
     this.setState({shareDialogOpen: !this.state.shareDialogOpen})
     console.log('Dialog state: ' + this.state.shareDialogOpen)
   }
+
+
+  handleChange = (event, index, value) => this.setState({network: value});
 
 
   render() {
@@ -76,14 +83,20 @@ export default class ClosableAppBar extends Component {
     return (
       <div>
         <AppBar
-          title="Merged Gene Ontology"
+          title="DeepCell 1.0"
           onLeftIconButtonTouchTap={this.openMenu}
-          iconElementRight={
-            <IconButton
-              onTouchTap={this.handleShareDialogOpen}
+          children={
+            <SelectField
+              floatingLabelText="Neural Network"
+              value={this.state.network}
+              onChange={this.handleChange}
+              floatingLabelStyle={{color: '#EEEEEE'}}
+              labelStyle={{color: 'white'}}
             >
-              <ShareIcon />
-            </IconButton>
+              <MenuItem value={1} primaryText="Merged Gene Ontology" />
+              <MenuItem value={2} primaryText="CLIXO" />
+            </SelectField>
+
           }
         >
         </AppBar>

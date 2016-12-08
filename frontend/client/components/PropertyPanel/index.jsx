@@ -4,6 +4,16 @@ import TitleBar from './TitleBar'
 import * as colors from 'material-ui/styles/colors';
 import Drawer from 'material-ui/Drawer'
 import {List, ListItem} from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
+import Divider from 'material-ui/Divider';
+import Badge from 'material-ui/Badge';
+
+
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import CloseIcon from 'material-ui/svg-icons/navigation/close';
+
+
+
 
 import CyViewer from 'cy-viewer'
 
@@ -74,6 +84,8 @@ class PropertyPanel extends Component {
   //   return true
   // }
 
+
+
   render() {
 
     console.log("-------------- %%%%%%%%%%%%PROP Panel rendering")
@@ -93,12 +105,16 @@ class PropertyPanel extends Component {
     let name = 'N/A'
     let keys = []
     let properties = {}
+    let genes = []
 
     if (data !== null && data.id !== null) {
 
       properties = data.properties
       name = properties.name
       keys = Object.keys(properties)
+      if(properties.genes !== undefined) {
+        genes = properties.genes
+      }
     }
 
     console.log("Step 2==================")
@@ -108,13 +124,25 @@ class PropertyPanel extends Component {
     const networkAreaStyle = {
       width: '100%',
       height: '45%',
-      background: colors.blueGrey800
+      background: colors.blueGrey50
     };
 
     const networkAreaStyleChild = {
       width: '100%',
-      height: '100%'
+      height: '100%',
+      top: 0,
+      right: 0,
+      position: 'relative'
     };
+
+    const descriptionStyle = {
+      background: '#F2F2F2',
+      padding: '1em'
+    }
+
+    const iconStyle = {
+      color: 'white',
+    }
 
 
     console.log("Last Step 2==================")
@@ -123,12 +151,10 @@ class PropertyPanel extends Component {
       <Drawer
         width={w}
         openSecondary={true}
-
         open={this.state.open}>
 
-
-
         <div style={networkAreaStyle}>
+
           <CyViewer
             key={String(new Date())}
             network={treeData}
@@ -136,6 +162,14 @@ class PropertyPanel extends Component {
             style={networkAreaStyleChild}
             rendererOptions={{layout: 'grid'}}
           />
+          <FloatingActionButton
+            style={{position: 'fixed', top: '0.7em', marginLeft: '0.7em', zIndex: 999}}
+            onClick={this.handleClose}
+            iconStyle={iconStyle}
+            mini={true}
+          >
+            <CloseIcon/>
+          </FloatingActionButton>
         </div>
 
 
@@ -144,18 +178,60 @@ class PropertyPanel extends Component {
           closeAction={this.handleClose}
         />
 
+
+        <div style={descriptionStyle}>
+          <h3>{properties.definition}</h3>
+        </div>
+
+
         <List>
+          <ListItem
+            key={1}
+            secondaryText={'Term ID'}
+            primaryText={properties.termid}
+          />,
+          <ListItem
+            key={2}
+            secondaryText={'Namespace'}
+            primaryText={properties.namespace}
+          />
+        </List>
+
+        <Divider />
+
+        <List>
+
+          <Badge
+            badgeContent={4}
+            primary={true}
+          >
+            <Subheader>Assigned Genes:</Subheader>
+          </Badge>
+
           {
-            keys.map((keyVal, i) => {
-              return <ListItem
-                key={i}
-                secondaryText={keyVal}
-                primaryText={String(properties[keyVal])}
+            genes.map((gene, j) => {
+              return (
+              <ListItem
+                key={j}
+                primaryText={gene['symbol']}
+                nestedItems={[
+                  <ListItem
+                    key={1}
+                    secondaryText={"Description"}
+                    primaryText={gene.name}
+                  />,
+                  <ListItem
+                    key={2}
+                    secondaryText={'SGD ID'}
+                    primaryText={gene.sgdid}
+                  />
+                ]}
               />
+              )
             })
           }
         </List>
-      </Drawer >
+      </Drawer>
     )
   }
 
