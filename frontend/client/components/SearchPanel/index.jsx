@@ -58,14 +58,16 @@ class SearchPanel extends Component {
         >
           <Tab
             icon={<SearchIcon/>}
-            label="Search"
             value="search"
           >
-            <SearchTab style={searchStyle} />
+            <SearchTab
+              style={searchStyle}
+              search={this.props.search}
+              searchActions={this.props.searchActions}
+            />
           </Tab>
           <Tab
             icon={<ListIcon/>}
-            label="Gene List"
             value="list"
           >
             <ListTab />

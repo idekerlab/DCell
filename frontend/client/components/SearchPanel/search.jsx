@@ -17,8 +17,67 @@ import Checkbox from 'material-ui/Checkbox';
 
 import TextField from 'material-ui/TextField';
 
+import style from './style.css'
+
+import {TransitionMotion, spring, presets} from 'react-motion'
+
+
+
 
 class SearchTab extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      query: '',
+      loading: false,
+      noSearchYet: true
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log("!!! got prop in search:")
+    console.log(nextProps)
+
+    if(nextProps.search.result !== null) {
+      this.setState({loading: false})
+    }
+  }
+
+
+  search = () => {
+
+    this.setState({
+      loading: true,
+      noSearchYet: false
+    })
+
+    const query = this.state.query
+    console.log("Q = " + query)
+    this.props.searchActions.searchDatabase(query)
+  }
+
+
+  clearQuery = () => {
+    this.setState({
+      query: '',
+      loading: false,
+      noSearchYet: true
+    });
+  }
+
+  handleChange = event => {
+    this.setState({
+      query: event.target.value
+    });
+  }
+
+  handleKey = event => {
+    if (event.key === 'Enter') {
+      this.search()
+    }
+  }
 
   render() {
 
@@ -35,17 +94,21 @@ class SearchTab extends Component {
       marginBottom: '0.5em',
     }
 
-    const listStyle ={
-      overflow: 'scroll',
-      height: '20em',
-      background: 'white'
-    }
 
     const actionStyle = {
       display: 'flex',
       background: colors.blueGrey50,
       marginTop: '0.5em'
     }
+
+
+
+    const searchResult = this.props.search.result
+    let hits = []
+    if(searchResult !== null) {
+      hits = searchResult.hits.hits
+    }
+
 
     return (
       <div style={this.props.style}>
@@ -56,33 +119,27 @@ class SearchTab extends Component {
             floatingLabelText="Keyword Search"
             floatingLabelFixed={true}
 
+            value={this.state.query}
+            onChange={this.handleChange}
+            onKeyPress={this.handleKey}
           />
 
           <RaisedButton
             style={itemStyle}
             icon={<ClearIcon />}
+            onClick={this.clearQuery}
           />
           <RaisedButton
             style={itemStyle}
             icon={<SearchIcon />}
             primary={true}
+            onClick={this.search}
           />
         </div>
 
 
-        <List style={listStyle}>
-          <Subheader>Search Result</Subheader>
-          <ListItem
-            leftCheckbox={<Checkbox />}
-            primaryText="PDR11"
-            secondaryText="ATP-binding cassette (ABC) transporter"
-          />
-          <ListItem
-            leftCheckbox={<Checkbox />}
-            primaryText="BUD21"
-            secondaryText="Component of small ribosomal subunit (SSU) processosome"
-          />
-        </List>
+        {this.getListPanel(hits)}
+
 
         <div style={actionStyle}>
           <RaisedButton
@@ -104,6 +161,73 @@ class SearchTab extends Component {
     )
 
   }
+
+
+  getListPanel = hits => {
+    const listStyle ={
+      overflow: 'scroll',
+      height: '20em',
+      background: 'white'
+    }
+
+    const baseStyle = {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '20em',
+      background: 'white'
+    }
+
+    if(this.state.noSearchYet && this.state.loading === false) {
+      style.background = '#EFEFEF'
+      style.color = '#AAAAAA'
+
+      return(
+        <div style={baseStyle}>
+          <p>No search result yet</p>
+        </div>
+      )
+    } else if(this.state.loading) {
+      return (
+        <div style={baseStyle}>
+          <div className={style.loading}></div>
+          <h2 style={{color: '#888888'}}>Searching...</h2>
+        </div>
+      )
+    }
+
+    if(hits.length === 0) {
+      return (
+        <div style={baseStyle}>
+          <h1 style={{color: '#555555'}}>No Match!</h1>
+        </div>
+      )
+    }
+
+    return (<List style={listStyle}>
+      <Subheader>Search Result</Subheader>
+
+      {
+        hits.map((hit, i) => {
+
+          const symbol = hit._source.symbol
+          const locusName = hit._source.locus
+
+          return (
+            <ListItem
+              key={i}
+              leftCheckbox={<Checkbox />}
+              primaryText={symbol + '  (' + locusName + ')'}
+              secondaryText={hit._source.name}
+            />
+          )
+        })
+      }
+    </List>)
+
+  }
 }
+
 
 export default SearchTab

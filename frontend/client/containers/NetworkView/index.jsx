@@ -15,6 +15,7 @@ import * as networkDownloadActions from '../../reducers/networkDownload'
 import * as networkActions from '../../reducers/networks'
 
 import * as propertyActions from '../../actions/property'
+import * as searchActions from '../../actions/search'
 
 import style from './style.css'
 import {grey50, grey800} from 'material-ui/styles/colors';
@@ -69,6 +70,7 @@ function mapStateToProps(state) {
     networkDownload: state.cy_network.networkDownload,
     currentNetwork: state.app_manager.current_network,
     property: state.app_manager.property,
+    search: state.app_manager.search,
     commands: state.app_manager.commands,
     events: state.app_manager.cy_events,
     uiState: state.app_manager.ui_state,
@@ -92,6 +94,7 @@ function mapDispatchToProps(dispatch) {
     backgroundColorActions: bindActionCreators(backgroundColorActions, dispatch),
 
     propertyActions: bindActionCreators(propertyActions, dispatch),
+    searchActions: bindActionCreators(searchActions, dispatch),
   }
 }
 

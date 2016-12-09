@@ -49,7 +49,8 @@ export default class NetworkViewer extends Component {
       commands, commandActions,
       events, eventActions, networkId, uiState, uiStateActions,
       styles, currentVs, currentVsActions, backgroundColorActions,
-      backgroundColor, vsActions, datasource, property, propertyActions
+      backgroundColor, vsActions, datasource, property, propertyActions,
+      searchActions, search
     } = this.props
 
     let errorMsg = networkDownload.get('error')
@@ -100,6 +101,8 @@ export default class NetworkViewer extends Component {
         />
 
         <SearchPanel
+          search={search}
+          searchActions={searchActions}
         />
 
         <PropertyPanel
