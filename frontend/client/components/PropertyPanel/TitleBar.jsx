@@ -1,17 +1,18 @@
 import React, {Component} from 'react'
 
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import CloseIcon from 'material-ui/svg-icons/navigation/close';
 
 class TitleBar extends Component {
 
-  handleClick = () => {
-    console.log('- click')
-    this.props.closeAction()
+
+  componentWillReceiveProps(nextProps) {
+    console.log("TITLE NP +++++++++++++++++++++++++++")
+    console.log(nextProps)
+    console.log(this.state)
+
   }
 
-  render() {
 
+  render() {
     const style = {
       display: 'flex',
       alignItems: 'center',
@@ -24,6 +25,7 @@ class TitleBar extends Component {
       paddingLeft: '0.5em'
     }
 
+    console.log(">>>>>>> TITLE >>>>>>>>>")
 
     return (
       <div style={style}>

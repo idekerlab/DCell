@@ -46,7 +46,7 @@ class NetworkPanel extends Component {
       console.log('## Panel done!')
     }, 0)
 
-    this.props.propertyActions.fetchProperty(props.id_original)
+    this.props.propertyActions.fetchEntry(props.id_original)
   }
 
   selectEdges = (edgeIds, edgeProps) => {

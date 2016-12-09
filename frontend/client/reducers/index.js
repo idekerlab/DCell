@@ -28,7 +28,7 @@ const app_manager = combineReducers({
   ui_state: ui_state,
   background_color: background_color,
   datasource: datasource,
-  property: property,
+  current_property: property,
   search: search
 })
 
