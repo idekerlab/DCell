@@ -1,10 +1,5 @@
 import React, {Component} from 'react'
-
-
 import * as colors from 'material-ui/styles/colors';
-
-import {List, ListItem} from 'material-ui/List';
-
 import {Tabs, Tab} from 'material-ui/Tabs';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import ListIcon from 'material-ui/svg-icons/action/list';
@@ -26,7 +21,7 @@ class SearchPanel extends Component {
     this.setState({
       selected: value,
     });
-  };
+  }
 
   render() {
     const style = {

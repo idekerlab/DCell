@@ -35,17 +35,13 @@ export default class NetworkViewer extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    const error = nextProps.networkDownload.get('error')
-    if(error !== null && error !== undefined) {
-      this.state.open = true
-    }
   }
 
   render() {
 
     const {
-      networks, networkDownload,
-      downloadActions, networkActions,
+      networks,
+      networkActions,
       commands, commandActions,
       events, eventActions, networkId, uiState, uiStateActions,
       styles, currentVs, currentVsActions, backgroundColorActions,
@@ -53,7 +49,7 @@ export default class NetworkViewer extends Component {
       searchActions, search, network
     } = this.props
 
-    let errorMsg = networkDownload.get('error')
+    let errorMsg = null
     if(errorMsg === null || errorMsg === undefined) {
       errorMsg = 'N/A'
     } else {
@@ -78,9 +74,7 @@ export default class NetworkViewer extends Component {
 
         <NetworkPanel
           networks={networks}
-          networkDownload={networkDownload}
           networkActions={networkActions}
-          downloadActions={downloadActions}
           commands={commands}
           commandActions={commandActions}
           events={events}

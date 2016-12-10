@@ -17,9 +17,6 @@ import style from './style.css'
 const cyjsUrl = 'https://gist.githubusercontent.com/keiono/b7c047c1166681ef7170881217819938/raw/b81de1da63075ceb0e4c8d99adeacf83d0193cdb/goWOgenes.cyjs'
 // const cyjsUrl = 'https://raw.githubusercontent.com/idekerlab/ontology-data-generators/master/atgo.cyjs'
 // const cyjsUrl = 'https://gist.githubusercontent.com/keiono/004744a332451a472bf85c8beefba9db/raw/0955dddc4a3ea5a0e87423a349e5b2b16ec46fa2/gotree2.cyjs'
-const edgeColor = '#777777'
-
-
 
 
 class NetworkPanel extends Component {
@@ -40,13 +37,11 @@ class NetworkPanel extends Component {
     console.log('Selected Node ID: ' + node)
     console.log(props)
 
-    window.setTimeout(()=> {
+    window.setTimeout(()=>{
       this.props.eventActions.selected(nodeProps[nodeIds[0]])
       this.props.commandActions.findPath({startId:nodeIds[0], endId: '4022'})
-      console.log('## Panel done!')
+      this.props.propertyActions.fetchEntry(props.id_original)
     }, 0)
-
-    this.props.propertyActions.fetchEntry(props.id_original)
   }
 
   selectEdges = (edgeIds, edgeProps) => {
@@ -99,16 +94,16 @@ class NetworkPanel extends Component {
     style: [ {
       "selector" : "node",
       "css" : {
-        opacity: 0.4,
         "width" : 10.0,
         "text-valign" : "center",
         "text-halign" : "right",
         "shape" : "ellipse",
-        "color" : "#666666",
+        "color" : "rgba(50,50,50,0.1)",
         "background-color" : "rgb(204,204,204)",
         "height" : 10.0,
         "content" : "data(name)",
-        "min-zoomed-font-size": '2em',
+        "min-zoomed-font-size": '3em',
+        "font-size" : '0.4em',
       }
     }, {
       "selector" : "node[namespace = 'biological_process']",
@@ -125,26 +120,19 @@ class NetworkPanel extends Component {
       "css" : {
         "background-color" : "rgb(0,204,153)"
       }
-    // }, {
-    //   "selector" : "node[Degree > 1][Degree <= 296]",
-    //   "css" : {
-    //     "font-size" : "mapData(Degree,1,296,4,100)"
-    //   }
     }, {
       "selector" : "node:selected",
       "css" : {
-        opacity: 1,
-        "background-color" : "red",
-        "width" : 50.0,
-        "height" : 50.0,
-        "font-size" : 30,
-        "color" : "red"
+        "background-color" : "orange",
+        "width" : 35.0,
+        "height" : 35.0,
+        "font-size" : '2em',
+        "color" : "orange"
       }
     }, {
       "selector" : "edge",
       "css" : {
         "width" : 5.0,
-        opacity: 0.4,
         "line-color" : "rgb(132,132,132)",
       }
     }, {
@@ -165,9 +153,8 @@ class NetworkPanel extends Component {
     }, {
       "selector" : "edge:selected",
       "css" : {
-        "line-color" : "rgb(255,0,0)",
-        opacity: 1,
-        "width": 20
+        "line-color" : "orange",
+        "width": 15
       }
     } ]
   })
@@ -175,9 +162,7 @@ class NetworkPanel extends Component {
 
   render() {
     const {
-      commands, commandActions, events, networkDownload,
-      eventActions, networkId, styles, currentVs,
-      backgroundColor, vsActions, currentVsActions
+      commands
     } = this.props
 
 
@@ -189,7 +174,7 @@ class NetworkPanel extends Component {
       height: '100%',
     };
 
-    let errorMsg = networkDownload.get('error')
+    let errorMsg = null
     let failed = false
 
     if (errorMsg === null || errorMsg === undefined) {

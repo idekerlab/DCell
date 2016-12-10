@@ -10,6 +10,9 @@ import ClearIcon from 'material-ui/svg-icons/content/clear';
 import RaisedButton from 'material-ui/RaisedButton';
 import RunIcon from 'material-ui/svg-icons/av/play-arrow';
 
+import FlatButton from 'material-ui/FlatButton';
+
+
 
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
@@ -89,7 +92,7 @@ class SearchTab extends Component {
       paddingBottom: '0.5em'
     }
 
-    const itemStyle = {
+    const buttonStyle = {
       marginLeft: '0.5em',
       marginBottom: '0.5em',
     }
@@ -97,11 +100,10 @@ class SearchTab extends Component {
 
     const actionStyle = {
       display: 'flex',
-      background: colors.blueGrey50,
+      alignItems: 'flex-end',
+      justifyContent: 'flex-end',
       marginTop: '0.5em'
     }
-
-
 
     const searchResult = this.props.search.result
     let hits = []
@@ -114,7 +116,7 @@ class SearchTab extends Component {
       <div style={this.props.style}>
         <div style={searchUiStyle}>
           <TextField
-            style={{flexGrow: 2}}
+            style={{width: '5em', flexGrow: 2}}
             hintText="Enter search keywords here..."
             floatingLabelText="Keyword Search"
             floatingLabelFixed={true}
@@ -125,12 +127,12 @@ class SearchTab extends Component {
           />
 
           <RaisedButton
-            style={itemStyle}
+            style={buttonStyle}
             icon={<ClearIcon />}
             onClick={this.clearQuery}
           />
           <RaisedButton
-            style={itemStyle}
+            style={buttonStyle}
             icon={<SearchIcon />}
             primary={true}
             onClick={this.search}
@@ -143,19 +145,16 @@ class SearchTab extends Component {
 
         <div style={actionStyle}>
           <RaisedButton
-            style={{flexGrow: 1}}
-            label="Clear Selection"
+            label="Reset"
             labelPosition="before"
-            icon={<ClearIcon />}
           />
           <RaisedButton
-            style={{flexGrow: 1}}
-            label="Run Simulation"
+            label="Run"
+            style={{marginLeft: '0.5em'}}
             labelPosition="before"
             icon={<RunIcon />}
             secondary={true}
           />
-
         </div>
       </div>
     )

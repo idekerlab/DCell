@@ -11,8 +11,6 @@ import * as backgroundColorActions from '../../actions/background-color'
 
 import NetworkViewer from '../../components/NetworkViewer'
 
-import * as networkDownloadActions from '../../reducers/networkDownload'
-
 import * as propertyActions from '../../actions/property'
 import * as searchActions from '../../actions/search'
 
@@ -68,7 +66,6 @@ class NetworkView extends Component {
 function mapStateToProps(state) {
   return {
     networks: state.cy_network.networks,
-    networkDownload: state.cy_network.networkDownload,
     currentNetwork: state.app_manager.current_network,
     currentProperty: state.app_manager.current_property,
     search: state.app_manager.search,
@@ -86,7 +83,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    downloadActions: bindActionCreators(networkDownloadActions, dispatch),
     networkActions: bindActionCreators(networkActions, dispatch),
     networkSourceActions: bindActionCreators(networkSourceActions, dispatch),
     commandActions: bindActionCreators(commandActions, dispatch),
