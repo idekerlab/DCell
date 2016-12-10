@@ -14,6 +14,7 @@ import networks from './networks'
 import networkDownload from './networkDownload'
 
 import search from './search'
+import network from './network'
 
 
 // Cytoscape.js network data store
@@ -29,7 +30,9 @@ const app_manager = combineReducers({
   background_color: background_color,
   datasource: datasource,
   current_property: property,
-  search: search
+  search: search,
+
+  network: network
 })
 
 

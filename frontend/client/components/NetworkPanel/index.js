@@ -65,9 +65,9 @@ class NetworkPanel extends Component {
     browserHistory.push('/')
   }
 
+  // Initialize
   componentWillMount() {
-    this.props.downloadActions.downloadBegin()
-    this.props.downloadActions.fetchNetwork(cyjsUrl)
+    this.props.networkActions.fetchNetworkFromUrl(cyjsUrl)
   }
 
   getError() {
@@ -94,24 +94,6 @@ class NetworkPanel extends Component {
     )
   }
 
-  sizeCalculator = ele => {
-    const size = ele.data('Size')
-    if (size !== undefined) {
-      return Math.log(size) * 30
-    } else {
-      return 10
-    }
-  }
-
-  fontSizeCalculator = ele => {
-    const size = ele.data('Size')
-    if (size !== undefined) {
-      const fontSize = Math.log(size) / 2
-      return fontSize + 'em'
-    } else {
-      return '1em'
-    }
-  }
 
   getVisualStyle = () => ({
     style: [ {
@@ -190,58 +172,6 @@ class NetworkPanel extends Component {
     } ]
   })
 
-  getVisualStyle2 = () => ({
-    style: [
-      {
-        "selector": "node",
-        "css": {
-          "font-family": "SansSerif",
-          "shape": "ellipse",
-          "background-color": 'mapData(score, 0, 1,' + colors.blue50 + ',' + colors.blue800 + ')',
-          "width": this.sizeCalculator,
-          "text-margin-x": '1em',
-          "text-valign": "center",
-          "text-halign": "right",
-          "color": colors.blueGrey700,
-          "min-zoomed-font-size": '1em',
-          "font-size": this.fontSizeCalculator,
-          "height": this.sizeCalculator,
-          "content": "data(Manual_Name)",
-          "text-wrap": 'wrap',
-          "text-max-width": '40em'
-        }
-      },
-      {
-        "selector": "node:selected",
-        "css": {
-          "background-color": "red",
-          "color": "red"
-        }
-      },
-      {
-        "selector": "edge",
-        "css": {
-          "opacity": 0.5,
-          "line-color": edgeColor,
-          "source-arrow-shape": 'triangle',
-          "mid-source-arrow-shape": 'triangle',
-          "source-arrow-color": edgeColor,
-          "mid-source-arrow-color": edgeColor,
-          "color": "white"
-        }
-      },
-      {
-        "selector": "edge:selected",
-        "css": {
-          "line-color": "red",
-          "color": "white",
-          "source-arrow-color": "red",
-          "mid-source-arrow-color": "red",
-          "width": '1em'
-        }
-      },
-    ]
-  })
 
   render() {
     const {
@@ -268,15 +198,20 @@ class NetworkPanel extends Component {
       failed = true
     }
 
-    const network = this.props.networks.get(cyjsUrl)
+    // const network = this.props.networks.get(cyjsUrl)
 
+    const networkProp = this.props.network
+    console.log(this.props)
+    console.log(networkProp)
 
     if (failed) {
       return this.getError()
-    } else if (network !== undefined) {
+    } else if (networkProp.network.elements !== undefined) {
+
       return (
         <CyViewer
-          network={network.toJS()}
+          key="mainView"
+          network={networkProp.network}
           networkType={'cyjs'}
           style={networkAreaStyle}
           networkStyle={this.getVisualStyle()}

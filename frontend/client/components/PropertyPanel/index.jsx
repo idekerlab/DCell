@@ -31,7 +31,6 @@ class PropertyPanel extends Component {
     const selectedNew = nextProps.events.get('selected')
 
     if (selected !== selectedNew) {
-      console.log("------------------------>> Open")
       this.setState({
         open: true
       })

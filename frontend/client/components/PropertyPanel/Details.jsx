@@ -13,6 +13,7 @@ class Details extends Component {
 
 
   render() {
+    console.log("%%%%%%%%%%%%%%%% Rendering Details Panel")
 
     const details = this.props.currentProperty
     const data = details.data._source
@@ -25,7 +26,10 @@ class Details extends Component {
       entry = data
     }
 
-    console.log("%%%%%%%%%%%%%%%% Details Panel")
+    const genes = entry === {} ? [] : entry.genes
+    const subnet = this.buildNetwork(details.id, data)
+
+    console.log(subnet)
 
 
     const descriptionStyle = {
@@ -33,19 +37,20 @@ class Details extends Component {
       padding: '1em'
     }
 
+
     return (
       <div>
-        {/*<SubNetworkView*/}
-          {/*currentProperty={this.props.currentProperty}*/}
-          {/*handleClose={this.props.handleClose}*/}
-        {/*/>*/}
+        <SubNetworkView
+          subnet={subnet}
+          handleClose={this.props.handleClose}
+        />
 
         <TitleBar
           title={entry.name}
         />
 
         <div style={descriptionStyle}>
-          <h3>{entry.name}</h3>
+          <h3>{entry.definition}</h3>
         </div>
 
 
@@ -65,10 +70,81 @@ class Details extends Component {
         <Divider />
 
         <GeneList
-          genes={[]}
+          genes={genes}
         />
       </div>
     )
+  }
+
+  buildNetwork = (root, details) => {
+
+
+    console.log('------------------------- building Tree')
+
+
+    const network = {
+      data: {name: 'tree'},
+      elements: {
+        nodes: [],
+        edges: []
+      }
+    }
+
+    if(root=== undefined || root === null) {
+      return network
+    }
+
+    const rootNode = {
+      data: {
+        id: root,
+        name: root
+      }
+    }
+
+    network.elements.nodes.push(rootNode)
+
+    if(details === undefined || details === null || details === {}) {
+      return network
+    }
+
+    let children = details.children
+    if(children === undefined) {
+      children = []
+    }
+
+    let parents = details.parents
+    if(parents === undefined) {
+      parents = []
+    }
+
+    children.map((val, i) => {
+      const node = this.getNode(val)
+      const edge = this.getEdge(root, val.id)
+
+      console.log("Adding %%%%%%%%%%%%" + val.id)
+      network.elements.nodes.push(node)
+      network.elements.edges.push(edge)
+    })
+
+    return network
+  }
+
+  getNode = val => {
+    return {
+      data: {
+        id: val.id,
+        name: val.name
+      }
+    }
+  }
+
+  getEdge = (source, target) => {
+    return {
+      data: {
+        source: source,
+        target: target
+      }
+    }
   }
 }
 

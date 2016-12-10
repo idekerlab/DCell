@@ -8,12 +8,19 @@ import CyViewer from 'cy-viewer'
 
 class SubNetworkView extends Component {
 
+  getStyle = () => {
+    return {
+
+    }
+  }
+
+
   render() {
 
     const style = {
       width: '100%',
       height: '50em',
-      background: colors.blueGrey50
+      background: '#000000'
     }
 
     const networkAreaStyle = {
@@ -28,17 +35,28 @@ class SubNetworkView extends Component {
       color: 'white',
     }
 
-    const subnet = this.buildNetwork()
+    const titleStyle = {
+      position: 'fixed',
+      top: '0.5em',
+      right: '0.7em',
+      zIndex: 999
+    }
+
+    const subnet = this.props.subnet
+
+    console.log("------------------------>> Subtree rendering")
+    console.log(subnet)
 
     return (
       <div style={style}>
 
         <CyViewer
-          key="subview"
+          key="subNetworkView"
           network={subnet}
           networkType={'cyjs'}
+          networkStyle={this.getStyle()}
           style={networkAreaStyle}
-          rendererOptions={{layout: 'grid'}}
+          rendererOptions={{layout: 'breadthfirst'}}
         />
 
         <FloatingActionButton
@@ -49,70 +67,52 @@ class SubNetworkView extends Component {
         >
           <CloseIcon/>
         </FloatingActionButton>
+
+        <div style={titleStyle}>
+          <h2>Sub Tree for selected term</h2>
+        </div>
       </div>
     )
   }
 
-  buildNetwork = () => {
 
-    const details = this.props.currentProperty.data
-    const root = this.props.currentProperty.id
-
-    console.log('------------------------- building SUB')
-    const network = {
-      data: {name: 'tree'},
-      elements: {
-        nodes: [],
-        edges: []
+  getStyle = () => ({
+    style: [ {
+      "selector" : "node",
+      "css" : {
+        "width" : 50.0,
+        "text-valign" : "center",
+        "text-halign" : "right",
+        "shape" : "ellipse",
+        "color" : "#666666",
+        "background-color" : "rgb(204,204,204)",
+        "height" : 30.0,
+        "font-size" : 20,
+        "content" : "data(name)",
+        "min-zoomed-font-size": '1em',
       }
-    }
-
-    if(root=== undefined || root === null) {
-      return network
-    }
-
-
-    const rootNode = {
-      data: {
-        id: root,
-        name: root
+    }, {
+      "selector" : "node:selected",
+      "css" : {
+        "background-color" : "orange",
+        "font-size" : 30,
+        "color" : "orange"
       }
-    }
-
-    network.elements.nodes.push(rootNode)
-
-    if(details === undefined || details === null) {
-      return network
-    }
-
-    const children = details.children
-    const parents = details.parents
-
-
-    children.map((val, i) => {
-      const node = {
-        data: {
-          id: val.id,
-          name: val.name
-        }
+    }, {
+      "selector" : "edge",
+      "css" : {
+        "width" : 10,
+        "mid-target-arrow-shape": "triangle",
+        "line-color" : "rgb(132,132,132)",
       }
-
-      const edge = {
-        data: {
-          source: root,
-          target: val.id
-        }
+    }, {
+      "selector" : "edge:selected",
+      "css" : {
+        "line-color" : "rgb(255,0,0)",
+        "width": 14
       }
-
-      console.log("Adding %%%%%%%%%%%%" + val.id)
-      network.elements.nodes.push(node)
-      network.elements.edges.push(edge)
-    })
-
-    return network
-  }
-
+    } ]
+  })
 }
-
 
 export default SubNetworkView

@@ -12,10 +12,12 @@ import * as backgroundColorActions from '../../actions/background-color'
 import NetworkViewer from '../../components/NetworkViewer'
 
 import * as networkDownloadActions from '../../reducers/networkDownload'
-import * as networkActions from '../../reducers/networks'
 
 import * as propertyActions from '../../actions/property'
 import * as searchActions from '../../actions/search'
+
+// import * as networkActions from '../../reducers/networks'
+import * as networkActions from '../../actions/network'
 
 import {grey50, grey800} from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -77,6 +79,8 @@ function mapStateToProps(state) {
     currentVs: state.app_manager.current_vs,
     backgroundColor: state.app_manager.background_color,
     datasource: state.app_manager.datasource,
+
+    network: state.app_manager.network
   }
 }
 
