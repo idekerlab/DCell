@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 
-
 import * as colors from 'material-ui/styles/colors';
 
 import {List, ListItem} from 'material-ui/List';
@@ -22,8 +21,9 @@ import TextField from 'material-ui/TextField';
 
 import style from './style.css'
 
-import {TransitionMotion, spring, presets} from 'react-motion'
+import GenotypePanel from './GenotypePanel'
 
+import {TransitionMotion, spring, presets} from 'react-motion'
 
 
 
@@ -35,14 +35,12 @@ class SearchTab extends Component {
     this.state = {
       query: '',
       loading: false,
-      noSearchYet: true
+      noSearchYet: true,
+      genes: new Set()
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("!!! got prop in search:")
-    console.log(nextProps)
-
     if(nextProps.search.result !== null) {
       this.setState({loading: false})
     }
@@ -111,13 +109,15 @@ class SearchTab extends Component {
       hits = searchResult.hits.hits
     }
 
+    const selectedGenes = [...this.state.genes]
+
 
     return (
       <div style={this.props.style}>
         <div style={searchUiStyle}>
           <TextField
             style={{width: '5em', flexGrow: 2}}
-            hintText="Enter search keywords here..."
+            hintText="Keywords, etc."
             floatingLabelText="Keyword Search"
             floatingLabelFixed={true}
 
@@ -143,6 +143,10 @@ class SearchTab extends Component {
         {this.getListPanel(hits)}
 
 
+        <GenotypePanel
+          genes={selectedGenes}
+        />
+
         <div style={actionStyle}>
           <RaisedButton
             label="Reset"
@@ -154,11 +158,33 @@ class SearchTab extends Component {
             labelPosition="before"
             icon={<RunIcon />}
             secondary={true}
+            onClick={this.runSimulation}
           />
         </div>
       </div>
     )
 
+  }
+
+  runSimulation = () => {
+    console.log("Run!!")
+    this.props.uiStateActions.showResult(true)
+  }
+
+  itemSelected = symbol => {
+    const genes = this.state.genes
+
+    if(genes.has(symbol)) {
+      console.log("deleting")
+      genes.delete(symbol)
+    } else {
+      console.log("adding " + symbol)
+      genes.add(symbol)
+    }
+    console.log('Selected: ' + symbol)
+    console.log(genes)
+    this.setState({genes: genes})
+    console.log(this.state.genes)
   }
 
 
@@ -216,9 +242,14 @@ class SearchTab extends Component {
           return (
             <ListItem
               key={i}
-              leftCheckbox={<Checkbox />}
+              leftCheckbox={
+                <Checkbox
+                  onCheck={() => {this.itemSelected(symbol)}}
+                />
+              }
               primaryText={symbol + '  (' + locusName + ')'}
               secondaryText={hit._source.name}
+
             />
           )
         })

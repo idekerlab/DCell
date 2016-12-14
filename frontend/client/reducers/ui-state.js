@@ -5,7 +5,8 @@ import {Map} from 'immutable'
 
 const defaultState = Map({
   showAppBar: true,
-  showCommands: true
+  showCommands: true,
+  showResult: false
 })
 
 export default handleActions({
@@ -14,6 +15,9 @@ export default handleActions({
   ),
   SHOW_COMMANDS: (state, action) => (
     state.set('showCommands', action.payload)
+  ),
+  SHOW_RESULT: (state, action) => (
+    state.set('showResult', action.payload)
   ),
 }, defaultState)
 

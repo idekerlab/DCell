@@ -68,13 +68,6 @@ class Details extends Component {
     }
     return (
       <div>
-        <TreeViewer
-          style={{backgrund: 'red'}}
-          width={400}
-          height={400}
-          data={this.state.subtree}
-        />
-
         <SubNetworkView
           subnet={subnet}
           handleClose={this.props.handleClose}

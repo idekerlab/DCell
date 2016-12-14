@@ -10,6 +10,9 @@ import SearchPanel from '../SearchPanel'
 import Commands from '../Commands'
 
 import style from './style.css'
+import SubTreePanel from '../SubTreePanel'
+
+
 
 export default class NetworkViewer extends Component {
 
@@ -56,6 +59,9 @@ export default class NetworkViewer extends Component {
       errorMsg = 'ERROR: ' + errorMsg
     }
 
+
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ UI")
+    console.log(uiState)
     return (
 
       <div style={this.props.style}>
@@ -99,12 +105,15 @@ export default class NetworkViewer extends Component {
         <SearchPanel
           search={search}
           searchActions={searchActions}
+          uiStateActions={uiStateActions}
         />
 
         <PropertyPanel
           events={events}
           currentProperty={currentProperty}
         />
+
+        {uiState.get('showResult') ? <SubTreePanel uiStateActions={uiStateActions}/> : <div></div>}
 
         <Errorbar
           className={style.errorbar}
