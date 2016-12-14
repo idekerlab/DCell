@@ -1,0 +1,211 @@
+{
+  "shared_name" : "GO:00SUPER",
+  "score" : 0.889654636284,
+  "name" : "GO:00SUPER",
+  "SUID" : 214,
+  "id" : "GO:00SUPER",
+  "type" : "",
+  "selected" : true,
+  "children" : [ {
+    "shared_name" : "GO:0008150",
+    "score" : 0.29738172855,
+    "name" : "GO:0008150",
+    "SUID" : 215,
+    "id" : "GO:0008150",
+    "type" : "",
+    "selected" : false,
+    "children" : [ {
+      "shared_name" : "GO:0044699",
+      "score" : 0.11640059744999999,
+      "name" : "GO:0044699",
+      "SUID" : 222,
+      "id" : "GO:0044699",
+      "type" : "",
+      "selected" : false,
+      "children" : [ {
+        "shared_name" : "GO:0044710",
+        "score" : 0.283830902845,
+        "name" : "GO:0044710",
+        "SUID" : 226,
+        "id" : "GO:0044710",
+        "type" : "",
+        "selected" : false,
+        "children" : [ {
+          "shared_name" : "GO:0044281",
+          "score" : 0.602248570094,
+          "name" : "GO:0044281",
+          "SUID" : 227,
+          "id" : "GO:0044281",
+          "type" : "",
+          "selected" : false
+        }, {
+          "shared_name" : "GO:0008152",
+          "score" : 0.857529887321,
+          "name" : "GO:0008152",
+          "SUID" : 213,
+          "id" : "GO:0008152",
+          "type" : "",
+          "selected" : false,
+          "children" : [ {
+            "shared_name" : "GO:0071704",
+            "score" : 0.8212409744570001,
+            "name" : "GO:0071704",
+            "SUID" : 223,
+            "id" : "GO:0071704",
+            "type" : "",
+            "selected" : false,
+            "children" : [ {
+              "shared_name" : "GO:1901360",
+              "score" : 0.252483244667,
+              "name" : "GO:1901360",
+              "SUID" : 224,
+              "id" : "GO:1901360",
+              "type" : "",
+              "selected" : false
+            } ]
+          } ]
+        } ]
+      }, {
+        "shared_name" : "GO:0044763",
+        "score" : 0.280535655304,
+        "name" : "GO:0044763",
+        "SUID" : 219,
+        "id" : "GO:0044763",
+        "type" : "",
+        "selected" : false,
+        "children" : [ {
+          "shared_name" : "GO:0055086",
+          "score" : 0.704462248131,
+          "name" : "GO:0055086",
+          "SUID" : 211,
+          "id" : "GO:0055086",
+          "type" : "",
+          "selected" : false,
+          "children" : [ {
+            "shared_name" : "GO:0006753",
+            "score" : 0.600452011572,
+            "name" : "GO:0006753",
+            "SUID" : 212,
+            "id" : "GO:0006753",
+            "type" : "",
+            "selected" : false,
+            "children" : [ {
+              "shared_name" : "GO:0009123",
+              "score" : 0.146355669397,
+              "name" : "GO:0009123",
+              "SUID" : 228,
+              "id" : "GO:0009123",
+              "type" : "",
+              "selected" : false,
+              "children" : [ {
+                "shared_name" : "GO:0009167",
+                "score" : 0.610752542349,
+                "name" : "GO:0009167",
+                "SUID" : 229,
+                "id" : "GO:0009167",
+                "type" : "",
+                "selected" : false,
+                "children" : [ {
+                  "shared_name" : "GO:0009161",
+                  "score" : 0.710352769093,
+                  "name" : "GO:0009161",
+                  "SUID" : 225,
+                  "id" : "GO:0009161",
+                  "type" : "",
+                  "selected" : false
+                } ]
+              } ]
+            } ]
+          } ]
+        }, {
+          "shared_name" : "GO:0022900",
+          "score" : 0.850698063954,
+          "name" : "GO:0022900",
+          "SUID" : 220,
+          "id" : "GO:0022900",
+          "type" : "",
+          "selected" : false,
+          "children" : [ {
+            "shared_name" : "GO:0022904",
+            "score" : 0.971264983214,
+            "name" : "GO:0022904",
+            "SUID" : 218,
+            "id" : "GO:0022904",
+            "type" : "",
+            "selected" : false,
+            "children" : [ {
+              "shared_name" : "GO:0006122",
+              "score" : 0.44445622394100004,
+              "name" : "GO:0006122",
+              "SUID" : 233,
+              "id" : "GO:0006122",
+              "type" : "",
+              "selected" : false,
+              "children" : [ {
+                "shared_name" : "YEL024W",
+                "score" : 1.0,
+                "name" : "YEL024W",
+                "SUID" : 232,
+                "id" : "YEL024W",
+                "type" : "gene",
+                "selected" : false
+              }, {
+                "shared_name" : "YJL166W",
+                "score" : 1.0,
+                "name" : "YJL166W",
+                "SUID" : 234,
+                "id" : "YJL166W",
+                "type" : "gene",
+                "selected" : false
+              } ]
+            } ]
+          } ]
+        } ]
+      } ]
+    } ]
+  }, {
+    "shared_name" : "GO:0005575",
+    "score" : 0.324022379946,
+    "name" : "GO:0005575",
+    "SUID" : 216,
+    "id" : "GO:0005575",
+    "type" : "",
+    "selected" : false,
+    "children" : [ {
+      "shared_name" : "GO:0044425",
+      "score" : 0.7885490094840001,
+      "name" : "GO:0044425",
+      "SUID" : 217,
+      "id" : "GO:0044425",
+      "type" : "",
+      "selected" : false,
+      "children" : [ {
+        "shared_name" : "GO:1902495",
+        "score" : 0.370468886845,
+        "name" : "GO:1902495",
+        "SUID" : 221,
+        "id" : "GO:1902495",
+        "type" : "",
+        "selected" : false,
+        "children" : [ {
+          "shared_name" : "GO:0005750",
+          "score" : 0.36078017616400004,
+          "name" : "GO:0005750",
+          "SUID" : 230,
+          "id" : "GO:0005750",
+          "type" : "",
+          "selected" : false,
+          "children" : [ {
+            "shared_name" : "GO:0005739",
+            "score" : 0.19141607349599998,
+            "name" : "GO:0005739",
+            "SUID" : 231,
+            "id" : "GO:0005739",
+            "type" : "",
+            "selected" : false
+          } ]
+        } ]
+      } ]
+    } ]
+  } ]
+}

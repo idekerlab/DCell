@@ -8,8 +8,32 @@ import TitleBar from './TitleBar'
 import SubNetworkView from './SubNetworkView'
 import GeneList from './GeneList'
 
+import TreeViewer from 'tree-viewer'
+
+
+
+const url = 'https://gist.githubusercontent.com/keiono/a6509b60401f247ba054dd82011137d9/raw/c395a89cac35559f4b2313fce49bb99dbc18918d/subnet-d3.json'
 
 class Details extends Component {
+
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      subtree: {}
+    };
+  }
+
+
+  componentDidMount() {
+    fetch(url)
+      .then(response => (response.json()))
+      .then(json => {
+        this.setState({subtree: json})
+        console.log('TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SUBT')
+        console.log(json)
+      })
+  }
 
 
   render() {
@@ -38,8 +62,19 @@ class Details extends Component {
     }
 
 
+    const treeStyle = {
+      height: '20em',
+      background: 'red'
+    }
     return (
       <div>
+        <TreeViewer
+          style={{backgrund: 'red'}}
+          width={400}
+          height={400}
+          data={this.state.subtree}
+        />
+
         <SubNetworkView
           subnet={subnet}
           handleClose={this.props.handleClose}
