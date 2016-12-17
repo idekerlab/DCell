@@ -4,8 +4,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import TreeViewer from 'tree-viewer'
 
+const url = 'https://gist.githubusercontent.com/keiono/7ad5071409122c0415ceb41cf35ab8c2/raw/1ef43bc10be4690330ace2a6609a6836d304c791/tree3.json'
 
-const url = 'https://gist.githubusercontent.com/keiono/762b6dc830f247cdc50887e84889c41e/raw/5c7b6eb66a3bf341703e55a6e8fbcc7bd2b52bd3/tree3.json'
 
 class SubTreePanel extends Component {
 
@@ -49,6 +49,12 @@ class SubTreePanel extends Component {
     const w = window.innerWidth
     const h = window.innerHeight * 0.35
 
+
+    const treeStyle = {
+      width: w,
+      height: h
+    }
+
     return (
       <Card style={cardStyle}>
         <CardHeader
@@ -60,8 +66,7 @@ class SubTreePanel extends Component {
           <TreeViewer
             data={this.state.tree}
             label="long_name"
-            width={w}
-            height={h}
+            style={treeStyle}
           />,
 
         <CardActions style={actionStyle}>
