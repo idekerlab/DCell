@@ -95,6 +95,7 @@ export default class NetworkViewer extends Component {
           propertyActions={propertyActions}
 
           network={network}
+          search={search}
         />
 
         <Commands

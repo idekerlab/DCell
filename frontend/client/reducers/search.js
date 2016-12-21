@@ -1,4 +1,4 @@
-import {SEARCH, RECEIVE_SEARCH_RESULT} from '../actions/search'
+import {SEARCH, RECEIVE_SEARCH_RESULT, CLEAR_SEARCH_RESULT} from '../actions/search'
 
 const defaultState = {
   query: null,
@@ -25,6 +25,11 @@ export default function searchState(state = defaultState, action) {
         query: action.query,
         result: action.result
       }
+    case CLEAR_SEARCH_RESULT:
+      console.log('+++++++++++++++ CLEAR SEARCH called @@@ ++++++++++++++')
+      console.log(action)
+
+      return defaultState
     default:
       return state
   }

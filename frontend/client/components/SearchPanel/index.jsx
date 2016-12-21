@@ -6,6 +6,7 @@ import ListIcon from 'material-ui/svg-icons/action/list';
 
 import SearchTab from './search'
 import ListTab from './ListTab'
+import TermSearchPanel from './TermSearchPanel'
 
 
 class SearchPanel extends Component {
@@ -51,6 +52,17 @@ class SearchPanel extends Component {
           value={this.state.selected}
           onChange={this.handleChange}
         >
+          <Tab
+            icon={<SearchIcon/>}
+            value="term"
+          >
+            <TermSearchPanel
+              style={searchStyle}
+              search={this.props.search}
+              searchActions={this.props.searchActions}
+              uiStateActions={this.props.uiStateActions}
+            />
+          </Tab>
           <Tab
             icon={<SearchIcon/>}
             value="search"

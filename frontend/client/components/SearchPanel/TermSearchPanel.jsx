@@ -1,3 +1,7 @@
+/**
+ * Created by kono on 2016/12/20.
+ */
+
 import React, {Component} from 'react'
 
 import * as colors from 'material-ui/styles/colors';
@@ -25,9 +29,27 @@ import GenotypePanel from './GenotypePanel'
 
 import {TransitionMotion, spring, presets} from 'react-motion'
 
+import Avatar from 'material-ui/Avatar';
 
 
-class SearchTab extends Component {
+const GO_NAMESPACE = {
+  'biological_process': {
+    tag: 'BP',
+    color: colors.cyan300
+  },
+  'cellular_component': {
+    tag: 'CC',
+    color: colors.lightGreen300
+  },
+  'molecular_function': {
+    tag: 'MF',
+    color: colors.orange300
+  },
+
+}
+
+
+class TermSearchPanel extends Component {
 
   constructor(props) {
     super(props);
@@ -36,7 +58,7 @@ class SearchTab extends Component {
       query: '',
       loading: false,
       noSearchYet: true,
-      genes: new Set()
+      terms: new Set()
     };
   }
 
@@ -49,18 +71,19 @@ class SearchTab extends Component {
 
   search = () => {
 
+    // Search terms, not genes
+    const options = {
+      index: 'terms',
+      type: 'go_term'
+    }
+
     this.setState({
       loading: true,
       noSearchYet: false
     })
 
     const query = this.state.query
-    console.log("Q = " + query)
-
-    const options = {
-      index: 'terms,genes',
-      type: 'gene,go_term'
-    }
+    console.log("Q2 = " + query)
     this.props.searchActions.searchDatabase(query, options)
   }
 
@@ -71,6 +94,8 @@ class SearchTab extends Component {
       loading: false,
       noSearchYet: true
     });
+
+    this.props.searchActions.clear()
   }
 
   handleChange = event => {
@@ -114,7 +139,6 @@ class SearchTab extends Component {
       hits = searchResult.hits.hits
     }
 
-    const selectedGenes = [...this.state.genes]
 
 
     return (
@@ -123,7 +147,7 @@ class SearchTab extends Component {
           <TextField
             style={{width: '5em', flexGrow: 2}}
             hintText="Keywords, etc."
-            floatingLabelText="Keyword Search"
+            floatingLabelText="Term Search"
             floatingLabelFixed={true}
 
             value={this.state.query}
@@ -147,34 +171,11 @@ class SearchTab extends Component {
 
         {this.getListPanel(hits)}
 
-
-        <GenotypePanel
-          genes={selectedGenes}
-        />
-
-        <div style={actionStyle}>
-          <RaisedButton
-            label="Reset"
-            labelPosition="before"
-          />
-          <RaisedButton
-            label="Run"
-            style={{marginLeft: '0.5em'}}
-            labelPosition="before"
-            icon={<RunIcon />}
-            secondary={true}
-            onClick={this.runSimulation}
-          />
-        </div>
       </div>
     )
 
   }
 
-  runSimulation = () => {
-    console.log("Run!!")
-    this.props.uiStateActions.showResult(true)
-  }
 
   itemSelected = symbol => {
     const genes = this.state.genes
@@ -196,7 +197,7 @@ class SearchTab extends Component {
   getListPanel = hits => {
     const listStyle ={
       overflow: 'scroll',
-      height: '20em',
+      height: '30em',
       background: 'white'
     }
 
@@ -235,26 +236,28 @@ class SearchTab extends Component {
       )
     }
 
+
     return (<List style={listStyle}>
       <Subheader>Search Result</Subheader>
 
       {
         hits.map((hit, i) => {
 
-          const symbol = hit._source.symbol
-          const locusName = hit._source.locus
+          const termId = hit._id
 
           return (
             <ListItem
               key={i}
-              leftCheckbox={
-                <Checkbox
-                  onCheck={() => {this.itemSelected(symbol)}}
-                />
+              primaryText={hit._source.name}
+              secondaryText={termId}
+              leftAvatar={
+                <Avatar
+                  color={colors.white}
+                  backgroundColor={GO_NAMESPACE[hit._source.namespace].color}
+                >
+                  {GO_NAMESPACE[hit._source.namespace].tag}
+                </Avatar>
               }
-              primaryText={symbol + '  (' + locusName + ')'}
-              secondaryText={hit._source.name}
-
             />
           )
         })
@@ -262,7 +265,10 @@ class SearchTab extends Component {
     </List>)
 
   }
+
+
+
 }
 
 
-export default SearchTab
+export default TermSearchPanel
