@@ -110,6 +110,14 @@ class TermSearchPanel extends Component {
     }
   }
 
+  handleItemClick = termId => {
+
+    console.log('Click item!')
+    console.log(termId)
+
+    this.props.commandActions.select({idList: [termId]})
+  }
+
   render() {
 
     const searchUiStyle = {
@@ -258,6 +266,9 @@ class TermSearchPanel extends Component {
                   {GO_NAMESPACE[hit._source.namespace].tag}
                 </Avatar>
               }
+              onClick={ () => {
+                this.handleItemClick(termId)
+              }}
             />
           )
         })

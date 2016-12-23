@@ -24,4 +24,8 @@ export default handleActions({
     command: 'findPath',
     parameters: action.payload
   }),
+  SELECT: (state, action) => ({
+    command: 'select',
+    parameters: action.payload
+  }),
 }, defaultState)

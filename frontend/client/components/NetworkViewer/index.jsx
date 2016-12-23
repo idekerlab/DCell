@@ -107,6 +107,7 @@ export default class NetworkViewer extends Component {
           search={search}
           searchActions={searchActions}
           uiStateActions={uiStateActions}
+          commandActions={commandActions}
         />
 
         <PropertyPanel

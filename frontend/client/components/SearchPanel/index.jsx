@@ -61,6 +61,7 @@ class SearchPanel extends Component {
               search={this.props.search}
               searchActions={this.props.searchActions}
               uiStateActions={this.props.uiStateActions}
+              commandActions={this.props.commandActions}
             />
           </Tab>
           <Tab
