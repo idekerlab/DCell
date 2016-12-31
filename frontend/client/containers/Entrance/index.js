@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
 import * as networkSourceActions from '../../reducers/currentnetwork'
 import * as currentVsActions from '../../reducers/currentvs'
-import * as backgroundColorActions from '../../actions/background-color'
 import * as vsActions from '../../reducers/visualstyles'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 

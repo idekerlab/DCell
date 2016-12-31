@@ -37,3 +37,10 @@ export const fetchNetworkFromUrl = url => {
   }
 }
 
+export const DELETE_NETWORK = 'DELETE_NETWORK'
+const deleteNetwork = url => {
+  return {
+    type: DELETE_NETWORK,
+    url
+  }
+}

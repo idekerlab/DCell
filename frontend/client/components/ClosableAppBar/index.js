@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 
 import MainMenu from '../MainMenu'
-import ShareDialog from '../ShareDialog'
 
 import AppBar from 'material-ui/AppBar'
 import IconButton from 'material-ui/IconButton';
@@ -101,15 +100,6 @@ export default class ClosableAppBar extends Component {
         >
         </AppBar>
 
-        <ShareDialog
-          networkId={networkId}
-          onTouchTap={this.handleShareDialogOpen}
-          open={this.state.shareDialogOpen}
-          currentVs={currentVs}
-          backgroundColor={backgroundColor}
-          datasource={datasource}
-        />
-
         <Drawer
           docked={false}
           open={this.state.open}
@@ -125,8 +115,6 @@ export default class ClosableAppBar extends Component {
             styles={styles}
             currentVsActions={currentVsActions}
             currentVs={currentVs}
-            backgroundColor={backgroundColor}
-            backgroundColorActions={backgroundColorActions}
           />
         </Drawer>
       </div>

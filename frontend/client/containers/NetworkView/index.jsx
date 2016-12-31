@@ -7,14 +7,12 @@ import * as eventActions from '../../actions/cyjs'
 import * as uiStateActions from '../../actions/ui-state'
 import * as vsActions from '../../reducers/visualstyles'
 import * as currentVsActions from '../../reducers/currentvs'
-import * as backgroundColorActions from '../../actions/background-color'
 
 import NetworkViewer from '../../components/NetworkViewer'
 
 import * as propertyActions from '../../actions/property'
 import * as searchActions from '../../actions/search'
 
-// import * as networkActions from '../../reducers/networks'
 import * as networkActions from '../../actions/network'
 
 import {grey50, grey800} from 'material-ui/styles/colors';
@@ -65,7 +63,6 @@ class NetworkView extends Component {
 
 function mapStateToProps(state) {
   return {
-    networks: state.cy_network.networks,
     currentNetwork: state.app_manager.current_network,
     currentProperty: state.app_manager.current_property,
     search: state.app_manager.search,
@@ -74,10 +71,9 @@ function mapStateToProps(state) {
     uiState: state.app_manager.ui_state,
     styles: state.visual_styles,
     currentVs: state.app_manager.current_vs,
-    backgroundColor: state.app_manager.background_color,
     datasource: state.app_manager.datasource,
 
-    network: state.app_manager.network
+    network: state.network
   }
 }
 
@@ -90,7 +86,6 @@ function mapDispatchToProps(dispatch) {
     uiStateActions: bindActionCreators(uiStateActions, dispatch),
     vsActions: bindActionCreators(vsActions, dispatch),
     currentVsActions: bindActionCreators(currentVsActions, dispatch),
-    backgroundColorActions: bindActionCreators(backgroundColorActions, dispatch),
 
     propertyActions: bindActionCreators(propertyActions, dispatch),
     searchActions: bindActionCreators(searchActions, dispatch),
