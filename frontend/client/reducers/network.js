@@ -1,28 +1,18 @@
 import {FETCH_NETWORK, RECEIVE_NETWORK} from '../actions/network'
+import {Map} from 'immutable'
 
-const defaultState = {
-  url: null,
-  network: {}
-}
+const defState = Map({})
 
 
-export default function networkState(state = defaultState, action) {
+export default function networkState(state = defState, action) {
 
   switch (action.type) {
     case FETCH_NETWORK:
-      console.log('+++++++++++++++ Net Fetch 1 ++++++++++++++')
-      return {
-        url: action.url,
-        network: {}
-      }
+      console.log('+++++++++++++++ Net Fetch 2 ++++++++++++++')
+      return state.set('loading', action.url);
     case RECEIVE_NETWORK:
       console.log('+++++++++++++++ Net Fetch finished ++++++++++++++')
-      console.log(action)
-
-      return {
-        url: action.url,
-        network: action.network
-      }
+      return state.set(action.url, action.network)
     default:
       return state
   }

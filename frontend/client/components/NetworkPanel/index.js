@@ -229,20 +229,23 @@ class NetworkPanel extends Component {
       failed = true
     }
 
-    // const network = this.props.networks.get(cyjsUrl)
 
     const networkProp = this.props.network
     console.log(this.props)
     console.log(networkProp)
 
+    const network = networkProp.get(cyjsUrl)
+    console.log(network)
+
+
     if (failed) {
       return this.getError()
-    } else if (networkProp.network.elements !== undefined) {
+    } else if (network !== undefined && network.elements !== undefined) {
 
       return (
         <CyViewer
           key="mainView"
-          network={networkProp.network}
+          network={network}
           networkType={'cyjs'}
           style={networkAreaStyle}
           networkStyle={this.getVisualStyle()}
