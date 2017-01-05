@@ -13,6 +13,7 @@ import search from './search'
 import network from './network'
 
 import ontologies from './ontologies'
+import config from './config'
 
 // Application states
 const app_manager = combineReducers({
@@ -25,7 +26,6 @@ const app_manager = combineReducers({
   ui_state: ui_state,
   datasource: datasource,
   search: search,
-
 })
 
 
@@ -34,6 +34,7 @@ export default combineReducers({
     app_manager,
     visual_styles,
     network,
-    ontologies
+    ontologies,
+    config
   }
 )

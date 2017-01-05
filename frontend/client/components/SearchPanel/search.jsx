@@ -58,7 +58,7 @@ class SearchTab extends Component {
     console.log("Q = " + query)
 
     const options = {
-      index: 'terms,genes',
+      index: 'genes',
       type: 'gene,go_term'
     }
     this.props.searchActions.searchDatabase(query, options)

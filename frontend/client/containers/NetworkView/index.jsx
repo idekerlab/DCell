@@ -8,6 +8,8 @@ import * as uiStateActions from '../../actions/ui-state'
 import * as vsActions from '../../reducers/visualstyles'
 import * as currentVsActions from '../../reducers/currentvs'
 
+import * as currentNetworkActions from '../../reducers/currentnetwork'
+
 import NetworkViewer from '../../components/NetworkViewer'
 
 import * as propertyActions from '../../actions/property'
@@ -73,7 +75,8 @@ function mapStateToProps(state) {
     currentVs: state.app_manager.current_vs,
     datasource: state.app_manager.datasource,
 
-    network: state.network
+    network: state.network,
+    config: state.config
   }
 }
 
@@ -86,6 +89,8 @@ function mapDispatchToProps(dispatch) {
     uiStateActions: bindActionCreators(uiStateActions, dispatch),
     vsActions: bindActionCreators(vsActions, dispatch),
     currentVsActions: bindActionCreators(currentVsActions, dispatch),
+
+    currentNetworkActions: bindActionCreators(currentNetworkActions, dispatch),
 
     propertyActions: bindActionCreators(propertyActions, dispatch),
     searchActions: bindActionCreators(searchActions, dispatch),

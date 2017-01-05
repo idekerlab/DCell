@@ -24,8 +24,16 @@ class GenotypePanel extends Component {
       flexWrap: 'wrap',
     }
 
-    console.log("=======================> render geno")
-    console.log(this.props.genes)
+    const genes = this.props.genes
+
+    if(genes === undefined || genes.length === 0) {
+      return (
+        <div style={style}>
+        </div>
+      )
+    }
+
+
     return (
       <div style={style}>
         <h3>Genotype:</h3>

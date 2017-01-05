@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import TreeViewer from 'tree-viewer'
+import {TreeViewer, DAGViewer} from 'tree-viewer'
 
 const url = 'https://gist.githubusercontent.com/keiono/7ad5071409122c0415ceb41cf35ab8c2/raw/1ef43bc10be4690330ace2a6609a6836d304c791/tree3.json'
 
@@ -29,6 +29,7 @@ class SubTreePanel extends Component {
 
   render() {
 
+    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ SUBTREE rendered!")
     const cardStyle ={
       height: '47%',
       zIndex: '1200',

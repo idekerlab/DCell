@@ -14,11 +14,11 @@ import FlatButton from 'material-ui/FlatButton'
 
 import style from './style.css'
 
-// const cyjsUrl = 'https://gist.githubusercontent.com/keiono/b7c047c1166681ef7170881217819938/raw/b81de1da63075ceb0e4c8d99adeacf83d0193cdb/goWOgenes.cyjs'
+const cyjsUrl = 'https://gist.githubusercontent.com/keiono/b7c047c1166681ef7170881217819938/raw/b81de1da63075ceb0e4c8d99adeacf83d0193cdb/goWOgenes.cyjs'
 // const cyjsUrl = 'https://raw.githubusercontent.com/idekerlab/ontology-data-generators/master/atgo.cyjs'
 // const cyjsUrl = 'https://gist.githubusercontent.com/keiono/004744a332451a472bf85c8beefba9db/raw/0955dddc4a3ea5a0e87423a349e5b2b16ec46fa2/gotree2.cyjs'
 
-const cyjsUrl = 'https://gist.githubusercontent.com/keiono/2b2e289371b7aff1f47d5e2c2a41fc2a/raw/37bb6d2bd1d81072f95721fd83d88ac3774e365c/clixo-final.cyjs'
+// const cyjsUrl = 'https://gist.githubusercontent.com/keiono/2b2e289371b7aff1f47d5e2c2a41fc2a/raw/37bb6d2bd1d81072f95721fd83d88ac3774e365c/clixo-final.cyjs'
 
 
 class NetworkPanel extends Component {
@@ -64,7 +64,8 @@ class NetworkPanel extends Component {
 
   // Initialize
   componentWillMount() {
-    this.props.networkActions.fetchNetworkFromUrl(cyjsUrl)
+    const url = this.props.trees[this.props.currentNetwork.id].url
+    this.props.networkActions.fetchNetworkFromUrl(url)
   }
 
   getError() {
@@ -232,12 +233,10 @@ class NetworkPanel extends Component {
     }
 
 
+    const networkId = this.props.currentNetwork.id
+    const url = this.props.trees[networkId].url
     const networkProp = this.props.network
-    console.log(this.props)
-    console.log(networkProp)
-
-    const network = networkProp.get(cyjsUrl)
-    console.log(network)
+    const network = networkProp.get(url)
 
 
     if (failed) {

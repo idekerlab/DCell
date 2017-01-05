@@ -104,7 +104,9 @@ export default class MainMenu extends Component {
         </div>
 
         <NetworkSelector
-
+          trees={this.props.trees}
+          currentNetwork={this.props.currentNetwork}
+          currentNetworkActions={this.props.currentNetworkActions}
         />
 
         <List>

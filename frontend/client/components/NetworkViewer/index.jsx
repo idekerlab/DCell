@@ -49,7 +49,8 @@ export default class NetworkViewer extends Component {
       events, eventActions, networkId, uiState, uiStateActions,
       styles, currentVs, currentVsActions, backgroundColorActions,
       backgroundColor, vsActions, datasource, currentProperty, propertyActions,
-      searchActions, search, network
+      searchActions, search, network, config
+
     } = this.props
 
     let errorMsg = null
@@ -61,7 +62,8 @@ export default class NetworkViewer extends Component {
 
 
     console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ UI")
-    console.log(uiState)
+    console.log(this.props)
+
     return (
 
       <div style={this.props.style}>
@@ -76,6 +78,9 @@ export default class NetworkViewer extends Component {
           backgroundColorActions={backgroundColorActions}
           backgroundColor={backgroundColor}
           datasource={datasource}
+          trees={config.get('trees').toJS()}
+          currentNetwork={this.props.currentNetwork.toJS()}
+          currentNetworkActions={this.props.currentNetworkActions}
         />
 
         <NetworkPanel
@@ -96,6 +101,9 @@ export default class NetworkViewer extends Component {
 
           network={network}
           search={search}
+
+          trees={config.get('trees').toJS()}
+          currentNetwork={this.props.currentNetwork.toJS()}
         />
 
         <Commands
