@@ -68,6 +68,31 @@ class NetworkPanel extends Component {
     this.props.networkActions.fetchNetworkFromUrl(url)
   }
 
+  componentWillReceiveProps(nextProps) {
+    const nextNet = nextProps.currentNetwork
+    const newUrl = nextProps.trees[nextNet.id].url
+    const network = this.props.network.get(newUrl)
+
+    if(network === undefined || network === null) {
+      if(this.props.loading !== newUrl) {
+        this.props.networkActions.fetchNetworkFromUrl(newUrl)
+      }
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const nextNet = nextProps.currentNetwork
+    const newUrl = nextProps.trees[nextNet.id].url
+    const network = this.props.network.get(newUrl)
+
+
+    if(network === undefined) {
+      return false
+    }
+
+    return true
+  }
+
   getError() {
     return (
       <div className={style.container}>

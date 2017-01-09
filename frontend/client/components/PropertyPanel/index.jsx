@@ -1,9 +1,6 @@
 import React, {Component} from 'react'
-
 import Drawer from 'material-ui/Drawer'
-
 import Details from './Details'
-
 
 
 class PropertyPanel extends Component {

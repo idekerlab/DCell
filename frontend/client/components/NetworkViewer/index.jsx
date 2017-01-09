@@ -84,7 +84,6 @@ export default class NetworkViewer extends Component {
         />
 
         <NetworkPanel
-          networks={networks}
           networkActions={networkActions}
           commands={commands}
           commandActions={commandActions}
