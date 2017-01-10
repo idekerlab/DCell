@@ -1,7 +1,7 @@
 db:
   build: elastic
   volumes:
-    - esdata:/usr/share/elasticsearch/data
+    - clixo:/usr/share/elasticsearch/data
   ports:
     - "9200:9200"
     - "9300:9300"
