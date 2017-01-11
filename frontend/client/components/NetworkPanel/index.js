@@ -41,8 +41,8 @@ class NetworkPanel extends Component {
 
     window.setTimeout(()=>{
       this.props.eventActions.selected(nodeProps[nodeIds[0]])
-      this.props.commandActions.findPath({startId:nodeIds[0], endId: '4022'})
-      this.props.propertyActions.fetchEntry(props.id_original)
+      this.props.commandActions.findPath({startId:nodeIds[0].replace(/\:/, '\\:'), endId: 'GO\\:00SUPER'})
+      this.props.propertyActions.fetchEntry(props.id)
     }, 0)
   }
 
@@ -117,6 +117,56 @@ class NetworkPanel extends Component {
     )
   }
 
+  getVisualStyle2 = () => ({
+    style: [ {
+      "selector" : "node",
+      "css" : {
+        "text-valign" : "center",
+        "text-halign" : "right",
+        "shape" : "ellipse",
+        "color" : "#666666",
+        "background-color" : "blue",
+        "height" : 'mapData(betweenness, 0, 0.00113408, 10, 200)',
+        "width" : 'mapData(betweenness, 0, 0.00113408, 10, 200)',
+        "content" : "data(name)",
+        "min-zoomed-font-size": '0.45em',
+        "font-size" : 'mapData(betweenness, 0, 0.00113408, 7, 400)',
+        "text-opacity" : 0,
+        'text-wrap': 'wrap',
+        'text-max-width': '150px'
+      }
+    }, {
+      "selector" : "node[betweenness > 0.0001]",
+      "css" : {
+        'text-opacity': 1
+      }
+    }, {
+      "selector" : "node:selected",
+      "css" : {
+        "background-color" : "yellow",
+        "width" : 20.0,
+        "height" : 20.0,
+        "font-size" : '2em',
+        "color" : "red",
+        "text-opacity": 1,
+        'text-max-width': '200px'
+      }
+    }, {
+      "selector" : "edge",
+      "css" : {
+        "width" : 3.0,
+        'opacity': 0.3,
+        "line-color" : "rgb(132,132,132)",
+      }
+    }, {
+      "selector" : "edge:selected",
+      "css" : {
+        "line-color" : "red",
+        "width": 10,
+        'opacity': 1
+      }
+    } ]
+  })
 
   getVisualStyle = () => ({
     style: [ {
@@ -127,18 +177,19 @@ class NetworkPanel extends Component {
         "shape" : "ellipse",
         "color" : "#666666",
         "background-color" : "rgb(204,204,204)",
-        "height" : 'mapData(BetweennessCentrality, 0, 0.7, 10, 500)',
-        "width" : 'mapData(BetweennessCentrality, 0, 0.7, 10, 500)',
+        "height" : 'mapData(geneCount, 1, 6000, 7, 150)',
+        "width" : 'mapData(geneCount, 1, 6000, 7, 150)',
+        // "height" : function(ele) {return ((ele.data("geneCount")/100)*2 + 7)},
+        // "width" : function(ele) {return  ((ele.data("geneCount")/100)*2 + 7)},
         "content" : "data(name)",
-        "min-zoomed-font-size": '0.45em',
-        // "font-size" : '0.1em',
-        "font-size" : 'mapData(BetweennessCentrality, 0, 0.7, 7, 400)',
+        "min-zoomed-font-size": '0.8em',
+        "font-size" : 'mapData(geneCount, 1, 6000, 1, 80)',
         "text-opacity" : 0,
         'text-wrap': 'wrap',
-        'text-max-width': '150px'
+        'text-max-width': '180px'
       }
     }, {
-      "selector" : "node[BetweennessCentrality > 0.003]",
+      "selector" : "node[geneCount > 30]",
       "css" : {
         'text-opacity': 1
       }
@@ -175,9 +226,7 @@ class NetworkPanel extends Component {
     }, {
       "selector" : "node[name = 'GO:00SUPER']",
       "css" : {
-        'width': 30,
-        'height': 30,
-        'font-size': 20,
+        'font-size': 30,
         'label': 'ROOT'
       }
     }, {
@@ -187,16 +236,12 @@ class NetworkPanel extends Component {
         "node[name = 'cellular_component']",
       "css" : {
         'font-size': '15em',
-        'width': 100,
-        height: 100
       }
     }, {
       "selector" : "node:selected",
       "css" : {
         "background-color" : "red",
-        "width" : 20.0,
-        "height" : 20.0,
-        "font-size" : '2em',
+        "font-size" : '1.2em',
         "color" : "red",
         "text-opacity": 1,
         'text-max-width': '200px'
@@ -268,13 +313,20 @@ class NetworkPanel extends Component {
       return this.getError()
     } else if (network !== undefined && network.elements !== undefined) {
 
+      const curNet = this.props.currentNetwork.id
+      let style = this.getVisualStyle()
+
+      if(curNet === 'clixo') {
+        style = this.getVisualStyle2()
+      }
+
       return (
         <CyViewer
           key="mainView"
           network={network}
           networkType={'cyjs'}
           style={networkAreaStyle}
-          networkStyle={this.getVisualStyle()}
+          networkStyle={style}
           eventHandlers={this.getCustomEventHandlers()}
           command={commands}
         />

@@ -9,11 +9,11 @@
   "trees": {
     "go": {
       "name": "Merged GO",
-      "url": "https://gist.githubusercontent.com/keiono/b7c047c1166681ef7170881217819938/raw/b81de1da63075ceb0e4c8d99adeacf83d0193cdb/goWOgenes.cyjs"
+      "url": "https://gist.githubusercontent.com/keiono/86c18eeb7ba8c9c396e68dc5532c9786/raw/110a5b4cf72de8941122a544091dd4acce824dac/go-compact.json"
     },
     "clixo": {
       "name": "CLIXO",
-      "url": "https://gist.githubusercontent.com/keiono/2b2e289371b7aff1f47d5e2c2a41fc2a/raw/37bb6d2bd1d81072f95721fd83d88ac3774e365c/clixo-final.cyjs"
+      "url": "https://gist.githubusercontent.com/keiono/9b73f6f373ca06d8488e05706dbd42cc/raw/1e31c90766c0588ae883c8c9541baae6e213e91c/clixo-compact.json"
     }
   }
 }

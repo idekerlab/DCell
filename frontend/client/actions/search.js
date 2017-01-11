@@ -2,7 +2,7 @@ import {Client} from 'elasticsearch'
 
 const client = new Client({
   host: 'localhost:9200',
-  log: 'trace'
+  log: 'info'
 });
 
 const DEF_OPTIONS = {
@@ -23,9 +23,6 @@ const search = (query, options) => {
 
 export const RECEIVE_SEARCH_RESULT = 'RECEIVE_SEARCH_RESULT'
 const receiveSearchResult = (query, json, options) => {
-
-  console.log("*** Search Result ***")
-  console.log(json)
 
   return {
     type: RECEIVE_SEARCH_RESULT,
