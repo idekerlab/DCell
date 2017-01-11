@@ -1,7 +1,13 @@
-db:
-  build: elastic
-  volumes:
-    - clixo:/usr/share/elasticsearch/data
-  ports:
-    - "9200:9200"
-    - "9300:9300"
+version: '2'
+services:
+  elasticsearch:
+    build: ./elastic
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - deep-cell:/usr/share/elasticsearch/data
+
+volumes:
+  deep-cell:
+    driver: local

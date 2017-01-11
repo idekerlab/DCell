@@ -177,21 +177,20 @@ class NetworkPanel extends Component {
         "shape" : "ellipse",
         "color" : "#666666",
         "background-color" : "rgb(204,204,204)",
-        "height" : 'mapData(geneCount, 1, 6000, 7, 150)',
-        "width" : 'mapData(geneCount, 1, 6000, 7, 150)',
-        // "height" : function(ele) {return ((ele.data("geneCount")/100)*2 + 7)},
-        // "width" : function(ele) {return  ((ele.data("geneCount")/100)*2 + 7)},
+        "height" : 'mapData(geneCount, 1, 6000, 7, 160)',
+        "width" : 'mapData(geneCount, 1, 6000, 7, 160)',
         "content" : "data(name)",
-        "min-zoomed-font-size": '0.8em',
-        "font-size" : 'mapData(geneCount, 1, 6000, 1, 80)',
+        "min-zoomed-font-size": '0.5em',
+        "font-size" : 'mapData(geneCount, 1, 6000, 1, 70)',
         "text-opacity" : 0,
         'text-wrap': 'wrap',
-        'text-max-width': '180px'
+        'text-max-width': '120px',
+        'z-index': 1
       }
     }, {
       "selector" : "node[geneCount > 30]",
       "css" : {
-        'text-opacity': 1
+        'text-opacity': 0.4
       }
     }, {
       "selector" : "node[namespace = 'biological_process']",
@@ -244,13 +243,14 @@ class NetworkPanel extends Component {
         "font-size" : '1.2em',
         "color" : "red",
         "text-opacity": 1,
-        'text-max-width': '200px'
+        'text-max-width': '200px',
+        'z-index': 999
       }
     }, {
       "selector" : "edge",
       "css" : {
-        "width" : 3.0,
-        'opacity': 0.3,
+        "width" : 1.0,
+        'opacity': 0.2,
         "line-color" : "rgb(132,132,132)",
       }
     }, {
