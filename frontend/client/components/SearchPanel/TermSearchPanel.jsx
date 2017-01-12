@@ -1,8 +1,5 @@
-/**
- * Created by kono on 2016/12/20.
- */
-
 import React, {Component} from 'react'
+import Immutable, {Set} from 'immutable'
 
 import * as colors from 'material-ui/styles/colors';
 
@@ -11,10 +8,6 @@ import {List, ListItem} from 'material-ui/List';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import ClearIcon from 'material-ui/svg-icons/content/clear';
 import RaisedButton from 'material-ui/RaisedButton';
-import RunIcon from 'material-ui/svg-icons/av/play-arrow';
-
-import FlatButton from 'material-ui/FlatButton';
-
 
 
 import Subheader from 'material-ui/Subheader';
@@ -58,13 +51,21 @@ class TermSearchPanel extends Component {
       query: '',
       loading: false,
       noSearchYet: true,
-      terms: new Set()
+      idSet: Set()
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.search.result !== null) {
       this.setState({loading: false})
+      const searchResult = nextProps.search.result
+      let hits = []
+      if(searchResult !== null) {
+        hits = searchResult.hits.hits
+
+        console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^WILL called")
+        this.selectTerms(hits)
+      }
     }
   }
 
@@ -115,7 +116,33 @@ class TermSearchPanel extends Component {
     console.log('Click item!')
     console.log(termId)
 
-    this.props.commandActions.select({idList: [termId]})
+    this.props.commandActions.focus({idList: [termId]})
+  }
+
+
+  selectTerms = hits => {
+    const searchResult = this.props.search.result
+    const selectedTerms = hits.map(hit => (hit._id))
+
+    if(searchResult === undefined || searchResult === null) {
+      console.log('***************************************************************************************** first SELECT')
+      this.props.commandActions.select({idList: selectedTerms})
+      return
+    } else {
+      console.log('***************************************************************************************** 2+ SELECT')
+
+    }
+
+
+    // if(!Immutable.is(currentSet, newSet)) {
+    //   console.log('***************************************************************************************** 33SELECT')
+    //   console.log(newSet)
+    //   console.log(currentSet)
+    //   // this.props.commandActions.select({idList: selectedTerms})
+    // } else {
+    //   console.log('***************************************************************************************** NO SELECT')
+    // }
+
   }
 
   render() {
@@ -146,8 +173,6 @@ class TermSearchPanel extends Component {
     if(searchResult !== null) {
       hits = searchResult.hits.hits
     }
-
-
 
     return (
       <div style={this.props.style}>

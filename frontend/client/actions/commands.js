@@ -7,6 +7,7 @@ export const RESET = 'RESET'
 
 export const FIND_PATH = 'FIND_PATH'
 export const SELECT = 'SELECT'
+export const FOCUS = 'FOCUS'
 
 
 export const fit = createAction(FIT_NETWORK)
@@ -15,3 +16,4 @@ export const zoomOut = createAction(ZOOM_OUT_NETWORK)
 export const reset = createAction(RESET)
 export const findPath = createAction(FIND_PATH)
 export const select = createAction(SELECT)
+export const focus = createAction(FOCUS)

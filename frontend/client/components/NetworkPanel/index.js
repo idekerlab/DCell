@@ -240,11 +240,14 @@ class NetworkPanel extends Component {
       "selector" : "node:selected",
       "css" : {
         "background-color" : "red",
-        "font-size" : '1.2em',
+        "font-size" : '2em',
         "color" : "red",
-        "text-opacity": 1,
-        'text-max-width': '200px',
-        'z-index': 999
+        "text-opacity": 0.7,
+        'text-max-width': '400px',
+        'z-index': 109,
+        "min-zoomed-font-size": 0,
+        width: 25,
+        height: 25
       }
     }, {
       "selector" : "edge",
@@ -274,6 +277,27 @@ class NetworkPanel extends Component {
         "line-color" : "red",
         "width": 10,
         'opacity': 1
+      }
+    }, {
+      "selector" : ".focused",
+      "css" : {
+        "background-color" : "teal",
+        "font-size" : '4em',
+        "color" : "teal",
+        "text-opacity": 1,
+        'text-max-width': '500px',
+        'z-index': 999,
+        "min-zoomed-font-size": 0,
+        width: 50,
+        height: 50
+      }
+    }, {
+      "selector" : ".faded",
+      "css" : {
+        "background-color" : "black",
+        "line-color" : "black",
+        color: "black",
+        opacity: 0.2
       }
     } ]
   })

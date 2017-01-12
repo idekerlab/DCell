@@ -52,7 +52,7 @@ const sendQuery = (query, options) => {
   return client.search({
     index: opt.index,
     type: opt.type,
-    size: 100,
+    size: 20,
     body: {
       query: {
         match: {

@@ -28,4 +28,8 @@ export default handleActions({
     command: 'select',
     parameters: action.payload
   }),
+  FOCUS: (state, action) => ({
+    command: 'focus',
+    parameters: action.payload
+  }),
 }, defaultState)
