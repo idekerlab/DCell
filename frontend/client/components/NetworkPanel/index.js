@@ -181,14 +181,14 @@ class NetworkPanel extends Component {
         "width" : 'mapData(geneCount, 1, 6000, 7, 160)',
         "content" : "data(name)",
         "min-zoomed-font-size": '0.5em',
-        "font-size" : 'mapData(geneCount, 1, 6000, 1, 70)',
+        "font-size" : 'mapData(geneCount, 1, 6000, 1, 50)',
         "text-opacity" : 0,
         'text-wrap': 'wrap',
         'text-max-width': '120px',
         'z-index': 1
       }
     }, {
-      "selector" : "node[geneCount > 30]",
+      "selector" : "node[geneCount > 5]",
       "css" : {
         'text-opacity': 0.4
       }
