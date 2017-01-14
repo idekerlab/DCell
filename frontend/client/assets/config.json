@@ -3,17 +3,27 @@
   "database": {
   },
 
-  "defaultNetwork": "go",
+  "defaultNetwork": "clixo",
 
 
   "trees": {
     "go": {
       "name": "Merged GO",
+      "rootNode": "GO:00SUPER",
+      "searchOptions": {
+        "index": "terms",
+        "type": "go_term"
+      },
       "url": "https://gist.githubusercontent.com/keiono/86c18eeb7ba8c9c396e68dc5532c9786/raw/110a5b4cf72de8941122a544091dd4acce824dac/go-compact.json"
     },
     "clixo": {
       "name": "CLIXO",
-      "url": "https://gist.githubusercontent.com/keiono/9b73f6f373ca06d8488e05706dbd42cc/raw/1e31c90766c0588ae883c8c9541baae6e213e91c/clixo-compact.json"
+      "rootNode": "CLIXO:10706",
+      "searchOptions": {
+        "index": "terms",
+        "type": "clixo_term"
+      },
+      "url": "https://gist.githubusercontent.com/keiono/56c01be02e68ebc5a343554ee96998dd/raw/bed17e89cdacd1f53ca7d9ae5f2e5506238de094/clixo-compact.json"
     }
   }
 }

@@ -72,11 +72,7 @@ class TermSearchPanel extends Component {
 
   search = () => {
 
-    // Search terms, not genes
-    const options = {
-      index: 'terms',
-      type: 'go_term'
-    }
+    const options = this.props.trees[this.props.currentNetwork.id].searchOptions
 
     this.setState({
       loading: true,
@@ -277,6 +273,7 @@ class TermSearchPanel extends Component {
         hits.map((hit, i) => {
 
           const termId = hit._id
+          const avatarInfo = this.getAvatarInfo(hit._source.namespace)
 
           return (
             <ListItem
@@ -286,9 +283,9 @@ class TermSearchPanel extends Component {
               leftAvatar={
                 <Avatar
                   color={colors.white}
-                  backgroundColor={GO_NAMESPACE[hit._source.namespace].color}
+                  backgroundColor={avatarInfo.color}
                 >
-                  {GO_NAMESPACE[hit._source.namespace].tag}
+                  {avatarInfo.tag}
                 </Avatar>
               }
               onClick={ () => {
@@ -300,6 +297,19 @@ class TermSearchPanel extends Component {
       }
     </List>)
 
+  }
+
+  getAvatarInfo = namespace => {
+
+    const entry = GO_NAMESPACE[namespace]
+    if(entry === undefined || entry === null) {
+      return {
+        tag: 'CX',
+        color: 'teal'
+      }
+    } else {
+      return entry
+    }
   }
 
 

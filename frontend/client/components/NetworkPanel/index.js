@@ -40,8 +40,10 @@ class NetworkPanel extends Component {
     console.log(props)
 
     window.setTimeout(()=>{
+      const root = this.props.trees[this.props.currentNetwork.id].rootNode
+
       this.props.eventActions.selected(nodeProps[nodeIds[0]])
-      this.props.commandActions.findPath({startId:nodeIds[0].replace(/\:/, '\\:'), endId: 'GO\\:00SUPER'})
+      this.props.commandActions.findPath({startId:nodeIds[0].replace(/\:/, '\\:'), endId: root.replace(/\:/, '\\:')})
       this.props.propertyActions.fetchEntry(props.id)
     }, 0)
   }
@@ -124,39 +126,36 @@ class NetworkPanel extends Component {
         "text-valign" : "center",
         "text-halign" : "right",
         "shape" : "ellipse",
-        "color" : "#666666",
-        "background-color" : "blue",
-        "height" : 'mapData(betweenness, 0, 0.00113408, 10, 200)',
-        "width" : 'mapData(betweenness, 0, 0.00113408, 10, 200)',
+        "color" : "#555555",
+        "background-color" : "teal",
+        "height" : 'mapData(geneCount, 0, 6000, 10, 400)',
+        "width" : 'mapData(geneCount, 0, 6000, 10, 400)',
         "content" : "data(name)",
-        "min-zoomed-font-size": '0.45em',
-        "font-size" : 'mapData(betweenness, 0, 0.00113408, 7, 400)',
-        "text-opacity" : 0,
+        "min-zoomed-font-size": '0.3em',
+        "font-size" : 'mapData(geneCount, 0, 6000, 8, 400)',
+        "text-opacity" : 1,
         'text-wrap': 'wrap',
-        'text-max-width': '150px'
-      }
-    }, {
-      "selector" : "node[betweenness > 0.0001]",
-      "css" : {
-        'text-opacity': 1
+        'text-max-width': '180px'
       }
     }, {
       "selector" : "node:selected",
       "css" : {
-        "background-color" : "yellow",
-        "width" : 20.0,
-        "height" : 20.0,
-        "font-size" : '2em',
+        "background-color" : "red",
+        "font-size" : '3em',
         "color" : "red",
-        "text-opacity": 1,
-        'text-max-width': '200px'
+        "text-opacity": 0.7,
+        'text-max-width': '400px',
+        'z-index': 109,
+        "min-zoomed-font-size": 0,
+        width: 25,
+        height: 25
       }
     }, {
       "selector" : "edge",
       "css" : {
-        "width" : 3.0,
-        'opacity': 0.3,
-        "line-color" : "rgb(132,132,132)",
+        "width" : 4.0,
+        'opacity': 0.4,
+        "line-color" : "#555555",
       }
     }, {
       "selector" : "edge:selected",
