@@ -8,10 +8,11 @@ const client = new Client({
 
 
 export const FETCH_PROPERTY = 'FETCH_PROPERTY'
-const fetchProperty = id => {
+const fetchProperty = (id, options) => {
   return {
     type: FETCH_PROPERTY,
-    id
+    id,
+    options
   }
 }
 
@@ -29,20 +30,18 @@ const receiveProperty = (id, json) => {
   }
 }
 
-const fetchProp = id => {
-  return client.get({
-    index: 'terms',
-    type: 'go_term',
-    id: id
-  })
+const fetchProp = (id, options) => {
+
+  options.id = id
+  return client.get(options)
 }
 
-export const fetchEntry = id => {
+export const fetchEntry = (id, options) => {
 
   return dispatch => {
-    dispatch(fetchProperty(id))
+    dispatch(fetchProperty(id, options))
 
-    return fetchProp(id)
+    return fetchProp(id, options)
       .then(json =>
         dispatch(receiveProperty(id, json))
       )

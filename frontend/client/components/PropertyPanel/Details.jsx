@@ -6,13 +6,13 @@ import Divider from 'material-ui/Divider';
 import TitleBar from './TitleBar'
 
 import SubNetworkView from './SubNetworkView'
+import RawInteractionPanel from './RawInteractionPanel'
+
 import GeneList from './GeneList'
 
 import TreeViewer from 'tree-viewer'
 
 
-
-const url = 'https://gist.githubusercontent.com/keiono/a6509b60401f247ba054dd82011137d9/raw/c395a89cac35559f4b2313fce49bb99dbc18918d/subnet-d3.json'
 
 class Details extends Component {
 
@@ -26,13 +26,6 @@ class Details extends Component {
 
 
   componentDidMount() {
-    fetch(url)
-      .then(response => (response.json()))
-      .then(json => {
-        this.setState({subtree: json})
-        console.log('TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SUBT')
-        console.log(json)
-      })
   }
 
 
@@ -51,7 +44,7 @@ class Details extends Component {
     }
 
     const genes = entry === {} ? [] : entry.genes
-    const subnet = this.buildNetwork(details.id, data)
+    const subnet = this.buildNetwork(entry.genes, entry.interactions)
 
     console.log(subnet)
 
@@ -68,7 +61,7 @@ class Details extends Component {
     }
     return (
       <div>
-        <SubNetworkView
+        <RawInteractionPanel
           subnet={subnet}
           handleClose={this.props.handleClose}
         />
@@ -104,7 +97,7 @@ class Details extends Component {
     )
   }
 
-  buildNetwork = (root, details) => {
+  buildNetwork = (genes, interactions) => {
 
 
     console.log('------------------------- building Tree')
@@ -118,59 +111,64 @@ class Details extends Component {
       }
     }
 
-    if(root=== undefined || root === null) {
+    if(interactions === undefined || genes === undefined) {
       return network
     }
 
-    const rootNode = {
-      data: {
-        id: root,
-        name: root
-      }
-    }
+    const nodes = []
 
-    network.elements.nodes.push(rootNode)
+    const ids = new Set()
 
-    if(details === undefined || details === null || details === {}) {
-      return network
-    }
-
-    let children = details.children
-    if(children === undefined) {
-      children = []
-    }
-
-    let parents = details.parents
-    if(parents === undefined) {
-      parents = []
-    }
-
-    children.map((val, i) => {
-      const node = this.getNode(val)
-      const edge = this.getEdge(root, val.id)
-
-      console.log("Adding %%%%%%%%%%%%" + val.id)
-      network.elements.nodes.push(node)
-      network.elements.edges.push(edge)
+    genes.map(gene => {
+      ids.add(gene.sgdid)
+      nodes.push(this.getNode(gene.sgdid, gene.symbol))
     })
+
+
+    const edges = []
+
+    interactions.map(row => {
+      const source = row.source
+      const target = row.target
+
+      if(!ids.has(source)) {
+        nodes.push(this.getNode(source, source))
+      }
+
+      if(!ids.has(target)) {
+        nodes.push(this.getNode(target, target))
+      }
+
+      const score = row.score
+      const type = row.interaction
+
+      const edge = this.getEdge(source, target, score, type)
+      edges.push(edge)
+
+    })
+
+    network.elements.nodes = nodes
+    network.elements.edges = edges
 
     return network
   }
 
-  getNode = val => {
+  getNode = (sgd, symbol) => {
     return {
       data: {
-        id: val.id,
-        name: val.name
+        id: sgd,
+        name: symbol
       }
     }
   }
 
-  getEdge = (source, target) => {
+  getEdge = (source, target, score, type) => {
     return {
       data: {
         source: source,
-        target: target
+        target: target,
+        score: score,
+        type: type
       }
     }
   }
