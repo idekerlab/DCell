@@ -78,13 +78,13 @@ class RawInteractionPanel extends Component {
     style: [ {
       "selector" : "node",
       "css" : {
-        "width" : 50.0,
+        "width" : 30.0,
         "text-valign" : "center",
         "text-halign" : "right",
         "shape" : "ellipse",
-        "color" : "#666666",
+        "color" : "#FFFFFF",
         "background-color" : "#FFFFFF",
-        "height" : 50.0,
+        "height" : 30.0,
         "font-size" : '2em',
         "content" : "data(name)",
         "min-zoomed-font-size": '0.2em',
@@ -100,7 +100,7 @@ class RawInteractionPanel extends Component {
       "selector" : "edge",
       "css" : {
         "width" : 4,
-        "line-color" : "green",
+        "line-color" : "mapData(score, 0.5, 5, #FFFFFF, #00FF00)",
       }
     }, {
       "selector" : "edge:selected",
