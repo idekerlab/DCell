@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+service Request {
+  rpc ProcessTerms (TermRequest) returns (TermReply) {}
+}
+
+message TermRequest {
+  repeated string terms = 2;
+  string ontology_type = 1;
+  bool use_growth_data = 3;
+}
+
+message TermReply {
+  bool directed = 1;
+  bool multigraph = 2;
+  repeated Node nodes = 3;
+  repeated Edge edges = 4;
+}
+
+message Node {
+  string termId = 1;
+  double importance = 2;
+  double phenotype = 3;
+}
+
+message Edge {
+  string sourceTerm = 1;
+  string targetTerm = 2;
+}

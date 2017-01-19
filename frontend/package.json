@@ -52,6 +52,8 @@
   "dependencies": {
     "cy-viewer": "^2.0.0",
     "cytoscape": "^2.7.11",
+    "d3-scale": "^1.0.4",
+    "d3-scale-chromatic": "^1.1.0",
     "immutable": "^3.8.1",
     "import": "0.0.6",
     "material-ui": "^0.16.2",

@@ -63,6 +63,7 @@ class Details extends Component {
       <div>
         <RawInteractionPanel
           subnet={subnet}
+          selectedTerm={this.props.currentProperty._id}
           handleClose={this.props.handleClose}
         />
 
@@ -168,7 +169,7 @@ class Details extends Component {
         source: source,
         target: target,
         score: score,
-        type: type
+        interaction: type
       }
     }
   }
