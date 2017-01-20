@@ -1,9 +1,6 @@
 import React, {Component} from 'react'
 import {browserHistory} from 'react-router'
 
-
-import * as colors from 'material-ui/styles/colors';
-
 import CyViewer from 'cy-viewer'
 
 import Loading from '../Loading'
@@ -13,12 +10,6 @@ import BackIcon from 'material-ui/svg-icons/navigation/arrow-back'
 import FlatButton from 'material-ui/FlatButton'
 
 import style from './style.css'
-
-const cyjsUrl = 'https://gist.githubusercontent.com/keiono/b7c047c1166681ef7170881217819938/raw/b81de1da63075ceb0e4c8d99adeacf83d0193cdb/goWOgenes.cyjs'
-// const cyjsUrl = 'https://raw.githubusercontent.com/idekerlab/ontology-data-generators/master/atgo.cyjs'
-// const cyjsUrl = 'https://gist.githubusercontent.com/keiono/004744a332451a472bf85c8beefba9db/raw/0955dddc4a3ea5a0e87423a349e5b2b16ec46fa2/gotree2.cyjs'
-
-// const cyjsUrl = 'https://gist.githubusercontent.com/keiono/2b2e289371b7aff1f47d5e2c2a41fc2a/raw/37bb6d2bd1d81072f95721fd83d88ac3774e365c/clixo-final.cyjs'
 
 
 class NetworkPanel extends Component {
@@ -36,8 +27,6 @@ class NetworkPanel extends Component {
     const props = nodeProps[node]
 
     console.log('====== Custom node select function called! ========');
-    console.log('Selected Node ID: ' + node)
-    console.log(props)
 
     window.setTimeout(()=>{
       const root = this.props.trees[this.props.currentNetwork.id].rootNode
@@ -78,19 +67,39 @@ class NetworkPanel extends Component {
     const network = this.props.network.get(newUrl)
 
     if(network === undefined || network === null) {
-      if(this.props.loading !== newUrl) {
+
+      // Need to fetch network data
+      if(nextNet.id !== this.props.currentNetwork.id) {
         this.props.networkActions.fetchNetworkFromUrl(newUrl)
       }
     }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const nextNet = nextProps.currentNetwork
-    const newUrl = nextProps.trees[nextNet.id].url
-    const network = this.props.network.get(newUrl)
 
+    console.log("********* State checking=======================================================================================")
+    console.log(this.props)
+    console.log(nextProps)
+
+    const curNet = this.props.currentNetwork
+    const nextNet = nextProps.currentNetwork
+
+    const curNetId = curNet.id
+    const nextNetId = nextNet.id
+
+    if(curNetId === nextNetId && nextProps.network.get('loading') === this.props.network.get('loading')) {
+
+
+
+      console.log("same main network: " + curNetId + '############################################################################################')
+      return false
+    }
+
+    const newUrl = nextProps.trees[nextNetId].url
+    const network = nextProps.network.get(newUrl)
 
     if(network === undefined) {
+      console.log("2UNDEF NET--------------------")
       return false
     }
 
@@ -176,22 +185,17 @@ class NetworkPanel extends Component {
         "text-valign" : "center",
         "text-halign" : "right",
         "shape" : "ellipse",
-        "color" : "#666666",
+        "color" : "#555555",
         "background-color" : "rgb(204,204,204)",
-        "height" : 'mapData(geneCount, 1, 6000, 7, 160)',
-        "width" : 'mapData(geneCount, 1, 6000, 7, 160)',
+        "height" : 'mapData(geneCount, 1, 6000, 30, 400)',
+        "width" : 'mapData(geneCount, 1, 6000, 30, 400)',
         "content" : "data(name)",
-        "min-zoomed-font-size": '0.5em',
-        "font-size" : 'mapData(geneCount, 1, 6000, 1, 50)',
-        "text-opacity" : 0,
+        "min-zoomed-font-size": '1em',
+        "font-size" : 'mapData(geneCount, 1, 6000, 6, 100)',
+        "text-opacity" : 1,
         'text-wrap': 'wrap',
-        'text-max-width': '120px',
+        // 'text-max-width': '120px',
         'z-index': 1
-      }
-    }, {
-      "selector" : "node[geneCount > 5]",
-      "css" : {
-        'text-opacity': 0.4
       }
     }, {
       "selector" : "node[namespace = 'biological_process']",
@@ -211,23 +215,26 @@ class NetworkPanel extends Component {
     }, {
       "selector" : "node[name = 'biological_process']",
       "css" : {
-        "color" : "rgb(0,153,204)"
+        "color" : "rgb(0,153,204)",
+        "label": "Biological Process"
       }
     }, {
       "selector" : "node[name = 'cellular_component']",
       "css" : {
-        "color" : "rgb(255,102,0)"
+        "color" : "rgb(255,102,0)",
+        "label": "Cellular Component"
       }
     }, {
       "selector" : "node[name = 'molecular_function']",
       "css" : {
-        "color" : "rgb(0,204,153)"
+        "color" : "rgb(0,204,153)",
+        "label": "Molecular Function"
       }
     }, {
       "selector" : "node[name = 'GO:00SUPER']",
       "css" : {
-        'font-size': 30,
-        'label': 'ROOT'
+        'font-size': '20em',
+        'label': 'GO Root'
       }
     }, {
       "selector" :
@@ -235,7 +242,7 @@ class NetworkPanel extends Component {
         "node[name = 'molecular_function'], " +
         "node[name = 'cellular_component']",
       "css" : {
-        'font-size': '15em',
+        'font-size': '55em',
       }
     }, {
       "selector" : "node:selected",
@@ -253,8 +260,8 @@ class NetworkPanel extends Component {
     }, {
       "selector" : "edge",
       "css" : {
-        "width" : 1.0,
-        'opacity': 0.2,
+        "width" : 25.0,
+        'opacity': 0.5,
         "line-color" : "rgb(132,132,132)",
       }
     }, {
@@ -305,6 +312,18 @@ class NetworkPanel extends Component {
 
 
   render() {
+    console.log('**** MAIN VIEW ============================================================== Custom node select function called! ========');
+
+    const loading = this.props.network.get('loading')
+    if(loading) {
+      return (
+        <Loading />
+      )
+    }
+
+
+
+
     const {
       commands
     } = this.props

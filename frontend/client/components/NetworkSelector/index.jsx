@@ -14,10 +14,6 @@ class NetworkSelector extends Component {
   }
 
   render() {
-
-    console.log('SELECTOR TREE')
-    console.log(this.props)
-
     const networkMap = this.props.trees
     const ids = Object.keys(networkMap)
 

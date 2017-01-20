@@ -89,12 +89,6 @@ export default class NetworkViewer extends Component {
           commandActions={commandActions}
           events={events}
           eventActions={eventActions}
-          networkId={networkId}
-          styles={styles}
-          currentVs={currentVs}
-          currentVsActions={currentVsActions}
-          backgroundColor={backgroundColor}
-          vsActions={vsActions}
           currentProperty={currentProperty}
           propertyActions={propertyActions}
 
@@ -110,17 +104,18 @@ export default class NetworkViewer extends Component {
           uiState={uiState}
         />
 
-        <SearchPanel
-          search={search}
-          searchActions={searchActions}
-          uiStateActions={uiStateActions}
-          commandActions={commandActions}
+        {/*<SearchPanel*/}
+          {/*search={search}*/}
+          {/*searchActions={searchActions}*/}
+          {/*uiStateActions={uiStateActions}*/}
+          {/*commandActions={commandActions}*/}
 
-          trees={config.get('trees').toJS()}
-          currentNetwork={this.props.currentNetwork.toJS()}
-        />
+          {/*trees={config.get('trees').toJS()}*/}
+          {/*currentNetwork={this.props.currentNetwork.toJS()}*/}
+        {/*/>*/}
 
         <PropertyPanel
+          commandActions={commandActions}
           events={events}
           currentProperty={currentProperty}
         />

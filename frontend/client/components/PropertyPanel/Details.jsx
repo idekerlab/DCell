@@ -10,6 +10,8 @@ import RawInteractionPanel from './RawInteractionPanel'
 
 import GeneList from './GeneList'
 
+import Immutable from 'immutable'
+
 import TreeViewer from 'tree-viewer'
 
 
@@ -62,9 +64,11 @@ class Details extends Component {
     return (
       <div>
         <RawInteractionPanel
-          subnet={subnet}
-          selectedTerm={this.props.currentProperty._id}
+          subnet={Immutable.fromJS(subnet)}
+          selectedTerm={this.props.currentProperty.id}
           handleClose={this.props.handleClose}
+          commandActions={this.props.commandActions}
+          loading={this.props.currentProperty.loading}
         />
 
         <TitleBar
@@ -122,7 +126,7 @@ class Details extends Component {
 
     genes.map(gene => {
       ids.add(gene.sgdid)
-      nodes.push(this.getNode(gene.sgdid, gene.symbol))
+      nodes.push(this.getNode(gene.sgdid, gene.symbol, gene.name))
     })
 
 
@@ -132,13 +136,13 @@ class Details extends Component {
       const source = row.source
       const target = row.target
 
-      if(!ids.has(source)) {
-        nodes.push(this.getNode(source, source))
-      }
-
-      if(!ids.has(target)) {
-        nodes.push(this.getNode(target, target))
-      }
+      // if(!ids.has(source)) {
+      //   nodes.push(this.getNode(source, source))
+      // }
+      //
+      // if(!ids.has(target)) {
+      //   nodes.push(this.getNode(target, target))
+      // }
 
       const score = row.score
       const type = row.interaction
@@ -154,11 +158,12 @@ class Details extends Component {
     return network
   }
 
-  getNode = (sgd, symbol) => {
+  getNode = (sgd, symbol, name) => {
     return {
       data: {
         id: sgd,
-        name: symbol
+        name: symbol,
+        fullName: name
       }
     }
   }
