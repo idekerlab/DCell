@@ -115,6 +115,7 @@ export default class NetworkViewer extends Component {
         {/*/>*/}
 
         <PropertyPanel
+          commands={commands}
           commandActions={commandActions}
           events={events}
           currentProperty={currentProperty}

@@ -10,9 +10,6 @@ const fetchNetwork = url => {
 export const RECEIVE_NETWORK = 'RECEIVE_NETWORK'
 const receiveNetwork = (url, json) => {
 
-  console.log("*** Network Fetch Result ***")
-  console.log(json)
-
   return {
     type: RECEIVE_NETWORK,
     url,

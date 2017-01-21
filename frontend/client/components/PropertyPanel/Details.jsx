@@ -14,6 +14,13 @@ import Immutable from 'immutable'
 
 import TreeViewer from 'tree-viewer'
 
+import FilterPanel from './FilterPanel'
+
+
+import * as d3Scale from 'd3-scale'
+import * as d3ScaleChromatic from 'd3-scale-chromatic'
+
+const colorFunction = d3Scale.scaleOrdinal(d3ScaleChromatic.schemeDark2)
 
 
 class Details extends Component {
@@ -22,7 +29,9 @@ class Details extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      subtree: {}
+      subtree: {},
+      scoreFilter: 1.0,
+      subnet: {}
     };
   }
 
@@ -30,29 +39,43 @@ class Details extends Component {
   componentDidMount() {
   }
 
+  setScore = (val) => {
+    this.setState({scoreFilter: val})
+    console.log('New Score: ' + val)
+
+    this.props.commandActions.filter({options: {
+      type: 'numeric',
+      range: 'edge[score > ' + val + ']'
+    }})
+  }
+
 
   render() {
     console.log("%%%%%%%%%%%%%%%% Rendering Details Panel")
+
+    console.log(this.props)
 
     const details = this.props.currentProperty
     const data = details.data._source
 
     let entry = {}
 
+    let subnet = null
+
     if(data === undefined) {
       entry = {}
     } else {
       entry = data
+      subnet = this.buildNetwork(entry.genes, entry.interactions)
+      subnet = Immutable.fromJS(subnet)
     }
 
     const genes = entry === {} ? [] : entry.genes
-    const subnet = this.buildNetwork(entry.genes, entry.interactions)
 
-    console.log(subnet)
 
 
     const descriptionStyle = {
-      background: '#F2F2F2',
+      background: '#BEBEB4',
       padding: '1em'
     }
 
@@ -63,12 +86,21 @@ class Details extends Component {
     }
     return (
       <div>
+
         <RawInteractionPanel
-          subnet={Immutable.fromJS(subnet)}
+          subnet={subnet}
           selectedTerm={this.props.currentProperty.id}
           handleClose={this.props.handleClose}
           commandActions={this.props.commandActions}
           loading={this.props.currentProperty.loading}
+          colorFunction={colorFunction}
+          scoreFilter={this.state.scoreFilter}
+          commands={this.props.commands}
+        />
+
+        <FilterPanel
+          colorFunction={colorFunction}
+          setScore={this.setScore}
         />
 
         <TitleBar

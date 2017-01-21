@@ -9,7 +9,6 @@ class TitleBar extends Component {
       alignItems: 'center',
       justifyContent: 'flex-start',
       background: 'teal',
-      height: '6em',
 
       color: 'white',
       margin: 0,

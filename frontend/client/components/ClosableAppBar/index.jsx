@@ -36,7 +36,6 @@ export default class ClosableAppBar extends Component {
 
   handleShareDialogOpen = () => {
     this.setState({shareDialogOpen: !this.state.shareDialogOpen})
-    console.log('Dialog state: ' + this.state.shareDialogOpen)
   }
 
 
@@ -45,7 +44,6 @@ export default class ClosableAppBar extends Component {
 
   getBar = () => {
     const show = this.props.uiState.get('showAppBar')
-    console.log(show)
 
     if (!show){
 

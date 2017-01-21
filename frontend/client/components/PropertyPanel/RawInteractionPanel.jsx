@@ -3,8 +3,11 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import CloseIcon from 'material-ui/svg-icons/navigation/close';
 import CyViewer from 'cy-viewer'
 
-import * as d3Scale from 'd3-scale'
-import * as d3ScaleChromatic from 'd3-scale-chromatic'
+import FlatButton from 'material-ui/FlatButton';
+
+
+
+import FilterPanel from './FilterPanel'
 
 
 class RawInteractionPanel extends Component {
@@ -12,12 +15,8 @@ class RawInteractionPanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      colorFunction: d3Scale.scaleOrdinal(d3ScaleChromatic.schemeAccent)
     };
   }
-
-
-
 
   shouldComponentUpdate(nextProps, nextState) {
 
@@ -30,6 +29,11 @@ class RawInteractionPanel extends Component {
       if(nextProps.loading !== this.props.loading) {
         return true
       }
+
+      if(nextProps.commands !== undefined) {
+        return true
+      }
+
       return false;
     }
     return true
@@ -38,14 +42,13 @@ class RawInteractionPanel extends Component {
 
   render() {
 
-    console.log('rendering RAW #######################################################################################################');
+    console.log("%%%%%%%%%%%%%%%% Rendering RAW=====================================")
     console.log(this.props)
-
 
     const style = {
       width: '100%',
-      height: '60em',
-      background: '#EFEFEF'
+      height: '50em',
+      background: '#000000'
     }
 
     const iconStyle = {
@@ -57,20 +60,21 @@ class RawInteractionPanel extends Component {
 
         {this.getMainContents()}
 
-        <FloatingActionButton
-          backgroundColor={"teal"}
+        <CloseIcon
           style={{position: 'fixed', top: '0.7em', marginLeft: '0.7em', zIndex: 999}}
           onClick={this.props.handleClose}
-          iconStyle={iconStyle}
-          mini={true}
-        >
-          <CloseIcon/>
-        </FloatingActionButton>
+          color={'white'}
+        />
       </div>
     )
   }
 
   getMainContents = () => {
+
+    if(this.props.subnet === null || this.props.subnet === undefined) {
+      return (<div></div>)
+    }
+
 
     const networkAreaStyle = {
       width: '100%',
@@ -83,15 +87,16 @@ class RawInteractionPanel extends Component {
     if(!this.props.loading) {
 
       return (
-        <CyViewer
-          key="subNetworkView"
-          network={this.props.subnet.toJS()}
-          networkType={'cyjs'}
-          networkStyle={this.getStyle()}
-          style={networkAreaStyle}
-          eventHandlers={this.getCustomEventHandlers()}
-          rendererOptions={{layout: 'concentric'}}
-        />
+          <CyViewer
+            key="subNetworkView"
+            network={this.props.subnet.toJS()}
+            networkType={'cyjs'}
+            networkStyle={this.getStyle()}
+            style={networkAreaStyle}
+            eventHandlers={this.getCustomEventHandlers()}
+            rendererOptions={{layout: 'concentric'}}
+            command={this.props.commands}
+          />
       )
     } else {
       return (<h2>Loading networks...</h2>)
@@ -107,7 +112,7 @@ class RawInteractionPanel extends Component {
         "text-valign" : "center",
         "text-halign" : "right",
         "shape" : "ellipse",
-        "color" : "#555555",
+        "color" : "white",
         "background-color" : "#CCCCCC",
         "height" : 15.0,
         "font-size" : '3em',
@@ -126,12 +131,13 @@ class RawInteractionPanel extends Component {
     }, {
       "selector" : "edge",
       "css" : {
-        "width" : "mapData(score, 0.0, 1.0, 0.1, 10)",
-        "opacity" : "mapData(score, 0.0, 1.0, 0.05, 1.0)",
+        "width" : "mapData(score, 0.0, 1.0, 0.1, 7.0)",
+        "opacity" : "mapData(score, 0.0, 1.0, 0.01, 0.7)",
 
+        // "line-color": 'white'
         "line-color" : ele => {
           const type = ele.data("interaction")
-          const c = this.state.colorFunction(type)
+          const c = this.props.colorFunction(type)
           return c
         },
       }
@@ -150,17 +156,9 @@ class RawInteractionPanel extends Component {
         opacity: 0.2
       }
     }, {
-      "selector" : ".focused",
+      "selector" : ".dark",
       "css" : {
-        "background-color" : "teal",
-        "font-size" : '4em',
-        "color" : "teal",
-        "text-opacity": 1,
-        'text-max-width': '500px',
-        'z-index': 999,
-        "min-zoomed-font-size": 0,
-        width: 50,
-        height: 50
+        "visibility": 'hidden'
       }
     } ]
   })
@@ -169,6 +167,7 @@ class RawInteractionPanel extends Component {
   selectNodes = (nodeIds, nodeProps) => {
     const node = nodeIds[0]
     const props = nodeProps[node]
+
 
     console.log('RAW ============================================================== Custom node select function called! ========');
     console.log('Selected Node ID: ' + node)

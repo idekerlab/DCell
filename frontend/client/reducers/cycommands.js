@@ -8,7 +8,7 @@ const defaultState = Map({
 
 export default handleActions({
   FIT_NETWORK: (state, action) => ({
-    command: 'fit'
+    command: 'fit',
   }),
   ZOOM_IN_NETWORK: (state, action) => ({
     command: 'zoomIn'
@@ -22,7 +22,8 @@ export default handleActions({
 
   FIND_PATH: (state, action) => ({
     command: 'findPath',
-    parameters: action.payload
+    parameters: action.payload,
+    target: action.payload.target
   }),
   SELECT: (state, action) => ({
     command: 'select',
@@ -31,5 +32,10 @@ export default handleActions({
   FOCUS: (state, action) => ({
     command: 'focus',
     parameters: action.payload
+  }),
+  FILTER: (state, action) => ({
+    command: 'filter',
+    parameters: action.payload,
+    target: action.payload.target
   }),
 }, defaultState)
