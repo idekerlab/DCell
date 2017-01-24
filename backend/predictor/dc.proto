@@ -1,29 +1,27 @@
 syntax = "proto3";
 
-service Request {
-  rpc ProcessTerms (TermRequest) returns (TermReply) {}
+service DeepCell {
+  rpc Run (Request) returns (Reply) {}
 }
 
-message TermRequest {
-  repeated string terms = 2;
-  string ontology_type = 1;
-  bool use_growth_data = 3;
+message Request {
+  repeated string genes = 2;
+  string ontology = 1;
+  bool growth = 3;
 }
 
-message TermReply {
-  bool directed = 1;
-  bool multigraph = 2;
+message Reply {
   repeated Node nodes = 3;
   repeated Edge edges = 4;
 }
 
 message Node {
-  string termId = 1;
+  string id = 1;
   double importance = 2;
   double phenotype = 3;
 }
 
 message Edge {
-  string sourceTerm = 1;
-  string targetTerm = 2;
+  string source = 1;
+  string target = 2;
 }

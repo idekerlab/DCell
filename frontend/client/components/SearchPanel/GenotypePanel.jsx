@@ -1,42 +1,37 @@
 import React, {Component} from 'react'
-
-import * as colors from 'material-ui/styles/colors';
-import {List, ListItem} from 'material-ui/List';
-import {Tabs, Tab} from 'material-ui/Tabs';
-import SearchIcon from 'material-ui/svg-icons/action/search';
-import ListIcon from 'material-ui/svg-icons/action/list';
-
 import Chip from 'material-ui/Chip';
+
+
+const style = {
+  background: 'white',
+  padding: 0,
+}
+
+const containerStyle = {
+  display: 'flex',
+  flexWrap: 'wrap',
+}
 
 
 class GenotypePanel extends Component {
 
-
   render() {
-
-    const style = {
-      background: 'white',
-      padding: 0,
-    }
-
-    const containerStyle = {
-      display: 'flex',
-      flexWrap: 'wrap',
-    }
 
     const genes = this.props.genes
 
-    if(genes === undefined || genes.length === 0) {
+    if(genes === undefined || genes.size === 0) {
+      console.log('ZERO!!!!!!!!!!! **********************************************************************************************************************')
+
       return (
         <div style={style}>
         </div>
       )
     }
 
-
     return (
       <div style={style}>
         <h3>Genotype:</h3>
+
         <div style={containerStyle}>
           {this.props.genes.map(this.renderGene, this)}
         </div>
@@ -48,7 +43,7 @@ class GenotypePanel extends Component {
   renderGene = data => {
 
     const chipStyle = {
-      margin: '0.3em',fontSize: '0.3em'
+      margin: '0.3em', fontSize: '0.3em'
     }
 
     return (

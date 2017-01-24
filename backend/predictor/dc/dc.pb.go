@@ -9,8 +9,8 @@ It is generated from these files:
 	dc.proto
 
 It has these top-level messages:
-	TermRequest
-	TermReply
+	Request
+	Reply
 	Node
 	Edge
 */
@@ -36,72 +36,56 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-type TermRequest struct {
-	Terms         []string `protobuf:"bytes,2,rep,name=terms" json:"terms,omitempty"`
-	OntologyType  string   `protobuf:"bytes,1,opt,name=ontology_type,json=ontologyType" json:"ontology_type,omitempty"`
-	UseGrowthData bool     `protobuf:"varint,3,opt,name=use_growth_data,json=useGrowthData" json:"use_growth_data,omitempty"`
+type Request struct {
+	Genes    []string `protobuf:"bytes,2,rep,name=genes" json:"genes,omitempty"`
+	Ontology string   `protobuf:"bytes,1,opt,name=ontology" json:"ontology,omitempty"`
+	Growth   bool     `protobuf:"varint,3,opt,name=growth" json:"growth,omitempty"`
 }
 
-func (m *TermRequest) Reset()                    { *m = TermRequest{} }
-func (m *TermRequest) String() string            { return proto.CompactTextString(m) }
-func (*TermRequest) ProtoMessage()               {}
-func (*TermRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *Request) Reset()                    { *m = Request{} }
+func (m *Request) String() string            { return proto.CompactTextString(m) }
+func (*Request) ProtoMessage()               {}
+func (*Request) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
-func (m *TermRequest) GetTerms() []string {
+func (m *Request) GetGenes() []string {
 	if m != nil {
-		return m.Terms
+		return m.Genes
 	}
 	return nil
 }
 
-func (m *TermRequest) GetOntologyType() string {
+func (m *Request) GetOntology() string {
 	if m != nil {
-		return m.OntologyType
+		return m.Ontology
 	}
 	return ""
 }
 
-func (m *TermRequest) GetUseGrowthData() bool {
+func (m *Request) GetGrowth() bool {
 	if m != nil {
-		return m.UseGrowthData
+		return m.Growth
 	}
 	return false
 }
 
-type TermReply struct {
-	Directed   bool    `protobuf:"varint,1,opt,name=directed" json:"directed,omitempty"`
-	Multigraph bool    `protobuf:"varint,2,opt,name=multigraph" json:"multigraph,omitempty"`
-	Nodes      []*Node `protobuf:"bytes,3,rep,name=nodes" json:"nodes,omitempty"`
-	Edges      []*Edge `protobuf:"bytes,4,rep,name=edges" json:"edges,omitempty"`
+type Reply struct {
+	Nodes []*Node `protobuf:"bytes,3,rep,name=nodes" json:"nodes,omitempty"`
+	Edges []*Edge `protobuf:"bytes,4,rep,name=edges" json:"edges,omitempty"`
 }
 
-func (m *TermReply) Reset()                    { *m = TermReply{} }
-func (m *TermReply) String() string            { return proto.CompactTextString(m) }
-func (*TermReply) ProtoMessage()               {}
-func (*TermReply) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+func (m *Reply) Reset()                    { *m = Reply{} }
+func (m *Reply) String() string            { return proto.CompactTextString(m) }
+func (*Reply) ProtoMessage()               {}
+func (*Reply) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
-func (m *TermReply) GetDirected() bool {
-	if m != nil {
-		return m.Directed
-	}
-	return false
-}
-
-func (m *TermReply) GetMultigraph() bool {
-	if m != nil {
-		return m.Multigraph
-	}
-	return false
-}
-
-func (m *TermReply) GetNodes() []*Node {
+func (m *Reply) GetNodes() []*Node {
 	if m != nil {
 		return m.Nodes
 	}
 	return nil
 }
 
-func (m *TermReply) GetEdges() []*Edge {
+func (m *Reply) GetEdges() []*Edge {
 	if m != nil {
 		return m.Edges
 	}
@@ -109,7 +93,7 @@ func (m *TermReply) GetEdges() []*Edge {
 }
 
 type Node struct {
-	TermId     string  `protobuf:"bytes,1,opt,name=termId" json:"termId,omitempty"`
+	Id         string  `protobuf:"bytes,1,opt,name=id" json:"id,omitempty"`
 	Importance float64 `protobuf:"fixed64,2,opt,name=importance" json:"importance,omitempty"`
 	Phenotype  float64 `protobuf:"fixed64,3,opt,name=phenotype" json:"phenotype,omitempty"`
 }
@@ -119,9 +103,9 @@ func (m *Node) String() string            { return proto.CompactTextString(m) }
 func (*Node) ProtoMessage()               {}
 func (*Node) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
 
-func (m *Node) GetTermId() string {
+func (m *Node) GetId() string {
 	if m != nil {
-		return m.TermId
+		return m.Id
 	}
 	return ""
 }
@@ -141,8 +125,8 @@ func (m *Node) GetPhenotype() float64 {
 }
 
 type Edge struct {
-	SourceTerm string `protobuf:"bytes,1,opt,name=sourceTerm" json:"sourceTerm,omitempty"`
-	TargetTerm string `protobuf:"bytes,2,opt,name=targetTerm" json:"targetTerm,omitempty"`
+	Source string `protobuf:"bytes,1,opt,name=source" json:"source,omitempty"`
+	Target string `protobuf:"bytes,2,opt,name=target" json:"target,omitempty"`
 }
 
 func (m *Edge) Reset()                    { *m = Edge{} }
@@ -150,23 +134,23 @@ func (m *Edge) String() string            { return proto.CompactTextString(m) }
 func (*Edge) ProtoMessage()               {}
 func (*Edge) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
 
-func (m *Edge) GetSourceTerm() string {
+func (m *Edge) GetSource() string {
 	if m != nil {
-		return m.SourceTerm
+		return m.Source
 	}
 	return ""
 }
 
-func (m *Edge) GetTargetTerm() string {
+func (m *Edge) GetTarget() string {
 	if m != nil {
-		return m.TargetTerm
+		return m.Target
 	}
 	return ""
 }
 
 func init() {
-	proto.RegisterType((*TermRequest)(nil), "TermRequest")
-	proto.RegisterType((*TermReply)(nil), "TermReply")
+	proto.RegisterType((*Request)(nil), "Request")
+	proto.RegisterType((*Reply)(nil), "Reply")
 	proto.RegisterType((*Node)(nil), "Node")
 	proto.RegisterType((*Edge)(nil), "Edge")
 }
@@ -179,64 +163,64 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// Client API for Request service
+// Client API for DeepCell service
 
-type RequestClient interface {
-	ProcessTerms(ctx context.Context, in *TermRequest, opts ...grpc.CallOption) (*TermReply, error)
+type DeepCellClient interface {
+	Run(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Reply, error)
 }
 
-type requestClient struct {
+type deepCellClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewRequestClient(cc *grpc.ClientConn) RequestClient {
-	return &requestClient{cc}
+func NewDeepCellClient(cc *grpc.ClientConn) DeepCellClient {
+	return &deepCellClient{cc}
 }
 
-func (c *requestClient) ProcessTerms(ctx context.Context, in *TermRequest, opts ...grpc.CallOption) (*TermReply, error) {
-	out := new(TermReply)
-	err := grpc.Invoke(ctx, "/Request/ProcessTerms", in, out, c.cc, opts...)
+func (c *deepCellClient) Run(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Reply, error) {
+	out := new(Reply)
+	err := grpc.Invoke(ctx, "/DeepCell/Run", in, out, c.cc, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// Server API for Request service
+// Server API for DeepCell service
 
-type RequestServer interface {
-	ProcessTerms(context.Context, *TermRequest) (*TermReply, error)
+type DeepCellServer interface {
+	Run(context.Context, *Request) (*Reply, error)
 }
 
-func RegisterRequestServer(s *grpc.Server, srv RequestServer) {
-	s.RegisterService(&_Request_serviceDesc, srv)
+func RegisterDeepCellServer(s *grpc.Server, srv DeepCellServer) {
+	s.RegisterService(&_DeepCell_serviceDesc, srv)
 }
 
-func _Request_ProcessTerms_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TermRequest)
+func _DeepCell_Run_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RequestServer).ProcessTerms(ctx, in)
+		return srv.(DeepCellServer).Run(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/Request/ProcessTerms",
+		FullMethod: "/DeepCell/Run",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RequestServer).ProcessTerms(ctx, req.(*TermRequest))
+		return srv.(DeepCellServer).Run(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _Request_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "Request",
-	HandlerType: (*RequestServer)(nil),
+var _DeepCell_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "DeepCell",
+	HandlerType: (*DeepCellServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ProcessTerms",
-			Handler:    _Request_ProcessTerms_Handler,
+			MethodName: "Run",
+			Handler:    _DeepCell_Run_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -246,25 +230,22 @@ var _Request_serviceDesc = grpc.ServiceDesc{
 func init() { proto.RegisterFile("dc.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
-	// 318 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x4c, 0x91, 0x4d, 0x4b, 0xc3, 0x40,
-	0x10, 0x86, 0x4d, 0xd3, 0xd6, 0x64, 0xda, 0x22, 0x2c, 0x22, 0xa1, 0x8a, 0x84, 0x08, 0x12, 0x3c,
-	0xe4, 0x50, 0xf1, 0x1f, 0xf8, 0x81, 0x17, 0x91, 0xa5, 0x47, 0xa1, 0xc4, 0xec, 0x90, 0x16, 0x9a,
-	0xec, 0xba, 0x3b, 0x41, 0x72, 0xf4, 0x9f, 0xcb, 0x6e, 0xd2, 0x36, 0xc7, 0x79, 0x9e, 0x65, 0x5f,
-	0x66, 0x5e, 0x08, 0x44, 0x91, 0x29, 0x2d, 0x49, 0x26, 0x0a, 0x66, 0x6b, 0xd4, 0x15, 0xc7, 0x9f,
-	0x06, 0x0d, 0xb1, 0x4b, 0x98, 0x10, 0xea, 0xca, 0x44, 0xa3, 0xd8, 0x4f, 0x43, 0xde, 0x0d, 0xec,
-	0x0e, 0x16, 0xb2, 0x26, 0xb9, 0x97, 0x65, 0xbb, 0xa1, 0x56, 0x61, 0xe4, 0xc5, 0x5e, 0x1a, 0xf2,
-	0xf9, 0x01, 0xae, 0x5b, 0x85, 0xec, 0x1e, 0x2e, 0x1a, 0x83, 0x9b, 0x52, 0xcb, 0x5f, 0xda, 0x6e,
-	0x44, 0x4e, 0x79, 0xe4, 0xc7, 0x5e, 0x1a, 0xf0, 0x45, 0x63, 0xf0, 0xcd, 0xd1, 0xe7, 0x9c, 0xf2,
-	0xe4, 0xcf, 0x83, 0xb0, 0x8b, 0x54, 0xfb, 0x96, 0x2d, 0x21, 0x10, 0x3b, 0x8d, 0x05, 0xa1, 0x70,
-	0xbf, 0x06, 0xfc, 0x38, 0xb3, 0x5b, 0x80, 0xaa, 0xd9, 0xd3, 0xae, 0xd4, 0xb9, 0xda, 0x46, 0x23,
-	0x67, 0x07, 0x84, 0x5d, 0xc3, 0xa4, 0x96, 0x02, 0x4d, 0xe4, 0xc7, 0x7e, 0x3a, 0x5b, 0x4d, 0xb2,
-	0x0f, 0x29, 0x90, 0x77, 0xcc, 0x4a, 0x14, 0x25, 0x9a, 0x68, 0xdc, 0xcb, 0x17, 0x51, 0x22, 0xef,
-	0x58, 0xf2, 0x05, 0x63, 0xfb, 0x96, 0x5d, 0xc1, 0xd4, 0x6e, 0xf8, 0x2e, 0xfa, 0x8d, 0xfa, 0xc9,
-	0x26, 0xef, 0x2a, 0x25, 0x35, 0xe5, 0x75, 0x81, 0x2e, 0xd9, 0xe3, 0x03, 0xc2, 0x6e, 0x20, 0x54,
-	0x5b, 0xac, 0xa5, 0x3b, 0x86, 0xef, 0xf4, 0x09, 0x24, 0xaf, 0x30, 0xb6, 0x61, 0xf6, 0x17, 0x23,
-	0x1b, 0x5d, 0xa0, 0x5d, 0xb7, 0x4f, 0x18, 0x10, 0xeb, 0x29, 0xd7, 0x25, 0x92, 0xf3, 0xa3, 0xce,
-	0x9f, 0xc8, 0xea, 0x09, 0xce, 0x0f, 0xbd, 0x3c, 0xc0, 0xfc, 0x53, 0xcb, 0x02, 0x8d, 0x59, 0xbb,
-	0x46, 0xe6, 0xd9, 0xa0, 0xb5, 0x25, 0x64, 0xc7, 0x83, 0x26, 0x67, 0xdf, 0x53, 0xd7, 0xec, 0xe3,
-	0x7f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x28, 0x8a, 0x0b, 0x20, 0xe5, 0x01, 0x00, 0x00,
+	// 257 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x4c, 0x90, 0x4d, 0x4b, 0xc4, 0x30,
+	0x10, 0x86, 0x4d, 0xbf, 0x6c, 0x47, 0xf0, 0x10, 0x44, 0xe2, 0x2a, 0x52, 0x0a, 0x42, 0x4f, 0x3d,
+	0xac, 0xe0, 0x5d, 0xd4, 0xab, 0x87, 0xd1, 0x3f, 0xb0, 0x36, 0x43, 0xb6, 0x50, 0x33, 0xb1, 0x4d,
+	0x91, 0xfe, 0x7b, 0x69, 0x1b, 0xd4, 0xe3, 0xf3, 0x4c, 0x98, 0x79, 0xf3, 0x42, 0xae, 0xdb, 0xc6,
+	0x0d, 0xec, 0xb9, 0x7a, 0x83, 0x53, 0xa4, 0xaf, 0x89, 0x46, 0x2f, 0x2f, 0x20, 0x35, 0x64, 0x69,
+	0x54, 0x51, 0x19, 0xd7, 0x05, 0x6e, 0x20, 0x77, 0x90, 0xb3, 0xf5, 0xdc, 0xb3, 0x99, 0x95, 0x28,
+	0x45, 0x5d, 0xe0, 0x2f, 0xcb, 0x4b, 0xc8, 0xcc, 0xc0, 0xdf, 0xfe, 0xa8, 0xe2, 0x52, 0xd4, 0x39,
+	0x06, 0xaa, 0x1e, 0x21, 0x45, 0x72, 0xfd, 0x2c, 0xaf, 0x21, 0xb5, 0xac, 0x69, 0x54, 0x71, 0x19,
+	0xd7, 0x67, 0xfb, 0xb4, 0x79, 0x65, 0x4d, 0xb8, 0xb9, 0x65, 0x48, 0xda, 0xd0, 0xa8, 0x92, 0x30,
+	0x7c, 0xd1, 0x86, 0x70, 0x73, 0xd5, 0x3b, 0x24, 0xcb, 0x5b, 0x79, 0x0e, 0x51, 0xa7, 0xc3, 0xe1,
+	0xa8, 0xd3, 0xf2, 0x16, 0xa0, 0xfb, 0x74, 0x3c, 0xf8, 0x83, 0x6d, 0x49, 0x45, 0xa5, 0xa8, 0x05,
+	0xfe, 0x33, 0xf2, 0x06, 0x0a, 0x77, 0x24, 0xcb, 0x7e, 0x76, 0xb4, 0xa6, 0x12, 0xf8, 0x27, 0xaa,
+	0x07, 0x48, 0x96, 0x23, 0x4b, 0xf0, 0x91, 0xa7, 0xa1, 0xa5, 0xb0, 0x39, 0xd0, 0xe2, 0xfd, 0x61,
+	0x30, 0xe4, 0xd7, 0xcd, 0x05, 0x06, 0xda, 0xdf, 0x41, 0xfe, 0x4c, 0xe4, 0x9e, 0xa8, 0xef, 0xe5,
+	0x15, 0xc4, 0x38, 0x59, 0x99, 0x37, 0xa1, 0xb7, 0x5d, 0xd6, 0xac, 0x9f, 0xad, 0x4e, 0x3e, 0xb2,
+	0xb5, 0xd3, 0xfb, 0x9f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x66, 0xa7, 0x30, 0x12, 0x5f, 0x01, 0x00,
+	0x00,
 }

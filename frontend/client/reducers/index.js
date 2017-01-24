@@ -15,6 +15,9 @@ import network from './network'
 import ontologies from './ontologies'
 import config from './config'
 
+import query_genes from './query-genes'
+
+
 // Application states
 const app_manager = combineReducers({
   current_vs: current_vs,
@@ -26,6 +29,8 @@ const app_manager = combineReducers({
   ui_state: ui_state,
   datasource: datasource,
   search: search,
+
+  query_genes: query_genes
 })
 
 

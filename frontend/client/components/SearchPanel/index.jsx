@@ -4,7 +4,8 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import ListIcon from 'material-ui/svg-icons/action/list';
 
-import SearchTab from './search'
+import SearchTab from './SearchTab'
+
 import ListTab from './ListTab'
 import TermSearchPanel from './TermSearchPanel'
 
@@ -56,16 +57,19 @@ class SearchPanel extends Component {
             icon={<SearchIcon/>}
             value="term"
           >
-            <TermSearchPanel
-              style={searchStyle}
-              search={this.props.search}
-              searchActions={this.props.searchActions}
-              uiStateActions={this.props.uiStateActions}
-              commandActions={this.props.commandActions}
+            {/*<TermSearchPanel*/}
+              {/*style={searchStyle}*/}
+              {/*search={this.props.search}*/}
+              {/*searchActions={this.props.searchActions}*/}
+              {/*uiStateActions={this.props.uiStateActions}*/}
+              {/*commandActions={this.props.commandActions}*/}
 
-              trees={this.props.trees}
-              currentNetwork={this.props.currentNetwork}
-            />
+              {/*trees={this.props.trees}*/}
+              {/*currentNetwork={this.props.currentNetwork}*/}
+            {/*/>*/}
+
+
+
           </Tab>
           <Tab
             icon={<SearchIcon/>}
@@ -76,6 +80,9 @@ class SearchPanel extends Component {
               search={this.props.search}
               searchActions={this.props.searchActions}
               uiStateActions={this.props.uiStateActions}
+
+              queryGenesActions={this.props.queryGenesActions}
+              queryGenes={this.props.queryGenes}
             />
           </Tab>
           <Tab

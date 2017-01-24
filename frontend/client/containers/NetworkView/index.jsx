@@ -21,6 +21,8 @@ import {grey50, grey800} from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
+import * as queryGenesActions from '../../actions/query-genes'
+
 
 // Theme settings
 const muiTheme = getMuiTheme({
@@ -76,7 +78,9 @@ function mapStateToProps(state) {
     datasource: state.app_manager.datasource,
 
     network: state.network,
-    config: state.config
+    config: state.config,
+
+    queryGenes: state.app_manager.query_genes
   }
 }
 
@@ -94,6 +98,8 @@ function mapDispatchToProps(dispatch) {
 
     propertyActions: bindActionCreators(propertyActions, dispatch),
     searchActions: bindActionCreators(searchActions, dispatch),
+
+    queryGenesActions: bindActionCreators(queryGenesActions, dispatch)
   }
 }
 

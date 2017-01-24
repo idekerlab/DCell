@@ -104,15 +104,18 @@ export default class NetworkViewer extends Component {
           uiState={uiState}
         />
 
-        {/*<SearchPanel*/}
-          {/*search={search}*/}
-          {/*searchActions={searchActions}*/}
-          {/*uiStateActions={uiStateActions}*/}
-          {/*commandActions={commandActions}*/}
+        <SearchPanel
+          search={search}
+          searchActions={searchActions}
+          uiStateActions={uiStateActions}
+          commandActions={commandActions}
 
-          {/*trees={config.get('trees').toJS()}*/}
-          {/*currentNetwork={this.props.currentNetwork.toJS()}*/}
-        {/*/>*/}
+          trees={config.get('trees').toJS()}
+          currentNetwork={this.props.currentNetwork.toJS()}
+
+          queryGenesActions={this.props.queryGenesActions}
+          queryGenes={this.props.queryGenes}
+        />
 
         <PropertyPanel
           commands={commands}

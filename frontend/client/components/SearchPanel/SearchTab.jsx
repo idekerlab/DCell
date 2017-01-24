@@ -13,9 +13,6 @@ import FlatButton from 'material-ui/FlatButton';
 
 
 
-import Subheader from 'material-ui/Subheader';
-import Divider from 'material-ui/Divider';
-import Checkbox from 'material-ui/Checkbox';
 
 import TextField from 'material-ui/TextField';
 
@@ -26,6 +23,39 @@ import GenotypePanel from './GenotypePanel'
 import {TransitionMotion, spring, presets} from 'react-motion'
 
 
+import GeneList from './GeneList'
+
+
+const searchUiStyle = {
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'flex-end',
+  justifyContent: 'flex-start',
+  paddingBottom: '0.5em'
+}
+
+const buttonStyle = {
+  marginLeft: '0.5em',
+  marginBottom: '0.5em',
+}
+
+
+const actionStyle = {
+  display: 'flex',
+  alignItems: 'flex-end',
+  justifyContent: 'flex-end',
+  marginTop: '0.5em'
+}
+
+const baseStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '20em',
+  background: 'white'
+}
+
 
 class SearchTab extends Component {
 
@@ -34,15 +64,9 @@ class SearchTab extends Component {
 
     this.state = {
       query: '',
-      loading: false,
       noSearchYet: true,
-      genes: new Set()
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.search.result !== null) {
-      this.setState({loading: false})
+      genes: new Set(),
+      selected: {}
     }
   }
 
@@ -50,7 +74,6 @@ class SearchTab extends Component {
   search = () => {
 
     this.setState({
-      loading: true,
       noSearchYet: false
     })
 
@@ -61,14 +84,16 @@ class SearchTab extends Component {
       index: 'genes',
       type: 'gene,go_term'
     }
+
     this.props.searchActions.searchDatabase(query, options)
   }
 
 
   clearQuery = () => {
+    this.props.searchActions.clear()
+
     this.setState({
       query: '',
-      loading: false,
       noSearchYet: true
     });
   }
@@ -87,34 +112,13 @@ class SearchTab extends Component {
 
   render() {
 
-    const searchUiStyle = {
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'flex-end',
-      justifyContent: 'flex-start',
-      paddingBottom: '0.5em'
-    }
-
-    const buttonStyle = {
-      marginLeft: '0.5em',
-      marginBottom: '0.5em',
-    }
-
-
-    const actionStyle = {
-      display: 'flex',
-      alignItems: 'flex-end',
-      justifyContent: 'flex-end',
-      marginTop: '0.5em'
-    }
-
     const searchResult = this.props.search.result
     let hits = []
     if(searchResult !== null) {
       hits = searchResult.hits.hits
     }
 
-    const selectedGenes = [...this.state.genes]
+    const genes = this.props.queryGenes.get('genes')
 
 
     return (
@@ -149,13 +153,14 @@ class SearchTab extends Component {
 
 
         <GenotypePanel
-          genes={selectedGenes}
+          genes={genes}
         />
 
         <div style={actionStyle}>
           <RaisedButton
             label="Reset"
             labelPosition="before"
+            onClick={this.resetSelection}
           />
           <RaisedButton
             label="Run"
@@ -173,43 +178,24 @@ class SearchTab extends Component {
 
   runSimulation = () => {
     console.log("Run!!")
-    this.props.uiStateActions.showResult(true)
+
+    const genes = this.props.queryGenes.get('genes')
+    console.log(genes)
+
+    this.props.queryGenesActions.runDeletion('http://localhost:8888', genes.toArray())
+    // this.props.uiStateActions.showResult(true)
   }
 
-  itemSelected = symbol => {
-    const genes = this.state.genes
 
-    if(genes.has(symbol)) {
-      console.log("deleting")
-      genes.delete(symbol)
-    } else {
-      console.log("adding " + symbol)
-      genes.add(symbol)
-    }
-    console.log('Selected: ' + symbol)
-    console.log(genes)
-    this.setState({genes: genes})
-    console.log(this.state.genes)
+  resetSelection = () => {
+    this.props.queryGenesActions.clearGenes()
   }
 
 
   getListPanel = hits => {
-    const listStyle ={
-      overflow: 'scroll',
-      height: '20em',
-      background: 'white'
-    }
 
-    const baseStyle = {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: '20em',
-      background: 'white'
-    }
+    if(this.props.search.result === null && this.props.search.loading === false) {
 
-    if(this.state.noSearchYet && this.state.loading === false) {
       style.background = '#EFEFEF'
       style.color = '#AAAAAA'
 
@@ -218,7 +204,7 @@ class SearchTab extends Component {
           <p>No search result yet</p>
         </div>
       )
-    } else if(this.state.loading) {
+    } else if(this.props.search.loading) {
       return (
         <div style={baseStyle}>
           <div className={style.loading}></div>
@@ -235,32 +221,13 @@ class SearchTab extends Component {
       )
     }
 
-    return (<List style={listStyle}>
-      <Subheader>Search Result</Subheader>
-
-      {
-        hits.map((hit, i) => {
-
-          const symbol = hit._source.symbol
-          const locusName = hit._source.locus
-
-          return (
-            <ListItem
-              key={i}
-              leftCheckbox={
-                <Checkbox
-                  onCheck={() => {this.itemSelected(symbol)}}
-                />
-              }
-              primaryText={symbol + '  (' + locusName + ')'}
-              secondaryText={hit._source.name}
-
-            />
-          )
-        })
-      }
-    </List>)
-
+    return (
+      <GeneList
+        hits={hits}
+        queryGenesActions={this.props.queryGenesActions}
+        queryGenes={this.props.queryGenes}
+      />
+    )
   }
 }
 

@@ -8,6 +8,12 @@ services:
     volumes:
       - deep-cell:/usr/share/elasticsearch/data
 
+  predictor:
+    build: ./predictor
+    ports:
+      - "8888:8888"
+
+
 volumes:
   deep-cell:
     driver: local
