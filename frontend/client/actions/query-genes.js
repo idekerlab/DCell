@@ -26,8 +26,7 @@ const receiveSimulationResult = (serviceUrl, genes, json) => {
 
 const fetchResult = (serviceUrl, genes) => {
 
-  // const query = genes
-  const query = ["YBL098W" ,"YPL133C"]
+  const query = genes
 
   console.log('-----------------Calling')
 

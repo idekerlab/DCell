@@ -41,6 +41,7 @@ class GeneList extends Component {
 
     const newList = hits.map((hit, i) => {
 
+      const gene = hit._source
       const symbol = hit._source.symbol
       const locusName = hit._source.locus
 
@@ -50,7 +51,7 @@ class GeneList extends Component {
           leftCheckbox={
             <Checkbox
               onCheck={() => {
-                this.itemSelected(symbol)
+                this.itemSelected(gene)
               }}
             />
           }
@@ -64,35 +65,25 @@ class GeneList extends Component {
     return newList
   }
 
-  isChecked = symbol => {
-    const genes = this.props.queryGenes.get('genes')
 
-    if (genes.has(symbol)) {
-      return true
-    }
+  itemSelected = gene => {
 
-    return false
-  }
+    const orf = gene.locus
 
-
-
-
-  itemSelected = symbol => {
-
-    console.log('Selected: ' + symbol)
+    console.log('Selected: ' + orf)
     console.log(this.props.queryGenes)
 
     const genes = this.props.queryGenes.get('genes')
 
-    if (genes.has(symbol)) {
+    if (genes.has(orf)) {
 
       console.log("deleting")
-      this.props.queryGenesActions.deleteGene(symbol)
+      this.props.queryGenesActions.deleteGene(orf)
 
     } else {
 
-      console.log("adding " + symbol)
-      this.props.queryGenesActions.addGene(symbol)
+      console.log("adding " + orf)
+      this.props.queryGenesActions.addGene(orf)
     }
 
     console.log(this.props.queryGenes)

@@ -183,7 +183,7 @@ class SearchTab extends Component {
     console.log(genes)
 
     this.props.queryGenesActions.runDeletion('http://localhost:8888', genes.toArray())
-    // this.props.uiStateActions.showResult(true)
+    this.props.uiStateActions.showResult(true)
   }
 
 

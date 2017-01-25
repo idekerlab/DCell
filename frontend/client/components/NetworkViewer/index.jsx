@@ -124,7 +124,14 @@ export default class NetworkViewer extends Component {
           currentProperty={currentProperty}
         />
 
-        {uiState.get('showResult') ? <SubTreePanel uiStateActions={uiStateActions}/> : <div></div>}
+        {
+          uiState.get('showResult') ?
+            <SubTreePanel
+              uiStateActions={uiStateActions}
+              queryGenes={this.props.queryGenes}
+            /> :
+            <div></div>
+        }
 
         <Errorbar
           className={style.errorbar}
