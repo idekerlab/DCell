@@ -38,6 +38,11 @@ export default class MainMenu extends Component {
     this.props.uiStateActions.showAppBar(!switched)
   }
 
+  handleShowSearchWindow = event => {
+    const switched = this.refs.searchWindow.state.switched
+    this.props.uiStateActions.showSearchWindow(!switched)
+  }
+
   extractNdexData(cxData) {
     const provenanceHistory = cxData.provenanceHistory
 
@@ -87,6 +92,8 @@ export default class MainMenu extends Component {
     const uiState = this.props.uiState
     const showAppBar = uiState.get('showAppBar')
     const showCommands = uiState.get('showCommands')
+    const showSearchWindow = uiState.get('showSearchWindow')
+
     const styles = this.props.styles
     const {currentVsActions, backgroundColorActions,
       backgroundColor, currentVs} = this.props
@@ -175,6 +182,17 @@ export default class MainMenu extends Component {
                     onToggle={this.handleShowAppBar}
                   />
                 }
+              />,
+              <ListItem
+              key={3}
+              primaryText="Search Window"
+              rightToggle={
+              <Toggle
+                ref="searchWindow"
+                toggled={showSearchWindow}
+                onToggle={this.handleShowSearchWindow}
+              />
+            }
               />
             ]}
           />

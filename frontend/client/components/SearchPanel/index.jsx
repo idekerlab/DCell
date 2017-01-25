@@ -26,6 +26,14 @@ class SearchPanel extends Component {
   }
 
   render() {
+
+    // Check show or hide
+    const uiState = this.props.uiState
+
+    if(!uiState.get('showSearchWindow')) {
+      return (<div></div>)
+    }
+
     const style = {
       width: '20%',
       background: 'rgba(100, 100, 100, 0.1)',

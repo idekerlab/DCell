@@ -115,6 +115,8 @@ export default class NetworkViewer extends Component {
 
           queryGenesActions={this.props.queryGenesActions}
           queryGenes={this.props.queryGenes}
+
+          uiState={uiState}
         />
 
         <PropertyPanel

@@ -6,7 +6,8 @@ import {Map} from 'immutable'
 const defaultState = Map({
   showAppBar: true,
   showCommands: true,
-  showResult: false
+  showResult: false,
+  showSearchWindow: true
 })
 
 export default handleActions({
@@ -18,6 +19,9 @@ export default handleActions({
   ),
   SHOW_RESULT: (state, action) => (
     state.set('showResult', action.payload)
+  ),
+  SHOW_SEARCH_WINDOW: (state, action) => (
+    state.set('showSearchWindow', action.payload)
   ),
 }, defaultState)
 

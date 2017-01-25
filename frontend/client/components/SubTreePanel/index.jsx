@@ -12,11 +12,13 @@ class SubTreePanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tree: {}
+      tree: {},
+      isMax: false
     };
   }
 
   componentDidMount() {
+
     fetch(url)
       .then(response => (response.json()))
       .then(json => {
@@ -24,14 +26,22 @@ class SubTreePanel extends Component {
         console.log(json)
         this.setState({tree: json})
       })
+  }
 
+
+  getHeight = () => {
+    if(this.state.isMax) {
+      return '100%'
+    } else {
+      return '45%'
+    }
   }
 
   render() {
 
-    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ SUBTREE rendered!")
+
     const cardStyle ={
-      height: '47%',
+      height: this.getHeight(),
       zIndex: '1200',
       width: '100%',
       position: 'fixed',
@@ -44,7 +54,10 @@ class SubTreePanel extends Component {
 
     const actionStyle = {
       display: 'flex',
-      justifyContent: 'flex-end'
+      justifyContent: 'flex-end',
+      position: 'fixed',
+      bottom: '1em',
+      right: '1em'
     }
 
 
@@ -73,6 +86,10 @@ class SubTreePanel extends Component {
 
         <CardActions style={actionStyle}>
           <RaisedButton
+            label={this.state.isMax ? "Minimize Window" : "Maximize Window"}
+            onClick={this.toggleWindow}
+          />
+          <RaisedButton
             label="Close Result"
             secondary={true}
             onClick={this.handleClose}
@@ -82,9 +99,19 @@ class SubTreePanel extends Component {
     )
   }
 
+
+  toggleWindow = () => {
+    this.setState({
+      isMax: !this.state.isMax
+    })
+
+  }
+
+
   handleClose = () => {
     this.props.uiStateActions.showResult(false)
   }
+
 
   getMainContents = (result) => {
     if(result === null || result === undefined) {
@@ -92,11 +119,12 @@ class SubTreePanel extends Component {
     } else {
 
       const w = window.innerWidth
-      const h = window.innerHeight * 0.35
+      const h = this.state.isMax ? window.innerHeight : window.innerHeight* 0.4
 
       const treeStyle = {
         width: w,
-        height: h
+        height: h,
+        background: '#777777'
       }
 
       const dag = this.getDag(result)
