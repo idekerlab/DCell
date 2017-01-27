@@ -17,26 +17,29 @@ class RawInteractionPanel extends Component {
     };
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-
-    if(nextProps.selectedTerm === undefined || this.props.selectedTerm === undefined) {
-      return false
-    }
-
-    if(nextProps.selectedTerm === this.props.selectedTerm) {
-
-      if(nextProps.loading !== this.props.loading) {
-        return true
-      }
-
-      if(nextProps.commands !== undefined) {
-        return true
-      }
-
-      return false;
-    }
-    return true
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //
+  //   if(nextProps.selectedTerm === undefined || this.props.selectedTerm === undefined) {
+  //     return false
+  //   }
+  //
+  //   if(nextProps.selectedTerm === this.props.selectedTerm) {
+  //
+  //     if(nextProps.loading !== this.props.loading) {
+  //       return true
+  //     }
+  //
+  //     if(nextProps.commands !== undefined) {
+  //       return true
+  //     }
+  //
+  //     return false;
+  //   }
+  //
+  //
+  //
+  //   return true
+  // }
 
 
   render() {
@@ -142,16 +145,9 @@ class RawInteractionPanel extends Component {
         "width": 14
       }
     }, {
-      "selector" : ".faded",
-      "css" : {
-        "background-color" : "black",
-        "line-color" : "black",
-        color: "black",
-        opacity: 0.2
-      }
-    }, {
       "selector" : ".dark",
       "css" : {
+        // "line-color": "red",
         "visibility": 'hidden'
       }
     } ]

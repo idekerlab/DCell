@@ -53,8 +53,36 @@ class ClixoDetails extends Component {
       options: {
         type: 'numeric',
         range: 'edge[score > ' + val + ']'
-      }
+      },
+      target: 'subnet'
     })
+  }
+
+
+  shouldComponentUpdate(nextProps, nextState) {
+
+    if(nextProps.selectedTerm === this.props.selectedTerm) {
+
+      if(nextProps.loading !== this.props.loading) {
+        return true
+      }
+
+      // Same network data
+      if(nextProps.currentProperty.data === this.props.currentProperty.data) {
+        if(nextProps.commands === this.props.commands) {
+          console.log("%%%%%%%%%%%%%%%% SAME COMMAND data")
+          return false;
+        } else {
+          console.log("%%%%%%%%%%%%%%%% NEW COMMAND")
+          return true
+        }
+      }
+
+    }
+
+
+
+    return true
   }
 
 

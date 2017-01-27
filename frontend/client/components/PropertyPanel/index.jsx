@@ -47,7 +47,6 @@ class PropertyPanel extends Component {
       w = MAX_WIDTH
     }
 
-    console.log('PANEL-----------------------------------------------------------------------------------------------------------------------')
     return (
       <Drawer
         width={w}
@@ -73,6 +72,7 @@ class PropertyPanel extends Component {
    */
   getPanel = curNet => {
 
+    // Do not return any component if nothing is selected.
     if(this.props.currentProperty.id === null) {
       return(<div></div>)
     }

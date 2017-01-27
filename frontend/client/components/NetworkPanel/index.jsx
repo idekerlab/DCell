@@ -11,6 +11,8 @@ import FlatButton from 'material-ui/FlatButton'
 
 import style from './style.css'
 
+import {Map} from 'immutable'
+
 
 class NetworkPanel extends Component {
 
@@ -77,6 +79,10 @@ class NetworkPanel extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
 
+    if(nextProps.commands.target === 'subnet') {
+      return false
+    }
+
     const curNet = this.props.currentNetwork
     const nextNet = nextProps.currentNetwork
 
@@ -98,6 +104,7 @@ class NetworkPanel extends Component {
     if(network === undefined) {
       return false
     }
+
 
 
     return true
@@ -333,9 +340,15 @@ class NetworkPanel extends Component {
       )
     }
 
-    const {
-      commands
-    } = this.props
+    let commands = this.props.commands
+    if(commands.target === 'subnet') {
+      console.log("%%%%%ignore")
+      commands = Map({
+        command: '',
+        parameters: {}
+      })
+    }
+
 
     const networkAreaStyle = {
       position: 'fixed',
