@@ -20,8 +20,6 @@ class GenotypePanel extends Component {
     const genes = this.props.genes
 
     if(genes === undefined || genes.size === 0) {
-      console.log('ZERO!!!!!!!!!!! **********************************************************************************************************************')
-
       return (
         <div style={style}>
         </div>

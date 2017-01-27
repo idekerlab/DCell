@@ -17,6 +17,8 @@ import config from './config'
 
 import query_genes from './query-genes'
 
+import message from './message'
+
 
 // Application states
 const app_manager = combineReducers({
@@ -30,7 +32,8 @@ const app_manager = combineReducers({
   datasource: datasource,
   search: search,
 
-  query_genes: query_genes
+  query_genes: query_genes,
+  message: message
 })
 
 

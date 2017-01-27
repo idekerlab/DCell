@@ -7,22 +7,28 @@ class TitleBar extends Component {
     const style = {
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'flex-start',
-      background: 'teal',
-
+      justifyContent: 'center',
+      background: this.props.background,
+      textAlign: 'center',
       color: 'white',
       margin: 0,
-      paddingLeft: '0.5em'
+      padding: '1.7em',
+      minHeight: '4em',
     }
 
     return (
       <div style={style}>
-        <h2 style={{paddingLeft: '1em'}}>
+        <h1 style={{textAlign: 'center', lineHeight: 1.3}}>
           {this.props.title}
-        </h2>
+        </h1>
       </div>
     )
   }
 }
+
+
+TitleBar.defaultProps = {
+  background: 'teal',
+};
 
 export default TitleBar

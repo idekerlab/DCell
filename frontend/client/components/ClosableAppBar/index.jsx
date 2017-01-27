@@ -4,13 +4,13 @@ import MainMenu from '../MainMenu'
 
 import AppBar from 'material-ui/AppBar'
 import IconButton from 'material-ui/IconButton';
-import ShareIcon from 'material-ui/svg-icons/social/share';
 import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 
 import Drawer from 'material-ui/Drawer'
 
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
+import style from './style.css'
+import classnames from 'classnames'
+
 
 import NetworkSelector from '../NetworkSelector'
 
@@ -45,7 +45,7 @@ export default class ClosableAppBar extends Component {
   getBar = () => {
     const show = this.props.uiState.get('showAppBar')
 
-    if (!show){
+    if (!show) {
 
       return (
         <IconButton
@@ -59,14 +59,16 @@ export default class ClosableAppBar extends Component {
     } else {
       return (
         <AppBar
-          title="DeepCell 1.0"
+          title={this.props.title}
           onLeftIconButtonTouchTap={this.openMenu}
           children={
 
             <NetworkSelector
+              messageActions={this.props.messageActions}
               trees={this.props.trees}
               currentNetwork={this.props.currentNetwork}
               currentNetworkActions={this.props.currentNetworkActions}
+              propertyActions={this.props.propertyActions}
             />
           }
         >
@@ -77,9 +79,11 @@ export default class ClosableAppBar extends Component {
 
   render() {
 
-    const {uiState, uiStateActions, networks, networkId,
+    const {
+      uiState, uiStateActions, networks, networkId,
       styles, currentVsActions, backgroundColorActions,
-      backgroundColor, currentVs, datasource, trees} = this.props
+      backgroundColor, currentVs, datasource, trees
+    } = this.props
 
 
     return (

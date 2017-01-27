@@ -4,8 +4,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import {TreeViewer, DAGViewer} from 'tree-viewer'
 
-const url = 'https://gist.githubusercontent.com/keiono/7ad5071409122c0415ceb41cf35ab8c2/raw/1ef43bc10be4690330ace2a6609a6836d304c791/tree3.json'
-
 
 class SubTreePanel extends Component {
 

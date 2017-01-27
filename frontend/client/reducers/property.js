@@ -1,4 +1,4 @@
-import {FETCH_PROPERTY, RECEIVE_PROPERTY} from '../actions/property'
+import {FETCH_PROPERTY, RECEIVE_PROPERTY, CLEAR_PROPERTY} from '../actions/property'
 
 
 const defaultState = {
@@ -26,6 +26,14 @@ export default function currentPropertyState(state = defaultState, action) {
       return {
         id: action.id,
         data: action.data,
+        loading: false
+      }
+    case CLEAR_PROPERTY:
+      console.log('+++++++++++++++ CLEAR ++++++++++++++')
+
+      return {
+        id: null,
+        data: {},
         loading: false
       }
     default:

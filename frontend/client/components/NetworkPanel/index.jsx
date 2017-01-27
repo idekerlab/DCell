@@ -103,6 +103,16 @@ class NetworkPanel extends Component {
     return true
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    console.log("##################################################################################################################RENDERED!!!!!!!!!")
+
+    this.props.messageActions.setMessage('Neural network browser is ready!')
+
+    window.setTimeout(() => {
+      this.props.messageActions.setMessage('DeepCell v1.0')
+    }, 3000)
+  }
+
   getError() {
     return (
       <div className={style.container}>

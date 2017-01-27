@@ -93,12 +93,6 @@ class SearchPanel extends Component {
               queryGenes={this.props.queryGenes}
             />
           </Tab>
-          <Tab
-            icon={<ListIcon/>}
-            value="list"
-          >
-            <ListTab />
-          </Tab>
         </Tabs>
       </div>
     )

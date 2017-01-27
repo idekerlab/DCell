@@ -106,52 +106,13 @@ export default class MainMenu extends Component {
             src={logo}
           />
           <h1 className={style.title}>
-            Ontology Viewer <i>&beta;</i>
+            DeepCell v1.0 <i>&beta;</i>
           </h1>
         </div>
 
-        <NetworkSelector
-          trees={this.props.trees}
-          currentNetwork={this.props.currentNetwork}
-          currentNetworkActions={this.props.currentNetworkActions}
-        />
-
-        <List>
-          {
-            ndexMetadata.map(keyVal => {
-              return <ListItem
-                secondaryText={keyVal['name']}
-                primaryText={keyVal['value']}
-              />
-            })
-          }
-        </List>
 
         <Divider />
 
-        <List>
-          <ListItem
-            key={1}
-            primaryText="Style"
-            leftIcon={<StyleIcon />}
-            initiallyOpen={true}
-            primaryTogglesNestedList={true}
-            nestedItems={[
-
-              <ListItem
-                key={2}
-              >
-                <StyleSelector
-                  styles={styles}
-                  currentVs={currentVs}
-                  currentVsActions={currentVsActions}
-                />
-              </ListItem>
-            ]}
-          />
-        </List>
-
-        <Divider />
 
         <List>
           <ListItem

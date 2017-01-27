@@ -8,18 +8,33 @@ class NetworkSelector extends Component {
 
 
   handleChange = (event, index, value) => {
-    window.setTimeout(() => {
-      this.props.currentNetworkActions.setCurrentNetwork(value)
-    }, 20)
+
+    // Here, perform cleaning actions for current state
+    this.props.propertyActions.clearProperty()
+
+    this.props.messageActions.setMessage('Switching the neural network. This takes 10-20 seconds...')
+
+    this.props.currentNetworkActions.setCurrentNetwork(value)
   }
 
   render() {
     const networkMap = this.props.trees
     const ids = Object.keys(networkMap)
 
+    const style = {
+      color: 'white',
+      paddingLeft: '1.2em'
+    }
+
+    const selectedStyle = {
+      color: 'white',
+      fontWeight: 700
+    }
+
     return (
       <SelectField
-        style={{paddingLeft: '1.2em'}}
+        labelStyle={selectedStyle}
+        style={style}
         onChange={this.handleChange}
         value={this.props.currentNetwork.id}
         floatingLabelText="Neural Network"

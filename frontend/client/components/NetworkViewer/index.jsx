@@ -49,7 +49,7 @@ export default class NetworkViewer extends Component {
       events, eventActions, networkId, uiState, uiStateActions,
       styles, currentVs, currentVsActions, backgroundColorActions,
       backgroundColor, vsActions, datasource, currentProperty, propertyActions,
-      searchActions, search, network, config
+      searchActions, search, network, config, message, messageActions
 
     } = this.props
 
@@ -68,6 +68,8 @@ export default class NetworkViewer extends Component {
 
       <div style={this.props.style}>
         <ClosableAppBar
+          title={message.get('message')}
+          messageActions={messageActions}
           networkId={networkId}
           networks={networks}
           uiState={uiState}
@@ -81,6 +83,8 @@ export default class NetworkViewer extends Component {
           trees={config.get('trees').toJS()}
           currentNetwork={this.props.currentNetwork.toJS()}
           currentNetworkActions={this.props.currentNetworkActions}
+
+          propertyActions={propertyActions}
         />
 
         <NetworkPanel
@@ -97,6 +101,8 @@ export default class NetworkViewer extends Component {
 
           trees={config.get('trees').toJS()}
           currentNetwork={this.props.currentNetwork.toJS()}
+
+          messageActions={messageActions}
         />
 
         <Commands
@@ -124,6 +130,8 @@ export default class NetworkViewer extends Component {
           commandActions={commandActions}
           events={events}
           currentProperty={currentProperty}
+          currentNetwork={this.props.currentNetwork.toJS()}
+          trees={config.get('trees').toJS()}
         />
 
         {

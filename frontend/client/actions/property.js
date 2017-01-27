@@ -47,3 +47,12 @@ export const fetchEntry = (id, options) => {
       )
   }
 }
+
+export const CLEAR_PROPERTY = 'CLEAR_PROPERTY'
+export const clearProperty = () => {
+  return {
+    type: CLEAR_PROPERTY,
+    id: null,
+    options: {}
+  }
+}

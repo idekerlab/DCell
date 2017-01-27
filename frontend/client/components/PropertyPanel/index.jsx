@@ -1,6 +1,12 @@
 import React, {Component} from 'react'
 import Drawer from 'material-ui/Drawer'
-import Details from './Details'
+import ClixoDetails from './ClixoDetails'
+import GoDetails from './GoDetails'
+
+import CloseIcon from 'material-ui/svg-icons/navigation/close';
+
+const MAX_WIDTH = 800
+
 
 
 class PropertyPanel extends Component {
@@ -13,8 +19,6 @@ class PropertyPanel extends Component {
   }
 
   handleClose = () => {
-    console.log('- handleClose called!')
-
     this.setState({
       open: false
     })
@@ -22,8 +26,6 @@ class PropertyPanel extends Component {
 
 
   componentWillReceiveProps(nextProps) {
-    console.log("=============== ****** PROP PANEL NEXT ********* ==================")
-
     const selected = this.props.events.get('selected')
     const selectedNew = nextProps.events.get('selected')
 
@@ -35,31 +37,62 @@ class PropertyPanel extends Component {
   }
 
 
+
   render() {
 
-    console.log("$$$$$$$$$$$$$$$$$$$ PROP Panel rendering $$$$$$$$$$$$$")
-    console.log(this.props)
+    const currentNet = this.props.currentNetwork.id
 
     let w = window.innerWidth * 0.35
-    if(w>=800) {
-      w = 800
+    if(w >= MAX_WIDTH) {
+      w = MAX_WIDTH
     }
 
+    console.log('PANEL-----------------------------------------------------------------------------------------------------------------------')
     return (
       <Drawer
         width={w}
         openSecondary={true}
         open={this.state.open}>
 
-        <Details
-          {...this.props}
-          handleClose={this.handleClose}
+
+        <CloseIcon
+          style={{position: 'fixed', top: '0.7em', marginLeft: '0.7em', zIndex: 1200}}
+          onClick={this.handleClose}
+          color={'white'}
         />
+
+        {this.getPanel(currentNet)}
 
       </Drawer>
     )
   }
 
+
+  /**
+   * Currently supporting two types of networks only.
+   */
+  getPanel = curNet => {
+
+    if(this.props.currentProperty.id === null) {
+      return(<div></div>)
+    }
+
+    if(curNet === 'go') {
+      return (
+        <GoDetails
+          {...this.props}
+        />
+      )
+    } else if(curNet === 'clixo') {
+      return (
+        <ClixoDetails
+          {...this.props}
+        />
+      )
+    } else {
+      return (<div><h2>Unknown Neural network type</h2></div>)
+    }
+  }
 
 }
 

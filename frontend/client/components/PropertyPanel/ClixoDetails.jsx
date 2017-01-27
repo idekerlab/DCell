@@ -5,25 +5,31 @@ import Divider from 'material-ui/Divider';
 
 import TitleBar from './TitleBar'
 
-import SubNetworkView from './SubNetworkView'
 import RawInteractionPanel from './RawInteractionPanel'
-
 import GeneList from './GeneList'
-
 import Immutable from 'immutable'
-
-import TreeViewer from 'tree-viewer'
-
 import FilterPanel from './FilterPanel'
 
+
+import Loading from '../Loading'
+import OpenIcon from 'material-ui/svg-icons/action/open-in-new'
 
 import * as d3Scale from 'd3-scale'
 import * as d3ScaleChromatic from 'd3-scale-chromatic'
 
 const colorFunction = d3Scale.scaleOrdinal(d3ScaleChromatic.schemeDark2)
 
+const descriptionStyle = {
+  background: '#BEBEB4',
+  padding: '0.2em'
+}
 
-class Details extends Component {
+const disabledStyle = {
+  background: '#999999'
+}
+
+
+class ClixoDetails extends Component {
 
 
   constructor(props) {
@@ -43,26 +49,36 @@ class Details extends Component {
     this.setState({scoreFilter: val})
     console.log('New Score: ' + val)
 
-    this.props.commandActions.filter({options: {
-      type: 'numeric',
-      range: 'edge[score > ' + val + ']'
-    }})
+    this.props.commandActions.filter({
+      options: {
+        type: 'numeric',
+        range: 'edge[score > ' + val + ']'
+      }
+    })
   }
 
 
   render() {
-    console.log("%%%%%%%%%%%%%%%% Rendering Details Panel")
-
+    console.log("%%%%%%%%%%%%%%%% Rendering CLIXO Panel")
     console.log(this.props)
 
     const details = this.props.currentProperty
+    if (details === undefined || details === null || details.id === null || details.id === undefined) {
+      return (<div></div>)
+    }
+
+    // Loading
+    if(details.loading) {
+      return(<Loading style={descriptionStyle} />)
+    }
+
     const data = details.data._source
 
     let entry = {}
 
     let subnet = null
 
-    if(data === undefined) {
+    if (data === undefined) {
       entry = {}
     } else {
       entry = data
@@ -73,17 +89,6 @@ class Details extends Component {
     const genes = entry === {} ? [] : entry.genes
 
 
-
-    const descriptionStyle = {
-      background: '#BEBEB4',
-      padding: '1em'
-    }
-
-
-    const treeStyle = {
-      height: '20em',
-      background: 'red'
-    }
     return (
       <div>
 
@@ -107,32 +112,59 @@ class Details extends Component {
           title={entry.name}
         />
 
-        <div style={descriptionStyle}>
-          <h3>{entry.definition}</h3>
-        </div>
-
-
         <List>
           <ListItem
             key={1}
             secondaryText={'Term ID'}
             primaryText={entry.termid}
-          />,
-          <ListItem
-            key={2}
-            secondaryText={'Namespace'}
-            primaryText={entry.namespace}
           />
         </List>
 
-        <Divider />
+        <List
+          style={descriptionStyle}
+        >
+          <ListItem
+            key={1}
+            primaryText={'Aligned Gene Ontology Term'}
+            initiallyOpen={true}
+            nestedItems={[
+              <ListItem
+                key={1}
+                secondaryText={'GO Term ID'}
+                primaryText={entry.go.goid}
+                leftIcon={
+                  <OpenIcon
+                    color={"#FFFFFF"}
+                    onTouchTap={this._handleTouchTap.bind(this, entry.go.goid)}
+                  />
+                }
+              />,
+              <ListItem
+                key={2}
+                primaryText={entry.go.definition}
+              />,
+              <ListItem
+                key={3}
+                secondaryText={'Score'}
+                primaryText={entry.go.score}
+              />,
+              <ListItem
+                key={4}
+                secondaryText={'FDR'}
+                primaryText={entry.go.fdr}
+              />
+            ]}/>
+        </List>
 
-        <GeneList
+        < Divider />
+
+        < GeneList
           genes={genes}
         />
       </div>
     )
   }
+
 
   buildNetwork = (genes, interactions) => {
 
@@ -148,7 +180,7 @@ class Details extends Component {
       }
     }
 
-    if(interactions === undefined || genes === undefined) {
+    if (interactions === undefined || genes === undefined) {
       return network
     }
 
@@ -210,6 +242,11 @@ class Details extends Component {
       }
     }
   }
+
+
+  _handleTouchTap = id => {
+    window.open('http://amigo.geneontology.org/amigo/term/' + id);
+  }
 }
 
-export default Details
+export default ClixoDetails

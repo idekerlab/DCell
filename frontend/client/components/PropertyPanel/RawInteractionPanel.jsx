@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import CloseIcon from 'material-ui/svg-icons/navigation/close';
 import CyViewer from 'cy-viewer'
 
 import FlatButton from 'material-ui/FlatButton';
@@ -60,11 +59,6 @@ class RawInteractionPanel extends Component {
 
         {this.getMainContents()}
 
-        <CloseIcon
-          style={{position: 'fixed', top: '0.7em', marginLeft: '0.7em', zIndex: 999}}
-          onClick={this.props.handleClose}
-          color={'white'}
-        />
       </div>
     )
   }
