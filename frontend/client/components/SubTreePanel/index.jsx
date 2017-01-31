@@ -34,7 +34,7 @@ class SubTreePanel extends Component {
       position: 'fixed',
       margin: 0,
       padding: '0.5em',
-      background: 'rgba(245,245, 245, 0.9)',
+      background: 'rgba(245, 245, 245,1)',
       left: 0,
       bottom: 0,
     }
@@ -150,7 +150,8 @@ class SubTreePanel extends Component {
         id: node.id,
         type: 'term',
         name: node.name,
-        namespace: node.namespace
+        namespace: node.namespace,
+        score: node.importance
       }
     }))
     const edges = result.data.edges.map(edge => ({data: edge}))
