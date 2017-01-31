@@ -26,6 +26,10 @@ import * as queryGenesActions from '../../actions/query-genes'
 import * as messageActions from '../../actions/message'
 
 
+import injectTapEventPlugin from 'react-tap-event-plugin'
+injectTapEventPlugin()
+
+
 // Theme settings
 const muiTheme = getMuiTheme({
   appBar: {

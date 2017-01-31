@@ -13,6 +13,11 @@ services:
     ports:
       - "8888:8888"
 
+  web:
+    build: ./webserver
+    ports:
+      - "8080:80"
+
 
 volumes:
   deep-cell:

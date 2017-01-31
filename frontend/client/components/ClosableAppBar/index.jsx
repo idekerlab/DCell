@@ -31,11 +31,8 @@ export default class ClosableAppBar extends Component {
     }
   }
 
-  openMenu = () => this.setState({open: !this.state.open});
-
-
-  handleShareDialogOpen = () => {
-    this.setState({shareDialogOpen: !this.state.shareDialogOpen})
+  openMenu = () => {
+    this.setState({open: !this.state.open})
   }
 
 

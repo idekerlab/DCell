@@ -15,17 +15,6 @@ class SubTreePanel extends Component {
     };
   }
 
-  componentDidMount() {
-
-    fetch(url)
-      .then(response => (response.json()))
-      .then(json => {
-        console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^ subtree")
-        console.log(json)
-        this.setState({tree: json})
-      })
-  }
-
 
   getHeight = () => {
     if(this.state.isMax) {
@@ -160,7 +149,8 @@ class SubTreePanel extends Component {
       data: {
         id: node.id,
         type: 'term',
-        name: node.id
+        name: node.name,
+        namespace: node.namespace
       }
     }))
     const edges = result.data.edges.map(edge => ({data: edge}))

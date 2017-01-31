@@ -1,4 +1,12 @@
 import { createAction } from 'redux-actions'
+import {Client} from 'elasticsearch'
+
+
+const client = new Client({
+  host: 'localhost:9200',
+  log: 'info'
+});
+
 
 export const RUN_SIMULATION = 'RUN_SIMULATION'
 
@@ -58,11 +66,82 @@ export const runDeletion = (serviceUrl, genes) => {
         console.log('got json')
         console.log(json)
 
-        return dispatch(receiveSimulationResult(serviceUrl, genes, json))
+        const nodes = json.data.nodes
+        const nodeIds = nodes.map(node => {
+          return node.id
+        })
+
+        console.log("IDS:")
+        console.log(nodeIds)
+
+        searchIdMapping(nodeIds)
+          .then(res2 => {
+            console.log('got new res2')
+            console.log(res2)
+
+            const docs = res2.docs
+
+            const result = replaceNodeData(nodes, docs)
+            console.log(result)
+
+
+
+          }).then(json2 => {
+            console.log(json2)
+
+            return dispatch(receiveSimulationResult(serviceUrl, genes, json))
+          })
       })
   }
 }
 
+const replaceNodeData = (nodes, docs) => {
+
+  const mapping = {}
+
+  docs.forEach(entry => {
+
+    console.log(entry)
+
+    if(entry['found']) {
+      mapping[entry._id] = {
+        name: entry._source.name,
+        namespace: entry._source.namespace
+      }
+    }
+  })
+
+  console.log(mapping)
+
+  return nodes.map(node => {
+    const data = mapping[node.id]
+
+    if(data !== undefined) {
+      node.name = data.name
+      node.namespace = data.namespace
+    } else {
+      node.name = node.id
+      node.namespace = "N/A"
+    }
+
+    return node
+  })
+}
+
+
+const searchIdMapping = query => {
+
+  return client.mget(
+    {
+      index: 'terms',
+      type: 'go_term',
+      _source: ['name', 'namespace'],
+      body: {
+        ids: query
+      }
+    }
+  )
+}
 
 export const ADD_GENE = 'ADD_GENE'
 export const addGene = createAction(ADD_GENE)
