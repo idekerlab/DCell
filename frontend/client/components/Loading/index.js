@@ -5,8 +5,9 @@ import classnames from 'classnames'
 export default class Loading extends Component {
 
   render() {
+
     return (
-      <div className={style.grid}>
+      <div style={this.props.style}>
         <div className={style.loader}>
           <div className={style.square}></div>
           <div className={style.square}></div>
@@ -23,3 +24,17 @@ export default class Loading extends Component {
   }
 }
 
+Loading.defaultProps = {
+  style: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexFlow: 'row wrap',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+};

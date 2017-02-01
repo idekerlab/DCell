@@ -30,7 +30,9 @@ export default function queryGeneState(state = defState, action) {
     case CLEAR_GENES:
       console.log('+++++ CLEAR: ')
 
-      return state.set('genes', Set())
+      return state
+        .set('genes', Set())
+        .set('result', null)
 
     case RUN_SIMULATION:
       console.log('+++++++++++++++ Run simulation! ++++++++++++++')
