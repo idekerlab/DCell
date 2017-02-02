@@ -72,7 +72,7 @@ class SubTreePanel extends Component {
       position: 'fixed',
       margin: 0,
       padding: '0.5em',
-      background: '#354B72',
+      background: '#FFFFFF',
       left: 0,
       bottom: 0,
     }
