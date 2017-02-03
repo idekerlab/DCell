@@ -1,10 +1,6 @@
 import React, {Component} from 'react'
 import {Set} from 'immutable'
 
-import * as colors from 'material-ui/styles/colors';
-
-import {List, ListItem} from 'material-ui/List';
-
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import ClearIcon from 'material-ui/svg-icons/content/clear';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -173,14 +169,10 @@ class SearchTab extends Component {
   }
 
   runSimulation = () => {
-    console.log("Run simulation! ")
     const genes = this.props.queryGenes.get('genes')
-    console.log(genes)
-
     const hits = this.props.search.result.hits.hits
 
     const geneMap = {}
-
     const geneSet = Set(genes)
 
     hits.forEach(hit => {
@@ -201,8 +193,6 @@ class SearchTab extends Component {
 
     console.log("============= Gene Map ==============")
     console.log(geneMap)
-
-
 
     this.props.queryGenesActions.runDeletion('http://localhost:8888', genes.toArray(), geneMap)
     this.props.uiStateActions.showResult(true)
@@ -253,6 +243,5 @@ class SearchTab extends Component {
     )
   }
 }
-
 
 export default SearchTab
