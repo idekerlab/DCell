@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Set} from 'immutable'
 
 import * as colors from 'material-ui/styles/colors';
 
@@ -9,10 +10,6 @@ import ClearIcon from 'material-ui/svg-icons/content/clear';
 import RaisedButton from 'material-ui/RaisedButton';
 import RunIcon from 'material-ui/svg-icons/av/play-arrow';
 
-import FlatButton from 'material-ui/FlatButton';
-
-
-
 
 import TextField from 'material-ui/TextField';
 
@@ -20,7 +17,6 @@ import style from './style.css'
 
 import GenotypePanel from './GenotypePanel'
 
-import {TransitionMotion, spring, presets} from 'react-motion'
 
 
 import GeneList from './GeneList'
@@ -177,18 +173,45 @@ class SearchTab extends Component {
   }
 
   runSimulation = () => {
-    console.log("Run!!")
-
+    console.log("Run simulation! ")
     const genes = this.props.queryGenes.get('genes')
     console.log(genes)
 
-    this.props.queryGenesActions.runDeletion('http://localhost:8888', genes.toArray())
+    const hits = this.props.search.result.hits.hits
+
+    const geneMap = {}
+
+    const geneSet = Set(genes)
+
+    hits.forEach(hit => {
+
+      const locusName = hit._source.locus
+
+      if(geneSet.has(locusName)) {
+        const gene = hit._source.id
+        const symbol = hit._source.symbol
+        const name = hit._source.name
+        geneMap[locusName] = {
+          name: symbol,
+          id: gene,
+          fullName: name
+        }
+      }
+    })
+
+    console.log("============= Gene Map ==============")
+    console.log(geneMap)
+
+
+
+    this.props.queryGenesActions.runDeletion('http://localhost:8888', genes.toArray(), geneMap)
     this.props.uiStateActions.showResult(true)
   }
 
 
   resetSelection = () => {
     this.props.queryGenesActions.clearGenes()
+    this.props.uiStateActions.showResult(false)
   }
 
 

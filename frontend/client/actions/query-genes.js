@@ -49,7 +49,7 @@ const fetchResult = (serviceUrl, genes) => {
 }
 
 
-export const runDeletion = (serviceUrl, genes) => {
+export const runDeletion = (serviceUrl, genes, geneMap) => {
 
   return dispatch => {
     dispatch(runSimulation(serviceUrl, genes))
@@ -80,11 +80,7 @@ export const runDeletion = (serviceUrl, genes) => {
             console.log(res2)
 
             const docs = res2.docs
-
-            const result = replaceNodeData(nodes, docs)
-            console.log(result)
-
-
+            const result = replaceNodeData(nodes, docs, genes, geneMap)
 
           }).then(json2 => {
             console.log(json2)
@@ -95,13 +91,11 @@ export const runDeletion = (serviceUrl, genes) => {
   }
 }
 
-const replaceNodeData = (nodes, docs) => {
+const replaceNodeData = (nodes, docs, genes, geneMap) => {
 
   const mapping = {}
 
   docs.forEach(entry => {
-
-    console.log(entry)
 
     if(entry['found']) {
       mapping[entry._id] = {
@@ -111,6 +105,13 @@ const replaceNodeData = (nodes, docs) => {
     }
   })
 
+
+  genes.forEach(gene => {
+    mapping[gene] = geneMap[gene]
+  })
+
+
+  console.log("MAP-_________________________________")
   console.log(mapping)
 
   return nodes.map(node => {

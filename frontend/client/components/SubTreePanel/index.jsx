@@ -5,6 +5,11 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {TreeViewer, DAGViewer} from 'tree-viewer'
 import Loading from '../Loading'
 
+import ExpandIcon from 'material-ui/svg-icons/navigation/fullscreen'
+import CollapseIcon from 'material-ui/svg-icons/navigation/fullscreen-exit'
+import CloseIcon from 'material-ui/svg-icons/content/clear'
+
+import Toggle from 'material-ui/Toggle';
 
 
 const loaderStyle = {
@@ -16,7 +21,6 @@ const loaderStyle = {
   alignItems: 'center',
   justifyContent: 'center',
 }
-
 
 
 class SubTreePanel extends Component {
@@ -31,10 +35,18 @@ class SubTreePanel extends Component {
 
 
   getHeight = () => {
-    if(this.state.isMax) {
+    if (this.state.isMax) {
       return '100%'
     } else {
       return '45%'
+    }
+  }
+
+  getIcon = () => {
+    if (this.state.isMax) {
+      return(<CollapseIcon />)
+    } else {
+      return(<ExpandIcon />)
     }
   }
 
@@ -46,7 +58,7 @@ class SubTreePanel extends Component {
     console.log(result)
     console.log(nextResult)
 
-    if(result === nextResult) {
+    if (result === nextResult) {
       console.log("SAME Tree!!!!!!!!!!!!!!")
 
       if (this.state.isMax === nextState.isMax) {
@@ -65,13 +77,13 @@ class SubTreePanel extends Component {
     console.log(this.props)
 
 
-    const cardStyle ={
+    const cardStyle = {
       height: this.getHeight(),
       zIndex: '1200',
       width: '100%',
       position: 'fixed',
       margin: 0,
-      padding: '0.5em',
+      padding: 0,
       background: '#FFFFFF',
       left: 0,
       bottom: 0,
@@ -80,47 +92,69 @@ class SubTreePanel extends Component {
     const actionStyle = {
       display: 'flex',
       justifyContent: 'flex-end',
+      alignItems: 'center',
       position: 'fixed',
       bottom: '1em',
-      right: '1em'
+      right: '1em',
+      background: 'rgba(0,0,0,0)',
+
+      zIndex: 1300,
     }
 
 
-
-    // const genes = this.props.queryGenes.get('genes')
-    // const genotype = genes.reduce(
-    //   (previousValue, currentValue, index, array) => {
-    //     return previousValue + ", " + currentValue
-    //   }
-    // )
-
+    const genes = this.props.queryGenes.get('genes')
+    const genotype = genes.reduce(
+      (previousValue, currentValue, index, array) => {
+        return previousValue + ", " + currentValue
+      }
+    )
 
 
     const result = this.props.queryGenes.get('result')
     const running = this.props.queryGenes.get('running')
 
+    const titleStyle = {
+      color: '#26C6DA',
+      fontWeight: 700,
+      position: 'fixed',
+      bottom: '1em',
+      left: '1em',
+      zIndex: 1210,
+      background: 'rgba(0,0,0,0)'
+
+    }
+
     return (
-      <Card style={cardStyle}>
-        <CardHeader
-          title="Gene Deletion Simulation Result"
-          subtitle={"Genotype: "}
-          actAsExpander={true}
-        />
+      <div>
+        <div style={titleStyle}>
+          {"Deleted Genes: " + genotype}
+        </div>
 
-        {this.getMainContents(result, running)}
+        <Card
+          style={cardStyle}
+        >
+          {this.getMainContents(result, running)}
 
-        <CardActions style={actionStyle}>
-          <RaisedButton
-            label={this.state.isMax ? "Minimize Window" : "Maximize Window"}
-            onClick={this.toggleWindow}
-          />
-          <RaisedButton
-            label="Close Result"
-            secondary={true}
-            onClick={this.handleClose}
-          />
-        </CardActions>
-      </Card>
+          <CardActions
+            style={actionStyle}
+          >
+            <Toggle
+              label="Show Neurons"
+              labelPosition="right"
+              style={{maxWidth: 180}}
+            />
+            <RaisedButton
+              icon={this.state.isMax ? <CollapseIcon /> : <ExpandIcon />}
+              onClick={this.toggleWindow}
+            />
+            <RaisedButton
+              icon={<CloseIcon />}
+              primary={true}
+              onClick={this.handleClose}
+            />
+          </CardActions>
+        </Card>
+      </div>
     )
   }
 
@@ -139,23 +173,23 @@ class SubTreePanel extends Component {
 
   getMainContents = (result, running) => {
 
-    if(result === null || result === undefined) {
+    if (result === null || result === undefined) {
 
-      if(running) {
+      if (running) {
         return (
           <Loading
             style={loaderStyle}
           />
         )
       } else {
-        return(
+        return (
           <div></div>
         )
       }
     } else {
 
       const w = window.innerWidth
-      const h = this.state.isMax ? window.innerHeight : window.innerHeight* 0.4
+      const h = this.state.isMax ? window.innerHeight : window.innerHeight * 0.4
 
       const treeStyle = {
         width: w,
@@ -165,7 +199,7 @@ class SubTreePanel extends Component {
 
       const dag = this.getDag(result)
 
-      return(
+      return (
         <DAGViewer
           data={dag}
           label="long_name"
@@ -185,30 +219,44 @@ class SubTreePanel extends Component {
         name: 'simulation result'
       },
       elements: {
-        nodes:[],
-        edges:[]
+        nodes: [],
+        edges: []
       }
     }
 
-    if(result === null || result === undefined) {
+    if (result === null || result === undefined) {
       return net
     }
 
     const nodes = result.data.nodes.map(node => {
 
+      console.log(node)
+
       let nodeType = 'term'
-      if(node.id.startsWith('Y')) {
+
+      if (node.id.startsWith('Y')) {
         nodeType = 'gene'
-      }
-      return {
-        data: {
-          id: node.id,
-          type: nodeType,
-          name: node.name,
-          namespace: node.namespace,
-          score: node.importance
+        return {
+          data: {
+            id: node.id,
+            type: nodeType,
+            name: node.name,
+            fullName: node.fullName
+          }
+        }
+      } else {
+
+        return {
+          data: {
+            id: node.id,
+            type: nodeType,
+            name: node.name,
+            namespace: node.namespace,
+            score: node.importance
+          }
         }
       }
+
     })
     const edges = result.data.edges.map(edge => ({data: edge}))
 
