@@ -11,6 +11,11 @@ import CloseIcon from 'material-ui/svg-icons/content/clear'
 
 import Toggle from 'material-ui/Toggle';
 
+// For filtering
+import cytoscape from 'cytoscape'
+
+
+
 
 const loaderStyle = {
   height: '100%',
@@ -29,7 +34,8 @@ class SubTreePanel extends Component {
     super(props);
     this.state = {
       tree: {},
-      isMax: false
+      isMax: false,
+      expand: false
     };
   }
 
@@ -58,12 +64,18 @@ class SubTreePanel extends Component {
     console.log(result)
     console.log(nextResult)
 
+    if(this.state.expand !== nextState.expand) {
+      console.log("EXPAND!!!!!!!!!!!!!!")
+      return true
+    }
+
     if (result === nextResult) {
       console.log("SAME Tree!!!!!!!!!!!!!!")
 
       if (this.state.isMax === nextState.isMax) {
         return false
       }
+
     }
 
     console.log("Tree Updated !!!!!!!!!!!!!!")
@@ -142,6 +154,7 @@ class SubTreePanel extends Component {
               label="Show Neurons"
               labelPosition="right"
               style={{maxWidth: 180}}
+              onToggle={this.handleToggle}
             />
             <RaisedButton
               icon={this.state.isMax ? <CollapseIcon /> : <ExpandIcon />}
@@ -158,6 +171,10 @@ class SubTreePanel extends Component {
     )
   }
 
+
+  handleToggle = () => {
+    this.setState({expand: !(this.state.expand)})
+  }
 
   toggleWindow = () => {
     this.setState({
@@ -199,20 +216,71 @@ class SubTreePanel extends Component {
 
       const dag = this.getDag(result)
 
+
+
+      const dagStyle = {
+
+      }
+
+      this.filter(dag, 'GO:0006281', 'GO:00SUPER')
+
       return (
         <DAGViewer
           data={dag}
           label="long_name"
           style={treeStyle}
+          expand={this.state.expand}
         />
       )
     }
 
   }
 
+  filter = (net, start, end) => {
+
+    console.log('Path finfing2 *********************************************************************')
+    console.log(start)
+    console.log(end)
+
+    const cy = cytoscape({
+      headless: true,
+      elements: net.elements
+    })
+
+    const r = start.replace(/\:/, '\\:')
+    const g = end.replace(/\:/, '\\:')
+
+
+
+    const newNodes = []
+
+    var bfs = cy.elements().bfs({
+      root: '#' + r,
+      directed: true,
+      visit: function(i, depth){
+        console.log('visited: ')
+        console.log(this.data() );
+        newNodes.push(this)
+      },
+    });
+
+    var path = bfs.path; // path to found node
+    var found = bfs.found; // found node
+
+
+
+
+
+    console.log(found)
+    console.log(path)
+    console.log(newNodes)
+    const ndata = cy.json({elements: newNodes})
+    console.log(ndata)
+
+  }
+
   getDag = result => {
     console.log('==================DAG *********************************************************************')
-    console.log(result)
 
     const net = {
       data: {
@@ -229,8 +297,6 @@ class SubTreePanel extends Component {
     }
 
     const nodes = result.data.nodes.map(node => {
-
-      console.log(node)
 
       let nodeType = 'term'
 
@@ -252,7 +318,8 @@ class SubTreePanel extends Component {
             type: nodeType,
             name: node.name,
             namespace: node.namespace,
-            score: node.importance
+            score: node.importance,
+            phenotype: node.phenotype
           }
         }
       }
@@ -262,8 +329,6 @@ class SubTreePanel extends Component {
 
     net.elements.nodes = nodes
     net.elements.edges = edges
-
-    console.log(net)
 
     return net
   }
