@@ -222,11 +222,12 @@ class SubTreePanel extends Component {
 
       }
 
-      this.filter(dag, 'GO:0006281', 'GO:00SUPER')
+      const dag2 = this.filter(dag, 'GO:0006281', 'GO:00SUPER')
+
 
       return (
         <DAGViewer
-          data={dag}
+          data={dag2}
           label="long_name"
           style={treeStyle}
           expand={this.state.expand}
@@ -239,6 +240,7 @@ class SubTreePanel extends Component {
   filter = (net, start, end) => {
 
     console.log('Path finfing2 *********************************************************************')
+    console.log(net)
     console.log(start)
     console.log(end)
 
@@ -247,36 +249,41 @@ class SubTreePanel extends Component {
       elements: net.elements
     })
 
+    // Start node
     const r = start.replace(/\:/, '\\:')
-    const g = end.replace(/\:/, '\\:')
-
-
 
     const newNodes = []
 
-    var bfs = cy.elements().bfs({
+    cy.elements().bfs({
       root: '#' + r,
       directed: true,
-      visit: function(i, depth){
-        console.log('visited: ')
-        console.log(this.data() );
+      visit: function(i, depth) {
         newNodes.push(this)
       },
     });
 
-    var path = bfs.path; // path to found node
-    var found = bfs.found; // found node
-
-
-
-
-
-    console.log(found)
-    console.log(path)
     console.log(newNodes)
-    const ndata = cy.json({elements: newNodes})
+
+    const ndata = cy.collection(newNodes)
     console.log(ndata)
 
+    const newEdges = ndata.connectedEdges()
+    console.log(newEdges)
+
+    const cy2 = cytoscape({
+      headless: true
+    })
+
+    const np = newEdges.connectedNodes()
+    cy2.add(np)
+    cy2.add(newEdges)
+
+    const newNet = cy2.json()
+
+    console.log('========== New net')
+    console.log(newNet)
+
+    return newNet
   }
 
   getDag = result => {
@@ -306,7 +313,7 @@ class SubTreePanel extends Component {
           data: {
             id: node.id,
             type: nodeType,
-            name: node.name,
+            name: node.name + ' (' + node.fullName + ')',
             fullName: node.fullName
           }
         }
