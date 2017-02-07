@@ -220,4 +220,4 @@ Temporary Items
 
 deep-cell.iml
 
-backend/webserver/static
+#backend/webserver/static
