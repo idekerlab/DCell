@@ -146,6 +146,7 @@ class SearchTab extends Component {
 
         <GenotypePanel
           genes={genes}
+          queryGenesActions={this.props.queryGenesActions}
         />
 
         <div style={actionStyle}>
@@ -169,6 +170,9 @@ class SearchTab extends Component {
   }
 
   runSimulation = () => {
+
+    this.props.queryGenesActions.clearResults()
+
     const genes = this.props.queryGenes.get('genes')
     const hits = this.props.search.result.hits.hits
 
@@ -192,9 +196,11 @@ class SearchTab extends Component {
     })
 
     console.log("============= Gene Map ==============")
+
+    console.log(genes)
     console.log(geneMap)
 
-    this.props.queryGenesActions.runDeletion('http://localhost:8888', genes.toArray(), geneMap)
+    this.props.queryGenesActions.runDeletion('http://localhost:8888', geneSet.toArray(), geneMap)
     this.props.uiStateActions.showResult(true)
   }
 
@@ -202,6 +208,8 @@ class SearchTab extends Component {
   resetSelection = () => {
     this.props.queryGenesActions.clearGenes()
     this.props.uiStateActions.showResult(false)
+
+    this.clearQuery()
   }
 
 

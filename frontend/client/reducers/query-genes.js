@@ -1,4 +1,4 @@
-import {RUN_SIMULATION, RECEIVE_SIMULATION_RESULT, ADD_GENE, DELETE_GENE, CLEAR_GENES} from '../actions/query-genes'
+import {RUN_SIMULATION, RECEIVE_SIMULATION_RESULT, ADD_GENE, DELETE_GENE, CLEAR_GENES, CLEAR_RESULTS} from '../actions/query-genes'
 import {Map, Set} from 'immutable'
 
 
@@ -32,6 +32,10 @@ export default function queryGeneState(state = defState, action) {
 
       return state
         .set('genes', Set())
+        .set('result', null)
+    case CLEAR_RESULTS:
+      console.log('+++++ CLEAR RES: ')
+      return state
         .set('result', null)
 
     case RUN_SIMULATION:

@@ -33,10 +33,11 @@ class SubTreePanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tree: {},
+      dag: null,
       isMax: false,
-      expand: false
-    };
+      expand: false,
+      filterDag: null
+    }
   }
 
 
@@ -45,14 +46,6 @@ class SubTreePanel extends Component {
       return '100%'
     } else {
       return '45%'
-    }
-  }
-
-  getIcon = () => {
-    if (this.state.isMax) {
-      return(<CollapseIcon />)
-    } else {
-      return(<ExpandIcon />)
     }
   }
 
@@ -72,6 +65,10 @@ class SubTreePanel extends Component {
     if (result === nextResult) {
       console.log("SAME Tree!!!!!!!!!!!!!!")
 
+      if(this.state.filterDag !== null) {
+        console.log("FILTER@@@@@@@@@@@@@@@@@@!!!!!!!!!!!!!!")
+        return true
+      }
       if (this.state.isMax === nextState.isMax) {
         return false
       }
@@ -82,6 +79,18 @@ class SubTreePanel extends Component {
     return true
 
   }
+
+  componentWillReceiveProps(nextProps) {
+    const result = nextProps.queryGenes.get('result')
+    if(result === null || result === undefined) {
+      return
+    }
+
+    const curResult = this.props.queryGenes.get('result')
+    const dag = this.getDag(result)
+    this.setState({dag: dag})
+  }
+
 
   render() {
 
@@ -187,6 +196,10 @@ class SubTreePanel extends Component {
     this.props.uiStateActions.showResult(false)
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    this.setState({filterDag: null})
+  }
+
 
   getMainContents = (result, running) => {
 
@@ -214,28 +227,45 @@ class SubTreePanel extends Component {
         background: '#777777'
       }
 
-      const dag = this.getDag(result)
 
 
+      let dag = this.state.dag
 
-      const dagStyle = {
-
+      if(this.state.filterDag !== null) {
+        console.log("###################### FILTER***********************************")
+        dag = this.filter(dag, this.state.filterDag.source, this.state.filterDag.target)
       }
-
-      const dag2 = this.filter(dag, 'GO:0006281', 'GO:00SUPER')
-
 
       return (
         <DAGViewer
-          data={dag2}
+          data={dag}
           label="long_name"
           style={treeStyle}
           expand={this.state.expand}
+          nodeSelected={this.nodeSelected}
         />
       )
     }
 
   }
+
+
+  nodeSelected = (selectedNode) => {
+    console.log('# Node Selected in Application: ')
+    console.log(selectedNode) // This is an ID of node
+
+    // Filter network
+    this.setState({
+      filterDag: {
+        source: selectedNode,
+        target: 'GO:00SUPER'
+      }
+
+    })
+
+  }
+
+
 
   filter = (net, start, end) => {
 
@@ -313,7 +343,7 @@ class SubTreePanel extends Component {
           data: {
             id: node.id,
             type: nodeType,
-            name: node.name + ' (' + node.fullName + ')',
+            name: node.name,
             fullName: node.fullName
           }
         }

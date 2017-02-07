@@ -152,3 +152,6 @@ export const deleteGene = createAction(DELETE_GENE)
 
 export const CLEAR_GENES = 'CLEAR_GENES'
 export const clearGenes = createAction(CLEAR_GENES)
+
+export const CLEAR_RESULTS = 'CLEAR_RESULTS'
+export const clearResults = createAction(CLEAR_RESULTS)

@@ -1,3 +1,14 @@
 FROM nginx
 
-COPY build /usr/share/nginx/html
+
+# Download ontology files from remote server
+RUN apt-get update
+RUN apt-get install -y wget
+
+COPY ./static /usr/share/nginx/html
+
+RUN mkdir /usr/share/nginx/html/data
+WORKDIR /usr/share/nginx/html/data
+
+RUN wget http://chianti.ucsd.edu/~kono/ci/data/deep-cell/tree/tree-go.json
+RUN wget http://chianti.ucsd.edu/~kono/ci/data/deep-cell/tree/tree-clixo.json

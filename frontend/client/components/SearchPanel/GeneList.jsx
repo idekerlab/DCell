@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, PropTypes} from 'react'
 
 import {List, ListItem} from 'material-ui/List';
 
@@ -14,17 +14,12 @@ const listStyle = {
 
 class GeneList extends Component {
 
-
   constructor(props) {
     super(props);
 
     this.state = {
-      checked: false
+      disabled: false
     }
-  }
-
-
-  componentWillReceiveProps(nextProps) {
   }
 
 
@@ -50,6 +45,7 @@ class GeneList extends Component {
           key={i}
           leftCheckbox={
             <Checkbox
+              disabled={this.state.disabled}
               onCheck={() => {
                 this.itemSelected(gene)
               }}
@@ -64,6 +60,19 @@ class GeneList extends Component {
 
     return newList
   }
+
+  // componentWillReceiveProps(nextProps) {
+  //   const selectedGeneCount = nextProps.queryGenes.get('genes')
+  //
+  //   console.log("===========> gene count3")
+  //   console.log(selectedGeneCount)
+  //
+  //
+  //   if(selectedGeneCount.size >= 2) {
+  //     this.setState({disabled: true})
+  //   }
+  //
+  // }
 
 
   itemSelected = gene => {
@@ -89,7 +98,7 @@ class GeneList extends Component {
     console.log(this.props.queryGenes)
 
   }
-
 }
+
 
 export default GeneList

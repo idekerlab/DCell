@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, PropTypes} from 'react'
 
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
@@ -61,5 +61,6 @@ class GeneList extends Component {
   }
 
 }
+
 
 export default GeneList

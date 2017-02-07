@@ -30,7 +30,7 @@
           }
         }
       },
-      "url": "https://gist.githubusercontent.com/keiono/33b81c13ee6fabdd9cb35e60662568b6/raw/84328470d1b7ef4470a18640cd911bf4e8d75c49/go-sparse-compact.json"
+      "url": "/data/tree-go.json"
     },
     "clixo": {
       "name": "CLIXO",
@@ -39,7 +39,7 @@
         "index": "terms",
         "type": "clixo_term"
       },
-      "url": "https://gist.githubusercontent.com/keiono/56c01be02e68ebc5a343554ee96998dd/raw/bed17e89cdacd1f53ca7d9ae5f2e5506238de094/clixo-compact.json"
+      "url": "/data/tree-clixo.json"
     }
   }
 }

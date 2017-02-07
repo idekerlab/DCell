@@ -15,8 +15,8 @@ const containerStyle = {
 
 class GenotypePanel extends Component {
 
-  render() {
 
+  render() {
     const genes = this.props.genes
 
     if(genes === undefined || genes.size === 0) {
@@ -28,17 +28,22 @@ class GenotypePanel extends Component {
 
     return (
       <div style={style}>
-        <h3>Genotype:</h3>
+        <h4>Genotype:</h4>
 
         <div style={containerStyle}>
-          {this.props.genes.map(this.renderGene, this)}
+          {this.getGenes(this.props.genes)}
         </div>
       </div>
     )
 
   }
 
-  renderGene = data => {
+
+  getGenes = genes => (
+    genes.map(gene => (this.renderGene(gene)))
+  )
+
+  renderGene = gene => {
 
     const chipStyle = {
       margin: '0.3em', fontSize: '0.3em'
@@ -46,20 +51,17 @@ class GenotypePanel extends Component {
 
     return (
       <Chip
-        key={data}
-        onRequestDelete={() => this.handleDelete(data)}
+        key={gene}
+        onRequestDelete={() => this.handleDelete(gene)}
         style={chipStyle}
       >
-        {data.toLowerCase() + 'Δ'}
+        {gene.toLowerCase() + 'Δ'}
       </Chip>
     );
   }
 
   handleDelete = key => {
-    this.chipData = this.props.genes;
-    const chipToDelete = this.chipData.map((chip) => chip.key).indexOf(key);
-    this.chipData.splice(chipToDelete, 1);
-    this.setState({chipData: this.chipData});
+    this.props.queryGenesActions.deleteGene(key)
   };
 
 }
