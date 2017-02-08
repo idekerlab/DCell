@@ -1,9 +1,12 @@
 import { createAction } from 'redux-actions'
 import {Client} from 'elasticsearch'
 
+import config from '../assets/config.json'
+
+
 
 const client = new Client({
-  host: 'localhost:9200',
+  host: config.backendServices.db,
   log: 'info'
 });
 

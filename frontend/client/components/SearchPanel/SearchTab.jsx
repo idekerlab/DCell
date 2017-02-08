@@ -15,6 +15,7 @@ import GenotypePanel from './GenotypePanel'
 
 
 
+
 import GeneList from './GeneList'
 
 
@@ -200,7 +201,9 @@ class SearchTab extends Component {
     console.log(genes)
     console.log(geneMap)
 
-    this.props.queryGenesActions.runDeletion('http://localhost:8888', geneSet.toArray(), geneMap)
+    const url = this.props.backendServices.simulator
+
+    this.props.queryGenesActions.runDeletion(url, geneSet.toArray(), geneMap)
     this.props.uiStateActions.showResult(true)
   }
 

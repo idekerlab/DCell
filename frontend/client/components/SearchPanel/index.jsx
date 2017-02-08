@@ -88,7 +88,7 @@ class SearchPanel extends Component {
               search={this.props.search}
               searchActions={this.props.searchActions}
               uiStateActions={this.props.uiStateActions}
-
+              backendServices={this.props.backendServices}
               queryGenesActions={this.props.queryGenesActions}
               queryGenes={this.props.queryGenes}
             />

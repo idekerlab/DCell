@@ -116,6 +116,7 @@ export default class NetworkViewer extends Component {
           uiStateActions={uiStateActions}
           commandActions={commandActions}
 
+          backendServices={config.get('backendServices').toJS()}
           trees={config.get('trees').toJS()}
           currentNetwork={this.props.currentNetwork.toJS()}
 
@@ -132,6 +133,7 @@ export default class NetworkViewer extends Component {
           currentProperty={currentProperty}
           currentNetwork={this.props.currentNetwork.toJS()}
           trees={config.get('trees').toJS()}
+          backendServices={config.get('backendServices').toJS()}
         />
 
         {
