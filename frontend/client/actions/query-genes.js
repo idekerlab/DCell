@@ -34,6 +34,28 @@ const receiveSimulationResult = (serviceUrl, genes, json) => {
   }
 }
 
+export const FETCH_CHILDREN = 'FETCH_CHILDREN'
+
+const fetchChildren = (serviceUrl, termId) => {
+
+  return {
+    type: FETCH_CHILDREN,
+    serviceUrl,
+    pivot: termId,
+  }
+}
+
+export const RECEIVE_CHILDREN = 'RECEIVE_CHILDREN'
+const receiveChildren = (serviceUrl, json, pivot) => {
+
+  return {
+    type: RECEIVE_SIMULATION_RESULT,
+    serviceUrl,
+    pivot,
+    result: json
+  }
+}
+
 
 const fetchResult = (serviceUrl, genes) => {
 
@@ -52,6 +74,48 @@ const fetchResult = (serviceUrl, genes) => {
 }
 
 
+export const pivot = (currentDag, serviceUrl, termId) => {
+  return dispatch => {
+
+    dispatch(fetchChildren(serviceUrl, termId))
+
+    const url = serviceUrl + termId + '/children'
+
+    return fetch(url)
+      .then(response => (response.json()))
+      .then(json => {
+
+        const nodes = json.elements.nodes
+        const edges = json.elements.edges
+
+        nodes.forEach(n => {
+          console.log(n)
+          if(n.id !== termId) {
+            currentDag.data.nodes.push({
+              id: n.data.id,
+              name: n.data.name,
+              importance: -1,
+              phenotype: -1,
+              neutons: [],
+              namespace: ''
+            })
+          }
+        })
+
+        edges.forEach(e=> {
+          console.log(e)
+          currentDag.data.edges.push({
+            source: e.data.source,
+            target: e.data.target
+          })
+        })
+
+        return dispatch(receiveChildren(serviceUrl, currentDag, termId))
+      })
+  }
+
+}
+
 export const runDeletion = (serviceUrl, genes, geneMap) => {
 
   return dispatch => {
@@ -60,13 +124,10 @@ export const runDeletion = (serviceUrl, genes, geneMap) => {
     return fetchResult(serviceUrl, genes)
       .then(response => {
         console.log(response)
-        // return response.text()
-
         return response.json()
-
       })
       .then(json => {
-        console.log('got json')
+        console.log('got DAG json in cyjs format')
         console.log(json)
 
         const nodes = json.data.nodes
@@ -85,7 +146,8 @@ export const runDeletion = (serviceUrl, genes, geneMap) => {
             const docs = res2.docs
             const result = replaceNodeData(nodes, docs, genes, geneMap)
 
-          }).then(json2 => {
+          })
+          .then(json2 => {
             console.log(json2)
 
             return dispatch(receiveSimulationResult(serviceUrl, genes, json))
@@ -130,6 +192,14 @@ const replaceNodeData = (nodes, docs, genes, geneMap) => {
 
     return node
   })
+}
+
+const mergeGraph = (serviceUrl, termid) => {
+
+  const url = serviceUrl + termid + '/children'
+
+  return fetch(url)
+
 }
 
 

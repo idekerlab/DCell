@@ -1,4 +1,5 @@
-import {RUN_SIMULATION, RECEIVE_SIMULATION_RESULT, ADD_GENE, DELETE_GENE, CLEAR_GENES, CLEAR_RESULTS} from '../actions/query-genes'
+import {RUN_SIMULATION, RECEIVE_SIMULATION_RESULT, FETCH_CHILDREN, RECEIVE_CHILDREN,
+  ADD_GENE, DELETE_GENE, CLEAR_GENES, CLEAR_RESULTS} from '../actions/query-genes'
 import {Map, Set} from 'immutable'
 
 
@@ -10,7 +11,8 @@ const defState = Map({
   serviceURL: SERVICE_URL,
   genes: Set(),
   running: false,
-  result: null
+  result: null,
+  pivot: null
 })
 
 
@@ -47,6 +49,20 @@ export default function queryGeneState(state = defState, action) {
 
     case RECEIVE_SIMULATION_RESULT:
       console.log('+++++++++++++++ Simulation finished ++++++++++++++')
+
+      return state
+        .set(RUNNING, false)
+        .set('result', action.result)
+
+    case FETCH_CHILDREN:
+      console.log('+++++++++++++++ Fetching children ++++++++++++++')
+      return state
+        .set(RUNNING, true)
+        .set('serviceURL', action.serviceUrl)
+        .set('pivot', action.pivot)
+
+    case RECEIVE_CHILDREN:
+      console.log('+++++++++++++++ CHILDREN finished ++++++++++++++')
 
       return state
         .set(RUNNING, false)

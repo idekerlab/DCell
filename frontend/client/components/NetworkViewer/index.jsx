@@ -140,6 +140,7 @@ export default class NetworkViewer extends Component {
           uiState.get('showResult') ?
             <SubTreePanel
               uiStateActions={uiStateActions}
+              queryGenesActions={this.props.queryGenesActions}
               queryGenes={this.props.queryGenes}
             /> :
             <div></div>

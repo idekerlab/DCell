@@ -13,6 +13,11 @@ services:
     ports:
       - "8888:8888"
 
+  go-util:
+    build: ./gene-ontology
+    ports:
+      - "5000:5000"
+
   static:
     build: ./webserver
     ports:

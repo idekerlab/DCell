@@ -254,14 +254,18 @@ class SubTreePanel extends Component {
     console.log('# Node Selected in Application: ')
     console.log(selectedNode) // This is an ID of node
 
-    // Filter network
-    this.setState({
-      filterDag: {
-        source: selectedNode,
-        target: 'GO:00SUPER'
-      }
 
-    })
+    const result = this.props.queryGenes.get('result')
+    this.props.queryGenesActions.pivot(result, 'http://localhost:5000/', selectedNode)
+
+    // // Filter network
+    // this.setState({
+    //   filterDag: {
+    //     source: selectedNode,
+    //     target: 'GO:00SUPER'
+    //   }
+    //
+    // })
 
   }
 
