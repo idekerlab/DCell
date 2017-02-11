@@ -256,16 +256,16 @@ class SubTreePanel extends Component {
 
 
     const result = this.props.queryGenes.get('result')
-    this.props.queryGenesActions.pivot(result, 'http://localhost:5000/', selectedNode)
+    // this.props.queryGenesActions.pivot(result, 'http://localhost:5000/', selectedNode)
 
-    // // Filter network
-    // this.setState({
-    //   filterDag: {
-    //     source: selectedNode,
-    //     target: 'GO:00SUPER'
-    //   }
-    //
-    // })
+    // Filter network
+    this.setState({
+      filterDag: {
+        source: selectedNode,
+        target: 'GO:00SUPER'
+      }
+
+    })
 
   }
 
