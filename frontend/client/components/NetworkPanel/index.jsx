@@ -265,7 +265,7 @@ class NetworkPanel extends Component {
       "selector" : "node:selected",
       "css" : {
         "background-color" : "red",
-        "font-size" : '2em',
+        "font-size" : '7em',
         "color" : "red",
         "text-opacity": 0.7,
         'text-max-width': '400px',

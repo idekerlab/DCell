@@ -6,40 +6,20 @@ import * as colors from 'material-ui/styles/colors';
 import {List, ListItem} from 'material-ui/List';
 
 import SearchIcon from 'material-ui/svg-icons/action/search';
+
 import ClearIcon from 'material-ui/svg-icons/content/clear';
 import RaisedButton from 'material-ui/RaisedButton';
 
-
 import Subheader from 'material-ui/Subheader';
-import Divider from 'material-ui/Divider';
-import Checkbox from 'material-ui/Checkbox';
 
 import TextField from 'material-ui/TextField';
 
 import style from './style.css'
 
-import GenotypePanel from './GenotypePanel'
 
-import {TransitionMotion, spring, presets} from 'react-motion'
 
 import Avatar from 'material-ui/Avatar';
 
-
-const GO_NAMESPACE = {
-  'biological_process': {
-    tag: 'BP',
-    color: colors.cyan300
-  },
-  'cellular_component': {
-    tag: 'CC',
-    color: colors.lightGreen300
-  },
-  'molecular_function': {
-    tag: 'MF',
-    color: colors.orange300
-  },
-
-}
 
 
 class TermSearchPanel extends Component {
@@ -67,6 +47,15 @@ class TermSearchPanel extends Component {
         this.selectTerms(hits)
       }
     }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const searchMode = nextProps.searchMode
+    if(searchMode !== 'term') {
+      return false;
+    }
+
+    return true
   }
 
 
@@ -122,23 +111,12 @@ class TermSearchPanel extends Component {
 
     if(searchResult === undefined || searchResult === null) {
       console.log('***************************************************************************************** first SELECT')
-      this.props.commandActions.select({idList: selectedTerms})
+      // this.props.commandActions.select({idList: selectedTerms})
       return
     } else {
       console.log('***************************************************************************************** 2+ SELECT')
 
     }
-
-
-    // if(!Immutable.is(currentSet, newSet)) {
-    //   console.log('***************************************************************************************** 33SELECT')
-    //   console.log(newSet)
-    //   console.log(currentSet)
-    //   // this.props.commandActions.select({idList: selectedTerms})
-    // } else {
-    //   console.log('***************************************************************************************** NO SELECT')
-    // }
-
   }
 
   render() {
@@ -174,7 +152,7 @@ class TermSearchPanel extends Component {
       <div style={this.props.style}>
         <div style={searchUiStyle}>
           <TextField
-            style={{width: '5em', flexGrow: 2}}
+            style={{width: '5em', flexGrow: 3}}
             hintText="Keywords, etc."
             floatingLabelText="Term Search"
             floatingLabelFixed={true}
@@ -265,6 +243,16 @@ class TermSearchPanel extends Component {
       )
     }
 
+    const curNetId = this.props.currentNetwork.id
+    const curTree = this.props.trees[curNetId]
+
+    const namespace = curTree.properties.namespace
+
+
+    let nsColor = 'teal'
+    let nsTag = 'CX'
+
+
 
     return (<List style={listStyle}>
       <Subheader>Search Result</Subheader>
@@ -273,7 +261,11 @@ class TermSearchPanel extends Component {
         hits.map((hit, i) => {
 
           const termId = hit._id
-          const avatarInfo = this.getAvatarInfo(hit._source.namespace)
+          const ns = hit._source.namespace
+          if (curNetId === 'go') {
+            nsColor = namespace[ns].color
+            nsTag = namespace[ns].tag
+          }
 
           return (
             <ListItem
@@ -283,9 +275,9 @@ class TermSearchPanel extends Component {
               leftAvatar={
                 <Avatar
                   color={colors.white}
-                  backgroundColor={avatarInfo.color}
+                  backgroundColor={nsColor}
                 >
-                  {avatarInfo.tag}
+                  {nsTag}
                 </Avatar>
               }
               onClick={ () => {
@@ -298,21 +290,6 @@ class TermSearchPanel extends Component {
     </List>)
 
   }
-
-  getAvatarInfo = namespace => {
-
-    const entry = GO_NAMESPACE[namespace]
-    if(entry === undefined || entry === null) {
-      return {
-        tag: 'CX',
-        color: 'teal'
-      }
-    } else {
-      return entry
-    }
-  }
-
-
 
 }
 

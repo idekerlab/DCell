@@ -4,10 +4,15 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import ListIcon from 'material-ui/svg-icons/action/list';
 
+import LocationIcon from 'material-ui/svg-icons/device/location-searching';
+
 import SearchTab from './SearchTab'
 
-import ListTab from './ListTab'
 import TermSearchPanel from './TermSearchPanel'
+
+
+const TERM_SEARCH_MODE = 'term'
+const GENE_SEARCH_MODE = 'gene'
 
 
 class SearchPanel extends Component {
@@ -15,13 +20,18 @@ class SearchPanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: 'search',
+      searchMode: GENE_SEARCH_MODE
     };
   }
 
   handleChange = value => {
+
+
+    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ tab selection')
+    console.log(value)
+
     this.setState({
-      selected: value,
+      searchMode: value,
     });
   }
 
@@ -35,12 +45,12 @@ class SearchPanel extends Component {
     }
 
     const style = {
-      width: '20%',
-      background: 'rgba(100, 100, 100, 0.1)',
+      width: '23%',
+      minWidth: '380px',
+      maxWidth: '450px',
       position: 'fixed',
       left: '0.3em',
-      top: '6em',
-      padding: '0.5em',
+      top: '5em',
       zIndex: 999
     };
 
@@ -58,32 +68,37 @@ class SearchPanel extends Component {
       <div style={style}>
         <Tabs
           style={tabStyle}
-          value={this.state.selected}
+          value={this.state.searchMode}
           onChange={this.handleChange}
         >
           <Tab
-            icon={<SearchIcon/>}
-            value="term"
+            icon={<LocationIcon />}
+            value={TERM_SEARCH_MODE}
+            label="Locate Terms"
           >
-            {/*<TermSearchPanel*/}
-              {/*style={searchStyle}*/}
-              {/*search={this.props.search}*/}
-              {/*searchActions={this.props.searchActions}*/}
-              {/*uiStateActions={this.props.uiStateActions}*/}
-              {/*commandActions={this.props.commandActions}*/}
+            <TermSearchPanel
 
-              {/*trees={this.props.trees}*/}
-              {/*currentNetwork={this.props.currentNetwork}*/}
-            {/*/>*/}
+              searchMode={this.state.searchMode}
 
+              style={searchStyle}
+              search={this.props.search}
+              searchActions={this.props.searchActions}
+              uiStateActions={this.props.uiStateActions}
+              commandActions={this.props.commandActions}
 
-
+              trees={this.props.trees}
+              currentNetwork={this.props.currentNetwork}
+            />
           </Tab>
+
           <Tab
             icon={<SearchIcon/>}
-            value="search"
+            value={GENE_SEARCH_MODE}
+            label="Search Genes"
           >
             <SearchTab
+              searchMode={this.state.searchMode}
+
               style={searchStyle}
               search={this.props.search}
               searchActions={this.props.searchActions}

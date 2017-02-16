@@ -33,7 +33,6 @@ class SubTreePanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dag: null,
       isMax: false,
       expand: false,
       filterDag: null
@@ -49,52 +48,18 @@ class SubTreePanel extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log('==================Checking SHOULD Subtree Panel *********************************************************************')
-    const result = this.props.queryGenes.get('result')
-    const nextResult = nextProps.queryGenes.get('result')
-
-    console.log(result)
-    console.log(nextResult)
-
-    if(this.state.expand !== nextState.expand) {
-      console.log("EXPAND!!!!!!!!!!!!!!")
-      return true
-    }
-
-    if (result === nextResult) {
-      console.log("SAME Tree!!!!!!!!!!!!!!")
-
-      if(this.state.filterDag !== null) {
-        console.log("FILTER@@@@@@@@@@@@@@@@@@!!!!!!!!!!!!!!")
-        return true
-      }
-      if (this.state.isMax === nextState.isMax) {
-        return false
-      }
-
-    }
-
-    console.log("Tree Updated !!!!!!!!!!!!!!")
-    return true
-
-  }
 
   componentWillReceiveProps(nextProps) {
     const result = nextProps.queryGenes.get('result')
     if(result === null || result === undefined) {
       return
     }
-
-    const curResult = this.props.queryGenes.get('result')
-    const dag = this.getDag(result)
-    this.setState({dag: dag})
   }
 
 
   render() {
 
-    console.log('==================Subtree Panel *********************************************************************')
+    console.log('================== DAG Panel *********************************************************************')
     console.log(this.props)
 
 
@@ -182,7 +147,7 @@ class SubTreePanel extends Component {
 
 
   handleToggle = () => {
-    this.setState({expand: !(this.state.expand)})
+    this.setState({expand: !this.state.expand})
   }
 
   toggleWindow = () => {
@@ -196,9 +161,9 @@ class SubTreePanel extends Component {
     this.props.uiStateActions.showResult(false)
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    this.setState({filterDag: null})
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   this.setState({filterDag: null})
+  // }
 
 
   getMainContents = (result, running) => {
@@ -227,14 +192,13 @@ class SubTreePanel extends Component {
         background: '#777777'
       }
 
+      let dag = this.getDag(result)
 
 
-      let dag = this.state.dag
-
-      if(this.state.filterDag !== null) {
-        console.log("###################### FILTER***********************************")
-        dag = this.filter(dag, this.state.filterDag.source, this.state.filterDag.target)
-      }
+      // if(this.state.filterDag !== null) {
+      //   console.log("###################### FILTER***********************************")
+      //   dag = this.filter(dag, this.state.filterDag.source, this.state.filterDag.target)
+      // }
 
       return (
         <DAGViewer
@@ -242,7 +206,6 @@ class SubTreePanel extends Component {
           label="long_name"
           style={treeStyle}
           expand={this.state.expand}
-          nodeSelected={this.nodeSelected}
         />
       )
     }
@@ -360,7 +323,8 @@ class SubTreePanel extends Component {
             name: node.name,
             namespace: node.namespace,
             score: node.importance,
-            phenotype: node.phenotype
+            phenotype: node.phenotype,
+            neurons: node.neurons
           }
         }
       }

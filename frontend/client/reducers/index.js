@@ -31,7 +31,6 @@ const app_manager = combineReducers({
   ui_state: ui_state,
   datasource: datasource,
   search: search,
-
   query_genes: query_genes,
   message: message
 })

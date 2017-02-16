@@ -63,6 +63,16 @@ class SearchTab extends Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    const searchModeNext = nextProps.searchMode
+
+    if(searchModeNext !== 'gene') {
+      return false
+    } else {
+      return true
+    }
+  }
+
 
   search = () => {
 
@@ -75,7 +85,7 @@ class SearchTab extends Component {
 
     const options = {
       index: 'genes',
-      type: 'gene,go_term'
+      type: 'gene'
     }
 
     this.props.searchActions.searchDatabase(query, options)
