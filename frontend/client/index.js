@@ -20,7 +20,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
 
-      <Route path="/" component={NetworkView}/>
+      <Route path="/app" component={NetworkView}/>
 
     </Router>
   </Provider>,

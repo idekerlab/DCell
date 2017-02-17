@@ -1,35 +1,73 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>DeepCell 1.0</title>
-    <style>
-      #root {
-        width: 100%;
-        height: 100%;
-        min-width: 600px;
-      }
-    </style>
-  </head>
-  <body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DeepCell</title>
 
-    <div id="root"></div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.1/css/bulma.min.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
-    <!-- Web Font loading -->
-    <script>
-      (function() {
-        var wf = document.createElement('script');
-        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-          '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-        wf.type = 'text/javascript';
-        wf.async = 'true';
 
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(wf, s);
-      })();
-    </script>
+<section class="hero is-info is-fullheight">
+    <!-- Hero header: will stick at the top -->
+    <div class="hero-head">
+        <header class="nav">
+            <div class="container">
+                <div class="nav-right nav-menu">
+                    <a class="nav-item is-active">
+                        Home
+                    </a>
+                    <a class="nav-item">
+                        Examples
+                    </a>
+                    <a class="nav-item">
+                        Documentation
+                    </a>
+                    <span class="nav-item">
+            <a class="button is-primary is-inverted">
+              <span class="icon">
+                <i class="fa fa-github"></i>
+              </span>
+              <span>Download</span>
+            </a>
+          </span>
+                </div>
+            </div>
+        </header>
+    </div>
 
-    <script src="vendor.bundle.js"></script>
-    <script src="bundle.js"></script>
-  </body>
+    <!-- Hero content: will be in the middle -->
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <h1 class="title main-title">
+                DeepCell
+            </h1>
+            <h2 class="subtitle">
+                ANN for T
+            </h2>
+        </div>
+    </div>
+
+    <!-- Hero footer: will stick at the bottom -->
+    <div class="hero-foot">
+        <nav class="tabs">
+            <div class="container">
+                <ul>
+                    <li class="is-active"><a>Overview</a></li>
+                    <li><a>Modifiers</a></li>
+                    <li><a>Grid</a></li>
+                    <li><a>Elements</a></li>
+                    <li><a>Components</a></li>
+                    <li><a>Layout</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</section>
+
+
+
+</body>
 </html>

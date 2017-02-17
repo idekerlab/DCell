@@ -21,7 +21,7 @@ services:
   static:
     build: ./webserver
     ports:
-      - "8080:80"
+      - "80:80"
 
 
 volumes:
