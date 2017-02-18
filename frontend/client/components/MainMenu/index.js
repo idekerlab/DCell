@@ -7,15 +7,9 @@ import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Settings from 'material-ui/svg-icons/action/settings'
 import HomeIcon from 'material-ui/svg-icons/action/home'
-import StyleIcon from 'material-ui/svg-icons/image/color-lens'
-import StyleSelectorIcon from 'material-ui/svg-icons/image/style'
-import Avatar from 'material-ui/Avatar'
 
 import HelpIcon from 'material-ui/svg-icons/action/help-outline';
 import Toggle from 'material-ui/Toggle';
-
-import StyleSelector from '../StyleSelector'
-import NetworkSelector from '../NetworkSelector'
 
 import style from './style.css'
 import logo from '../../assets/images/cytoscape-logo-orange.svg'
@@ -25,7 +19,11 @@ import logo from '../../assets/images/cytoscape-logo-orange.svg'
 export default class MainMenu extends Component {
 
   handleHome = event => {
-    browserHistory.push('/')
+    window.location.href = '/'
+  }
+
+  handleHelp = event => {
+    window.location.href = 'https://github.com/idekerlab/deep-cell/wiki'
   }
 
   handleShowCommands = event => {
@@ -106,7 +104,7 @@ export default class MainMenu extends Component {
             src={logo}
           />
           <h1 className={style.title}>
-            DeepCell v1.0 <i>&beta;</i>
+            DeepCell v1.0
           </h1>
         </div>
 
@@ -165,6 +163,7 @@ export default class MainMenu extends Component {
           <ListItem
             primaryText="Help"
             leftIcon={<HelpIcon />}
+            onTouchTap={this.handleHelp}
           />
           <ListItem
             primaryText="Back to home"
