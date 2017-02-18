@@ -1,4 +1,27 @@
 .main-title {
     font-weight: 100;
-    font-size: 10em;
+    font-size: 4em;
+}
+
+.main-background {
+    background: url(images/title-final.svg) no-repeat center;
+    background-size: 97% 100%;
+
+}
+
+.ex-large-button {
+    width: 8em;
+    height: 1.7em;
+    font-size: 2.5em;
+}
+
+.custom-button {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    height: 6em;
+    margin-right: 3em;
+    margin-bottom: 4em;
+    background-color: rgba(255, 255, 255, 0.0);
+    z-index: 999;
 }
