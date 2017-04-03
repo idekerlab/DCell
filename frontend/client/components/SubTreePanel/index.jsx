@@ -15,8 +15,6 @@ import Toggle from 'material-ui/Toggle';
 import cytoscape from 'cytoscape'
 
 
-
-
 const loaderStyle = {
   height: '100%',
   width: '100%',
@@ -62,7 +60,6 @@ class SubTreePanel extends Component {
     console.log('================== DAG Panel *********************************************************************')
     console.log(this.props)
 
-
     const cardStyle = {
       height: this.getHeight(),
       zIndex: '1200',
@@ -87,8 +84,9 @@ class SubTreePanel extends Component {
       zIndex: 1300,
     }
 
+    const genesMap = this.props.queryGenes.get('genes')
+    const genes = Object.values(genesMap.toJS())
 
-    const genes = this.props.queryGenes.get('genes')
     const genotype = genes.reduce(
       (previousValue, currentValue, index, array) => {
         return previousValue + ", " + currentValue

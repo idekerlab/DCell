@@ -6,16 +6,11 @@ import ClearIcon from 'material-ui/svg-icons/content/clear';
 import RaisedButton from 'material-ui/RaisedButton';
 import RunIcon from 'material-ui/svg-icons/av/play-arrow';
 
-
 import TextField from 'material-ui/TextField';
 
 import style from './style.css'
 
 import GenotypePanel from './GenotypePanel'
-
-
-
-
 import GeneList from './GeneList'
 
 
@@ -184,7 +179,14 @@ class SearchTab extends Component {
 
     this.props.queryGenesActions.clearResults()
 
-    const genes = this.props.queryGenes.get('genes')
+    // Get gene Map (immutable.js)
+    const genesMap = this.props.queryGenes.get('genes')
+    console.log('GENES IMM:')
+    console.log(genesMap)
+
+    const genesObj = genesMap.toJS()
+    const genes = Object.keys(genesObj)
+
     const hits = this.props.search.result.hits.hits
 
     const geneMap = {}
@@ -213,7 +215,7 @@ class SearchTab extends Component {
 
     const url = this.props.backendServices.simulator
 
-    this.props.queryGenesActions.runDeletion(url, geneSet.toArray(), geneMap)
+    this.props.queryGenesActions.runDeletion(url, genesMap, geneMap)
     this.props.uiStateActions.showResult(true)
   }
 

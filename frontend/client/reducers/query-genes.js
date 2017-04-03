@@ -9,7 +9,7 @@ const SERVICE_URL = 'http://localhost:8888'
 
 const defState = Map({
   serviceURL: SERVICE_URL,
-  genes: Set(),
+  genes: Map(),
   running: false,
   result: null,
   pivot: null
@@ -24,16 +24,22 @@ export default function queryGeneState(state = defState, action) {
       console.log(action)
       console.log(state)
 
+      const value = action.payload
+      const orf = value[0]
+      const symbol = value[1]
+
       return state
-        .set('genes', state.get('genes').add(action.payload))
+        .set('genes', state.get('genes').set(orf, symbol))
+
     case DELETE_GENE:
       console.log('+++++DELETING gene: ' + action)
       return state.set('genes', state.get('genes').delete(action.payload))
+
     case CLEAR_GENES:
       console.log('+++++ CLEAR: ')
 
       return state
-        .set('genes', Set())
+        .set('genes', Map())
         .set('result', null)
     case CLEAR_RESULTS:
       console.log('+++++ CLEAR RES: ')
@@ -42,6 +48,9 @@ export default function queryGeneState(state = defState, action) {
 
     case RUN_SIMULATION:
       console.log('+++++++++++++++ Run simulation! ++++++++++++++')
+      console.log(action)
+      console.log(state)
+
       return state
         .set(RUNNING, true)
         .set('serviceURL', action.serviceUrl)
@@ -71,4 +80,3 @@ export default function queryGeneState(state = defState, action) {
       return state
   }
 }
-

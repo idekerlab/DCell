@@ -31,7 +31,7 @@ class GenotypePanel extends Component {
         <h4>Genotype:</h4>
 
         <div style={containerStyle}>
-          {this.getGenes(this.props.genes)}
+          {this.getGenes(this.props.genes.toJS())}
         </div>
       </div>
     )
@@ -39,11 +39,16 @@ class GenotypePanel extends Component {
   }
 
 
-  getGenes = genes => (
-    genes.map(gene => (this.renderGene(gene)))
-  )
+  getGenes = genes => {
+    const orfs = Object.keys(genes)
 
-  renderGene = gene => {
+    console.log(genes)
+    console.log(orfs)
+
+    return orfs.map(orf => (this.renderGene(orf, genes[orf])))
+  }
+
+  renderGene = (orf, symbol) => {
 
     const chipStyle = {
       margin: '0.3em', fontSize: '0.3em'
@@ -51,11 +56,11 @@ class GenotypePanel extends Component {
 
     return (
       <Chip
-        key={gene}
-        onRequestDelete={() => this.handleDelete(gene)}
+        key={orf}
+        onRequestDelete={() => this.handleDelete(orf)}
         style={chipStyle}
       >
-        {gene.toLowerCase() + 'Δ'}
+        {orf.toLowerCase() + 'Δ' + ' (' + symbol + ')'}
       </Chip>
     );
   }

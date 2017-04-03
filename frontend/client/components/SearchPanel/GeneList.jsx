@@ -61,23 +61,11 @@ class GeneList extends Component {
     return newList
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   const selectedGeneCount = nextProps.queryGenes.get('genes')
-  //
-  //   console.log("===========> gene count3")
-  //   console.log(selectedGeneCount)
-  //
-  //
-  //   if(selectedGeneCount.size >= 2) {
-  //     this.setState({disabled: true})
-  //   }
-  //
-  // }
-
 
   itemSelected = gene => {
 
     const orf = gene.locus
+    const geneName = gene.symbol
 
     console.log('Selected: ' + orf)
     console.log(this.props.queryGenes)
@@ -92,7 +80,7 @@ class GeneList extends Component {
     } else {
 
       console.log("adding " + orf)
-      this.props.queryGenesActions.addGene(orf)
+      this.props.queryGenesActions.addGene([orf, geneName])
     }
 
     console.log(this.props.queryGenes)

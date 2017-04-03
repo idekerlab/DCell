@@ -13,23 +13,23 @@ const client = new Client({
 
 export const RUN_SIMULATION = 'RUN_SIMULATION'
 
-const runSimulation = (serviceUrl, genes) => {
+const runSimulation = (serviceUrl, genesMap) => {
 
   return {
     type: RUN_SIMULATION,
     serviceUrl,
-    genes
+    genes: genesMap
   }
 }
 
 
 export const RECEIVE_SIMULATION_RESULT = 'RECEIVE_SIMULATION_RESULT'
-const receiveSimulationResult = (serviceUrl, genes, json) => {
+const receiveSimulationResult = (serviceUrl, genesMap, json) => {
 
   return {
     type: RECEIVE_SIMULATION_RESULT,
     serviceUrl,
-    genes,
+    genes: genesMap,
     result: json
   }
 }
@@ -57,11 +57,9 @@ const receiveChildren = (serviceUrl, json, pivot) => {
 }
 
 
-const fetchResult = (serviceUrl, genes) => {
+const fetchResult = (serviceUrl, genesMap) => {
 
-  const query = genes
-
-  console.log('-----------------Calling')
+  const query = Object.keys(genesMap.toJS())
 
   const params = {
     method: 'POST',
@@ -116,12 +114,12 @@ export const pivot = (currentDag, serviceUrl, termId) => {
 
 }
 
-export const runDeletion = (serviceUrl, genes, geneMap) => {
+export const runDeletion = (serviceUrl, genesMap, geneMap) => {
 
   return dispatch => {
-    dispatch(runSimulation(serviceUrl, genes))
+    dispatch(runSimulation(serviceUrl, genesMap))
 
-    return fetchResult(serviceUrl, genes)
+    return fetchResult(serviceUrl, genesMap)
       .then(response => {
         console.log(response)
         return response.json()
@@ -144,19 +142,19 @@ export const runDeletion = (serviceUrl, genes, geneMap) => {
             console.log(res2)
 
             const docs = res2.docs
-            const result = replaceNodeData(nodes, docs, genes, geneMap)
+            const result = replaceNodeData(nodes, docs, genesMap, geneMap)
 
           })
           .then(json2 => {
             console.log(json2)
 
-            return dispatch(receiveSimulationResult(serviceUrl, genes, json))
+            return dispatch(receiveSimulationResult(serviceUrl, genesMap, json))
           })
       })
   }
 }
 
-const replaceNodeData = (nodes, docs, genes, geneMap) => {
+const replaceNodeData = (nodes, docs, genesMap, geneMap) => {
 
   const mapping = {}
 
@@ -170,7 +168,7 @@ const replaceNodeData = (nodes, docs, genes, geneMap) => {
     }
   })
 
-
+  const genes = Object.keys(genesMap.toJS())
   genes.forEach(gene => {
     mapping[gene] = geneMap[gene]
   })
