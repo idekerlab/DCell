@@ -55,7 +55,7 @@ class SearchTab extends Component {
       noSearchYet: true,
       genes: new Set(),
       selected: {},
-      runButtonDisabled: true,
+      runDisabled: true,
       enabledButton: ''
     }
   }
@@ -140,15 +140,6 @@ class SearchTab extends Component {
     }
 
     const genes = this.props.queryGenes.get('genes')
-
-    // const selectedGeneCount = genes.size
-    // const runDisabled = (selectedGeneCount < 2)
-    //
-    //
-    // let enabledButton = ''
-    // if(runDisabled == false) {
-    //   enabledButton = style.blinkbutton
-    // }
 
     return (
       <div style={this.props.style}>
