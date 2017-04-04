@@ -30,3 +30,11 @@
     -webkit-animation: spin 1s infinite linear;
     animation: spin 1s infinite linear;
 }
+
+.blinkbutton {
+  animation: blinker 1.2s linear infinite;
+}
+
+@keyframes blinker {
+  50% { opacity: 0.2; }
+}

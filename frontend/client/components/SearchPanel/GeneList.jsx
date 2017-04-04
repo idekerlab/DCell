@@ -34,18 +34,25 @@ class GeneList extends Component {
 
   getGene = hits => {
 
+    const selectedGenes = this.props.queryGenes.get('genes')
     const newList = hits.map((hit, i) => {
 
       const gene = hit._source
       const symbol = hit._source.symbol
       const locusName = hit._source.locus
+      const checked = selectedGenes.has(locusName)
 
+      let disabled = false
+      if(selectedGenes.size >= 2) {
+        disabled = true
+      }
       return (
         <ListItem
           key={i}
           leftCheckbox={
             <Checkbox
-              disabled={this.state.disabled}
+              disabled={disabled}
+              checked={checked}
               onCheck={() => {
                 this.itemSelected(gene)
               }}

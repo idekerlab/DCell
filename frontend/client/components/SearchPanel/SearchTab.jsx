@@ -54,8 +54,31 @@ class SearchTab extends Component {
       query: '',
       noSearchYet: true,
       genes: new Set(),
-      selected: {}
+      selected: {},
+      runButtonDisabled: true,
+      enabledButton: ''
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const genes = nextProps.queryGenes.get('genes')
+    const selectedGeneCount = genes.size
+
+    const lastGenes = this.props.queryGenes.get('genes')
+    const lastCount = lastGenes.size
+
+    if(selectedGeneCount == lastCount) {
+      return
+    }
+
+    this.state.runDisabled = (selectedGeneCount < 2)
+
+    if(this.state.runDisabled == false) {
+      this.state.enabledButton = style.blinkbutton
+    } else {
+      this.state.enabledButton = ''
+    }
+
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -118,6 +141,14 @@ class SearchTab extends Component {
 
     const genes = this.props.queryGenes.get('genes')
 
+    // const selectedGeneCount = genes.size
+    // const runDisabled = (selectedGeneCount < 2)
+    //
+    //
+    // let enabledButton = ''
+    // if(runDisabled == false) {
+    //   enabledButton = style.blinkbutton
+    // }
 
     return (
       <div style={this.props.style}>
@@ -162,7 +193,9 @@ class SearchTab extends Component {
             onClick={this.resetSelection}
           />
           <RaisedButton
-            label="Run"
+            label='Run'
+            className={this.state.enabledButton}
+            disabled={this.state.runDisabled}
             style={{marginLeft: '0.5em'}}
             labelPosition="before"
             icon={<RunIcon />}
@@ -178,6 +211,8 @@ class SearchTab extends Component {
   runSimulation = () => {
 
     this.props.queryGenesActions.clearResults()
+    this.state.runDisabled = true
+    this.state.enabledButton = ''
 
     // Get gene Map (immutable.js)
     const genesMap = this.props.queryGenes.get('genes')
