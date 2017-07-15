@@ -34,7 +34,12 @@ class NetworkPanel extends Component {
       const root = this.props.trees[this.props.currentNetwork.id].rootNode
 
       this.props.eventActions.selected(nodeProps[nodeIds[0]])
-      this.props.commandActions.findPath({startId:nodeIds[0].replace(/\:/, '\\:'), endId: root.replace(/\:/, '\\:')})
+      try {
+        this.props.commandActions.findPath({startId:nodeIds[0].replace(/\:/, '\\:'), endId: root.replace(/\:/, '\\:')})
+      } catch(e) {
+        console.log('* Failed FindPath')
+        console.log(e)
+      }
 
       const options = this.props.trees[this.props.currentNetwork.id].searchOptions
       this.props.propertyActions.fetchEntry(props.id, options)

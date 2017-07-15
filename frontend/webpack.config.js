@@ -20,6 +20,8 @@ module.exports = {
     path: path.join(__dirname, './static'),
     filename: 'bundle.js',
   },
+  devtool: 'inline-source-map',
+  
   module: {
     loaders: [
       {
