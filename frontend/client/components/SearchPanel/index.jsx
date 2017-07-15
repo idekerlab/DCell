@@ -2,14 +2,11 @@ import React, {Component} from 'react'
 import * as colors from 'material-ui/styles/colors';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import SearchIcon from 'material-ui/svg-icons/action/search';
-import ListIcon from 'material-ui/svg-icons/action/list';
-
 import LocationIcon from 'material-ui/svg-icons/device/location-searching';
 
 import SearchTab from './SearchTab'
 
 import TermSearchPanel from './TermSearchPanel'
-
 
 const TERM_SEARCH_MODE = 'term'
 const GENE_SEARCH_MODE = 'gene'
@@ -25,10 +22,6 @@ class SearchPanel extends Component {
   }
 
   handleChange = value => {
-
-
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ tab selection')
-    console.log(value)
 
     this.setState({
       searchMode: value,
@@ -94,7 +87,7 @@ class SearchPanel extends Component {
           <Tab
             icon={<SearchIcon/>}
             value={GENE_SEARCH_MODE}
-            label="Search Genes"
+            label="Select Gene/Genotype"
           >
             <SearchTab
               searchMode={this.state.searchMode}
