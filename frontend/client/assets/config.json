@@ -41,6 +41,9 @@
         "index": "terms",
         "type": "clixo_term"
       },
+      "properties": {
+        "namespace": {}
+      },
       "url": "/data/tree-clixo.json"
     }
   }

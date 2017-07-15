@@ -12,12 +12,6 @@ const DEF_OPTIONS = {
 }
 
 
-const ID_MAPPING_OPTIONS = {
-  index: 'terms',
-  type: 'go_term'
-}
-
-
 export const SEARCH = 'SEARCH'
 const search = (query, options) => {
   return {

@@ -43,7 +43,6 @@ class TermSearchPanel extends Component {
       if(searchResult !== null) {
         hits = searchResult.hits.hits
 
-        console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^WILL called")
         this.selectTerms(hits)
       }
     }
@@ -134,14 +133,6 @@ class TermSearchPanel extends Component {
       marginBottom: '0.5em',
     }
 
-
-    const actionStyle = {
-      display: 'flex',
-      alignItems: 'flex-end',
-      justifyContent: 'flex-end',
-      marginTop: '0.5em'
-    }
-
     const searchResult = this.props.search.result
     let hits = []
     if(searchResult !== null) {
@@ -184,23 +175,6 @@ class TermSearchPanel extends Component {
   }
 
 
-  itemSelected = symbol => {
-    const genes = this.state.genes
-
-    if(genes.has(symbol)) {
-      console.log("deleting")
-      genes.delete(symbol)
-    } else {
-      console.log("adding " + symbol)
-      genes.add(symbol)
-    }
-    console.log('Selected: ' + symbol)
-    console.log(genes)
-    this.setState({genes: genes})
-    console.log(this.state.genes)
-  }
-
-
   getListPanel = hits => {
     const listStyle ={
       overflow: 'scroll',
@@ -217,7 +191,9 @@ class TermSearchPanel extends Component {
       background: 'white'
     }
 
-    if(this.state.noSearchYet && this.state.loading === false) {
+
+    const isLoading = this.props.search.loading
+    if(this.state.noSearchYet && isLoading === false) {
       style.background = '#EFEFEF'
       style.color = '#AAAAAA'
 
@@ -226,7 +202,7 @@ class TermSearchPanel extends Component {
           <p>No search result yet</p>
         </div>
       )
-    } else if(this.state.loading) {
+    } else if(isLoading) {
       return (
         <div style={baseStyle}>
           <div className={style.loading}></div>
