@@ -67,8 +67,17 @@ class TermSearchPanel extends Component {
       noSearchYet: false
     })
 
-    const query = this.state.query
-    console.log("Q2 = " + query)
+    let query = this.state.query
+
+    // Special case: exact match for CLIXO
+    if(query !== undefined && query !== null && query != '') {
+      const parts = query.split(':')
+      const prefix = parts[0].toUpperCase()
+      if(prefix === 'CLIXO') {
+        query = parts[1]
+      }
+    }
+
     this.props.searchActions.searchDatabase(query, options)
   }
 
@@ -96,9 +105,6 @@ class TermSearchPanel extends Component {
   }
 
   handleItemClick = termId => {
-
-    console.log('Click item!')
-    console.log(termId)
 
     this.props.commandActions.focus({idList: [termId]})
   }
