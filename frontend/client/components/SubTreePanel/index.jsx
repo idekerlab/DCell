@@ -57,9 +57,6 @@ class SubTreePanel extends Component {
 
   render() {
 
-    console.log('================== DAG Panel *********************************************************************')
-    console.log(this.props)
-
     const cardStyle = {
       height: this.getHeight(),
       zIndex: '1200',
@@ -122,12 +119,6 @@ class SubTreePanel extends Component {
           <CardActions
             style={actionStyle}
           >
-            <Toggle
-              label="Show Neurons"
-              labelPosition="right"
-              style={{maxWidth: 180}}
-              onToggle={this.handleToggle}
-            />
             <RaisedButton
               icon={this.state.isMax ? <CollapseIcon /> : <ExpandIcon />}
               onClick={this.toggleWindow}
@@ -158,10 +149,6 @@ class SubTreePanel extends Component {
   handleClose = () => {
     this.props.uiStateActions.showResult(false)
   }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   this.setState({filterDag: null})
-  // }
 
 
   getMainContents = (result, running) => {

@@ -44,9 +44,6 @@ class SubNetworkView extends Component {
 
     const subnet = this.props.subnet
 
-    console.log("------------------------>> Subtree rendering")
-    console.log(subnet)
-
     return (
       <div style={style}>
 
