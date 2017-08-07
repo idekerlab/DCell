@@ -51,6 +51,7 @@
   },
   "dependencies": {
     "cy-viewer": "^2.0.0",
+    "tree-viewer": "^1.1.0",
     "cytoscape": "^2.7.11",
     "d3-scale": "^1.0.4",
     "d3-scale-chromatic": "^1.1.0",

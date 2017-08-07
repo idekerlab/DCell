@@ -99,8 +99,6 @@ class SearchTab extends Component {
     })
 
     const query = this.state.query
-    console.log("Q = " + query)
-
     const options = {
       index: 'genes',
       type: 'gene'
