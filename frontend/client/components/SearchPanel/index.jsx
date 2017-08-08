@@ -39,7 +39,7 @@ class SearchPanel extends Component {
 
     const style = {
       width: '23%',
-      minWidth: '380px',
+      minWidth: '400px',
       maxWidth: '450px',
       position: 'fixed',
       left: '0.3em',
@@ -50,12 +50,18 @@ class SearchPanel extends Component {
     const tabStyle = {
       background: colors.blueGrey500,
       height: '100%',
+      fontSize: '0.7em'
     }
 
     const searchStyle = {
       background: 'white',
       padding: '0.5em'
     }
+
+    const tabTitleStyle = {
+      fontSize: '1em'
+    }
+
 
     return (
       <div style={style}>
@@ -65,9 +71,9 @@ class SearchPanel extends Component {
           onChange={this.handleChange}
         >
           <Tab
-            icon={<LocationIcon />}
             value={TERM_SEARCH_MODE}
-            label="Locate Terms"
+            label='Locate Terms'
+            style={tabTitleStyle}
           >
             <TermSearchPanel
 
@@ -85,9 +91,9 @@ class SearchPanel extends Component {
           </Tab>
 
           <Tab
-            icon={<SearchIcon/>}
             value={GENE_SEARCH_MODE}
             label="Select Gene/Genotype"
+            style={tabTitleStyle}
           >
             <SearchTab
               searchMode={this.state.searchMode}

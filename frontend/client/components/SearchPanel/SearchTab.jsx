@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import {Set} from 'immutable'
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton'
 
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import ClearIcon from 'material-ui/svg-icons/content/clear';
 import RaisedButton from 'material-ui/RaisedButton';
-import RunIcon from 'material-ui/svg-icons/av/play-arrow';
 
 import TextField from 'material-ui/TextField';
 
@@ -19,20 +19,20 @@ const searchUiStyle = {
   flexDirection: 'row',
   alignItems: 'flex-end',
   justifyContent: 'flex-start',
-  paddingBottom: '0.5em'
+  paddingBottom: '0.1em',
 }
 
 const buttonStyle = {
   marginLeft: '0.5em',
-  marginBottom: '0.5em',
+  marginBottom: '0.3em',
 }
 
 
 const actionStyle = {
   display: 'flex',
-  alignItems: 'flex-end',
+  alignItems: 'flex-start',
   justifyContent: 'flex-end',
-  marginTop: '0.5em'
+  marginTop: '0.1em',
 }
 
 const baseStyle = {
@@ -42,6 +42,22 @@ const baseStyle = {
   justifyContent: 'center',
   height: '20em',
   background: 'white'
+}
+
+const buttonPanelStyle = {
+  display: 'flex',
+  flexFlow: 'row wrap',
+  flexDirection: 'row',
+  alignItems: 'flex-start',
+  justifyContent: 'flex-start',
+  padding: '0.2em',
+  width: '100%'
+}
+
+const radioButtonStyle = {
+  flexGrow: '1',
+  fontSize: '0.8em',
+  width: '49%'
 }
 
 
@@ -56,7 +72,8 @@ class SearchTab extends Component {
       genes: new Set(),
       selected: {},
       runDisabled: true,
-      enabledButton: ''
+      enabledButton: '',
+      queryOption: 'genetic'
     }
   }
 
@@ -67,13 +84,13 @@ class SearchTab extends Component {
     const lastGenes = this.props.queryGenes.get('genes')
     const lastCount = lastGenes.size
 
-    if(selectedGeneCount == lastCount) {
+    if (selectedGeneCount == lastCount) {
       return
     }
 
     this.state.runDisabled = (selectedGeneCount < 2)
 
-    if(this.state.runDisabled == false) {
+    if (this.state.runDisabled == false) {
       this.state.enabledButton = style.blinkbutton
     } else {
       this.state.enabledButton = ''
@@ -84,7 +101,7 @@ class SearchTab extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const searchModeNext = nextProps.searchMode
 
-    if(searchModeNext !== 'gene') {
+    if (searchModeNext !== 'gene') {
       return false
     } else {
       return true
@@ -133,7 +150,7 @@ class SearchTab extends Component {
 
     const searchResult = this.props.search.result
     let hits = []
-    if(searchResult !== null) {
+    if (searchResult !== null) {
       hits = searchResult.hits.hits
     }
 
@@ -155,12 +172,12 @@ class SearchTab extends Component {
 
           <RaisedButton
             style={buttonStyle}
-            icon={<ClearIcon />}
+            icon={<ClearIcon/>}
             onClick={this.clearQuery}
           />
           <RaisedButton
             style={buttonStyle}
-            icon={<SearchIcon />}
+            icon={<SearchIcon/>}
             primary={true}
             onClick={this.search}
           />
@@ -175,7 +192,34 @@ class SearchTab extends Component {
           queryGenesActions={this.props.queryGenesActions}
         />
 
+
+        <h4 style={{borderTop: 'thin solid #aaaaaa', paddingTop: '0.4em'}}>
+          Query Type:
+        </h4>
+
+        <div style={buttonPanelStyle}>
+
+          <RadioButtonGroup
+            name="queryType"
+            defaultSelected="genetic"
+            style={buttonPanelStyle}
+            onChange={this.queryOptionChanged}
+          >
+            <RadioButton
+              value='genetic'
+              label="Genetic Interaction"
+              style={radioButtonStyle}
+            />
+            <RadioButton
+              value='growth'
+              label='Growth'
+              style={radioButtonStyle}
+            />
+          </RadioButtonGroup>
+        </div>
+
         <div style={actionStyle}>
+
           <RaisedButton
             label="Reset"
             labelPosition="before"
@@ -185,9 +229,8 @@ class SearchTab extends Component {
             label='Run'
             className={this.state.enabledButton}
             disabled={this.state.runDisabled}
-            style={{marginLeft: '0.5em'}}
+            style={{marginLeft: '0.4em'}}
             labelPosition="before"
-            icon={<RunIcon />}
             secondary={true}
             onClick={this.runSimulation}
           />
@@ -197,8 +240,16 @@ class SearchTab extends Component {
 
   }
 
+  queryOptionChanged = (event, value) => {
+    console.log('Query option updated:')
+    this.setState({
+      queryOption: value
+    });
+  }
+
   runSimulation = () => {
 
+    console.log('Q option = ' + this.state.queryOption)
     this.props.queryGenesActions.clearResults()
     this.state.runDisabled = true
     this.state.enabledButton = ''
@@ -220,7 +271,7 @@ class SearchTab extends Component {
 
       const locusName = hit._source.locus
 
-      if(geneSet.has(locusName)) {
+      if (geneSet.has(locusName)) {
         const gene = hit._source.id
         const symbol = hit._source.symbol
         const name = hit._source.name
@@ -254,17 +305,17 @@ class SearchTab extends Component {
 
   getListPanel = hits => {
 
-    if(this.props.search.result === null && this.props.search.loading === false) {
+    if (this.props.search.result === null && this.props.search.loading === false) {
 
       style.background = '#EFEFEF'
       style.color = '#AAAAAA'
 
-      return(
+      return (
         <div style={baseStyle}>
           <p>No search result yet</p>
         </div>
       )
-    } else if(this.props.search.loading) {
+    } else if (this.props.search.loading) {
       return (
         <div style={baseStyle}>
           <div className={style.loading}></div>
@@ -273,7 +324,7 @@ class SearchTab extends Component {
       )
     }
 
-    if(hits.length === 0) {
+    if (hits.length === 0) {
       return (
         <div style={baseStyle}>
           <h1 style={{color: '#555555'}}>No Match!</h1>
