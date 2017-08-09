@@ -23,7 +23,7 @@ export default class MainMenu extends Component {
   }
 
   handleHelp = event => {
-    window.location.href = 'https://github.com/idekerlab/deep-cell/wiki'
+    window.location.href = 'https://github.com/idekerlab/deep-cell/wiki/Quick-Start-Guide'
   }
 
   handleShowCommands = event => {
