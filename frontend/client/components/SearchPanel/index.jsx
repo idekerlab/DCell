@@ -21,11 +21,19 @@ class SearchPanel extends Component {
     };
   }
 
-  handleChange = value => {
+  handleChange = () => {
+
+    let selected = this.state.searchMode;
+
+    if(selected === TERM_SEARCH_MODE) {
+      selected = GENE_SEARCH_MODE
+    } else {
+      selected = TERM_SEARCH_MODE
+    }
 
     this.setState({
-      searchMode: value,
-    });
+      searchMode: selected,
+    })
   }
 
   render() {

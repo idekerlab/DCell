@@ -23,12 +23,13 @@ const search = (query, options) => {
 
 
 export const RECEIVE_SEARCH_RESULT = 'RECEIVE_SEARCH_RESULT'
-const receiveSearchResult = (query, json, options) => {
+const receiveSearchResult = (query, json, searchType, options) => {
 
   return {
     type: RECEIVE_SEARCH_RESULT,
     query,
     options,
+    searchType,
     result: json
   }
 }
@@ -79,7 +80,7 @@ export const searchDatabase = (query, options) => {
 
     return sendQuery(query, options)
       .then(json =>
-        dispatch(receiveSearchResult(query, json))
+        dispatch(receiveSearchResult(query, json, options.index))
       )
   }
 }

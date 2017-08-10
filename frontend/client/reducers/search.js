@@ -3,7 +3,8 @@ import {SEARCH, RECEIVE_SEARCH_RESULT, CLEAR_SEARCH_RESULT} from '../actions/sea
 const defaultState = {
   query: null,
   result: null,
-  loading: false
+  loading: false,
+  searchType: null
 }
 
 
@@ -17,7 +18,8 @@ export default function searchState(state = defaultState, action) {
       return {
         query: action.query,
         result: null,
-        loading: true
+        loading: true,
+        searchType: action.searchType
       }
     case RECEIVE_SEARCH_RESULT:
       console.log('+++++++++++++++ GOT RESULT@@@ ++++++++++++++')
@@ -26,7 +28,8 @@ export default function searchState(state = defaultState, action) {
       return {
         query: action.query,
         result: action.result,
-        loading: false
+        loading: false,
+        searchType: action.searchType
       }
     case CLEAR_SEARCH_RESULT:
       console.log('+++++++++++++++ CLEAR SEARCH called @@@ ++++++++++++++')

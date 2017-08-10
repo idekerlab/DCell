@@ -78,6 +78,7 @@ class SearchTab extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+
     const genes = nextProps.queryGenes.get('genes')
     const selectedGeneCount = genes.size
 
@@ -305,7 +306,7 @@ class SearchTab extends Component {
 
   getListPanel = hits => {
 
-    if (this.props.search.result === null && this.props.search.loading === false) {
+    if (this.props.search.searchType === 'terms' || (this.props.search.result === null && this.props.search.loading === false)) {
 
       style.background = '#EFEFEF'
       style.color = '#AAAAAA'
