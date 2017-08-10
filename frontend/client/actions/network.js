@@ -28,11 +28,39 @@ export const fetchNetworkFromUrl = url => {
 
     return fetchNet(url)
       .then(response => (response.json()))
+      .then(network => (calculateLabelSize(network)))
       .then(json =>
         dispatch(receiveNetwork(url, json))
       )
   }
 }
+
+
+import * as d3Scale from 'd3-scale'
+
+const labelSizeMapper = d3Scale.scaleLog()
+  .domain([1, 6000])
+  .range([3, 130]);
+
+const calculateLabelSize = network => {
+
+  console.log('Score calculator called--')
+  console.log(network)
+
+  const nodes = network.elements.nodes
+  nodes.forEach(node => {
+    const geneCount = node.data.geneCount
+    if(geneCount !== undefined) {
+      const labelSize = labelSizeMapper(geneCount)
+      node.data['labelSize'] = labelSize
+    } else {
+      node.data['labelSize'] = 3
+    }
+  })
+
+  return network
+}
+
 
 export const DELETE_NETWORK = 'DELETE_NETWORK'
 const deleteNetwork = url => {

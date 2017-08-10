@@ -14,6 +14,13 @@ import style from './style.css'
 import {Map} from 'immutable'
 
 
+import * as d3Scale from 'd3-scale'
+
+
+const labelSizeMapper = d3Scale.scaleLog()
+  .domain([0, 5000])
+  .range([20, 300]);
+
 class NetworkPanel extends Component {
 
   constructor(props) {
@@ -162,7 +169,8 @@ class NetworkPanel extends Component {
         "width" : 'mapData(geneCount, 0, 6000, 10, 400)',
         "content" : "data(name)",
         "min-zoomed-font-size": '0.3em',
-        "font-size" : 'mapData(geneCount, 0, 6000, 8, 400)',
+        // "font-size" : 'mapData(geneCount, 0, 6000, 8, 400)',
+        "font-size": "val => (labelSizeMapper(geneCount))",
         "text-opacity" : 1,
         'text-wrap': 'wrap',
         'text-max-width': '180px'
@@ -197,6 +205,15 @@ class NetworkPanel extends Component {
     } ]
   })
 
+
+  fontMapper = ele => {
+    const labelSizeMapper = d3Scale.scaleLog()
+      .domain([0, 5000])
+      .range([20, 300])
+    const value = ele.data('geneCount')
+    return labelSizeMapper(value)
+  }
+
   getVisualStyle = () => ({
     style: [ {
       "selector" : "node",
@@ -209,8 +226,12 @@ class NetworkPanel extends Component {
         "height" : 'mapData(geneCount, 1, 6000, 30, 400)',
         "width" : 'mapData(geneCount, 1, 6000, 30, 400)',
         "content" : "data(name)",
-        "min-zoomed-font-size": '1.5em',
-        "font-size" : 'mapData(geneCount, 1, 6000, 6, 650)',
+        "min-zoomed-font-size": '0.8em',
+        // "font-size" : 'mapData(geneCount, 1, 6000, 6, 650)',
+        // "font-size" : 'mapData(geneCount, 1, 6000, 6, 650)',
+        "font-size": function(ele) {
+          return ele.data('labelSize')
+        },
         "text-opacity" : 1,
         'text-wrap': 'wrap',
         // 'text-max-width': '850px',
