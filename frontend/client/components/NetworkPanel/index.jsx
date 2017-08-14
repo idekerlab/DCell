@@ -222,16 +222,16 @@ class NetworkPanel extends Component {
         "text-halign" : "right",
         "shape" : "ellipse",
         "color" : "#000000",
-        "background-color" : "rgb(204,204,204)",
-        "height" : 'mapData(geneCount, 1, 6000, 30, 400)',
-        "width" : 'mapData(geneCount, 1, 6000, 30, 400)',
+        "background-color" : "rgb(204,204,254)",
+        // "height" : 'mapData(geneCount, 1, 6000, 30, 400)',
+        // "width" : 'mapData(geneCount, 1, 6000, 30, 400)',
+        "height" : 50,
+        "width" : 50,
         "content" : "data(name)",
         "min-zoomed-font-size": '0.8em',
         // "font-size" : 'mapData(geneCount, 1, 6000, 6, 650)',
         // "font-size" : 'mapData(geneCount, 1, 6000, 6, 650)',
-        "font-size": function(ele) {
-          return ele.data('labelSize')
-        },
+        "font-size": "data('labelSize')",
         "text-opacity" : 1,
         'text-wrap': 'wrap',
         // 'text-max-width': '850px',
@@ -303,7 +303,7 @@ class NetworkPanel extends Component {
     }, {
       "selector" : "edge",
       "css" : {
-        "width" : 34.0,
+        "width" : 10.0,
         'opacity': 1,
         "line-color" : "rgb(132,132,132)",
       }
@@ -330,8 +330,17 @@ class NetworkPanel extends Component {
         'opacity': 1
       }
     }, {
+      "selector" : ".faded",
+      "css" : {
+        "background-color" : "black",
+        "line-color" : "black",
+        color: "black",
+        opacity: 0.2
+      }
+    },{
       "selector" : ".focused",
       "css" : {
+        opacity: 1,
         "background-color" : "teal",
         "font-size" : '4em',
         "color" : "teal",
@@ -341,14 +350,6 @@ class NetworkPanel extends Component {
         "min-zoomed-font-size": 0,
         width: 50,
         height: 50
-      }
-    }, {
-      "selector" : ".faded",
-      "css" : {
-        "background-color" : "black",
-        "line-color" : "black",
-        color: "black",
-        opacity: 0.2
       }
     } ]
   })
