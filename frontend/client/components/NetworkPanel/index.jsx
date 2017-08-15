@@ -206,14 +206,6 @@ class NetworkPanel extends Component {
   })
 
 
-  fontMapper = ele => {
-    const labelSizeMapper = d3Scale.scaleLog()
-      .domain([0, 5000])
-      .range([20, 300])
-    const value = ele.data('geneCount')
-    return labelSizeMapper(value)
-  }
-
   getVisualStyle = () => ({
     style: [ {
       "selector" : "node",
@@ -225,17 +217,22 @@ class NetworkPanel extends Component {
         "background-color" : "rgb(204,204,254)",
         // "height" : 'mapData(geneCount, 1, 6000, 30, 400)',
         // "width" : 'mapData(geneCount, 1, 6000, 30, 400)',
-        "height" : 50,
-        "width" : 50,
+        "height" : 100,
+        "width" : 100,
         "content" : "data(name)",
-        "min-zoomed-font-size": '0.8em',
+        "min-zoomed-font-size": '12',
         // "font-size" : 'mapData(geneCount, 1, 6000, 6, 650)',
         // "font-size" : 'mapData(geneCount, 1, 6000, 6, 650)',
-        "font-size": "data('labelSize')",
+        "font-size": "data(labelSize)",
         "text-opacity" : 1,
         'text-wrap': 'wrap',
-        // 'text-max-width': '850px',
+        'text-max-width': '600px',
         'z-index': 1
+      }
+    }, {
+      "selector" : ".invisible",
+      "css" : {
+        'display': 'none',
       }
     }, {
       "selector" : "node[namespace = 'biological_process']",
@@ -303,7 +300,7 @@ class NetworkPanel extends Component {
     }, {
       "selector" : "edge",
       "css" : {
-        "width" : 10.0,
+        "width" : 30.0,
         'opacity': 1,
         "line-color" : "rgb(132,132,132)",
       }
