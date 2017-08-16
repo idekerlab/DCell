@@ -214,25 +214,31 @@ class NetworkPanel extends Component {
         "text-halign" : "right",
         "shape" : "ellipse",
         "color" : "#000000",
-        "background-color" : "rgb(204,204,254)",
-        "height" : 'mapData(geneCount, 1, 6000, 100, 1400)',
-        "width" : 'mapData(geneCount, 1, 6000, 100, 1400)',
-        // "height" : 100,
-        // "width" : 100,
+        "background-color" : "rgb(200,200,206)",
+        "height" : 'mapData(geneCount, 1, 6000, 120, 2500)',
+        "width" : 'mapData(geneCount, 1, 6000, 120, 2500)',
         "content" : "data(name)",
-        "min-zoomed-font-size": '12',
-        // "font-size" : 'mapData(geneCount, 1, 6000, 6, 650)',
-        // "font-size" : 'mapData(geneCount, 1, 6000, 6, 650)',
-        "font-size": "data(labelSize)",
+        "min-zoomed-font-size": '0.4em',
+        "font-size" : 'mapData(geneCount, 1, 6000, 70, 1200)',
         "text-opacity" : 1,
         'text-wrap': 'wrap',
-        'text-max-width': '600px',
+        'text-margin-x': '20',
         'z-index': 1
       }
     }, {
       "selector" : ".invisible",
       "css" : {
         'display': 'none',
+      }
+    }, {
+      "selector" : "node[type = 'g']",
+      "css" : {
+        'font-size': '80',
+      }
+    }, {
+      "selector" : "node[pLen <= 4][geneCount > 1500]",
+      "css" : {
+        'font-size': ele => (3200 / (ele.data('pLen'))),
       }
     }, {
       "selector" : "node[namespace = 'biological_process']",
@@ -243,14 +249,11 @@ class NetworkPanel extends Component {
       "selector" : "node[namespace = 'cellular_component']",
       "css" : {
         "background-color" : "rgb(255,102,0)",
-        "font-size" : 'mapData(geneCount, 1, 6000, 6, 650)',
-        "min-zoomed-font-size": '4.5em',
       }
     }, {
       "selector" : "node[namespace = 'molecular_function']",
       "css" : {
         "background-color" : "rgb(0,204,153)",
-        "font-size" : 'mapData(geneCount, 1, 6000, 6, 1150)',
       }
     }, {
       "selector" : "node[name = 'biological_process']",
@@ -271,36 +274,36 @@ class NetworkPanel extends Component {
         "label": "Molecular Function"
       }
     }, {
-      "selector" : "node[name = 'GO:00SUPER']",
+      "selector" : "node[type = 'r']",
       "css" : {
-        'font-size': '20em',
+        'font-size': '520em',
         'label': 'Root'
       }
     }, {
       "selector" :
-        "node[name = 'biological_process'], " +
-        "node[name = 'molecular_function'], " +
-        "node[name = 'cellular_component']",
+        "node[id = 'GO:0008150'], " +
+        "node[id = 'GO:0003674'], " +
+        "node[id = 'GO:0005575']",
       "css" : {
-        'font-size': '55em',
+        'font-size': '400em',
+        'text-opacity': '0.6'
       }
     }, {
       "selector" : "node:selected",
       "css" : {
         "background-color" : "red",
-        "font-size" : '7em',
+        "font-size" : '20em',
         "color" : "red",
-        "text-opacity": 0.7,
-        'text-max-width': '400px',
-        'z-index': 109,
+        "text-opacity": 1,
+        'z-index': 999,
         "min-zoomed-font-size": 0,
-        width: 25,
-        height: 25
+        width: 225,
+        height: 225
       }
     }, {
       "selector" : "edge",
       "css" : {
-        "width" : 30.0,
+        "width" : 60.0,
         'opacity': 1,
         "line-color" : "rgb(132,132,132)",
       }
@@ -323,7 +326,7 @@ class NetworkPanel extends Component {
       "selector" : "edge:selected",
       "css" : {
         "line-color" : "red",
-        "width": 10,
+        "width": 110,
         'opacity': 1
       }
     }, {

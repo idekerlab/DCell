@@ -60,32 +60,9 @@ export default class NetworkViewer extends Component {
       errorMsg = 'ERROR: ' + errorMsg
     }
 
-
-    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ UI")
-    console.log(this.props)
-
     return (
 
       <div style={this.props.style}>
-        <ClosableAppBar
-          title={message.get('message')}
-          messageActions={messageActions}
-          networkId={networkId}
-          networks={networks}
-          uiState={uiState}
-          uiStateActions={uiStateActions}
-          styles={styles}
-          currentVsActions={currentVsActions}
-          currentVs={currentVs}
-          backgroundColorActions={backgroundColorActions}
-          backgroundColor={backgroundColor}
-          datasource={datasource}
-          trees={config.get('trees').toJS()}
-          currentNetwork={this.props.currentNetwork.toJS()}
-          currentNetworkActions={this.props.currentNetworkActions}
-
-          propertyActions={propertyActions}
-        />
 
         <NetworkPanel
           networkActions={networkActions}
@@ -108,6 +85,7 @@ export default class NetworkViewer extends Component {
         <Commands
           commandActions={commandActions}
           uiState={uiState}
+          uiStateActions={uiStateActions}
         />
 
         <SearchPanel
@@ -124,6 +102,9 @@ export default class NetworkViewer extends Component {
           queryGenes={this.props.queryGenes}
 
           uiState={uiState}
+
+          currentNetworkActions={this.props.currentNetworkActions}
+          propertyActions={this.props.propertyActions}
         />
 
         <PropertyPanel

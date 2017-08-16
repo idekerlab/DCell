@@ -7,8 +7,8 @@ import Checkbox from 'material-ui/Checkbox';
 
 const listStyle = {
   overflow: 'scroll',
-  height: '20em',
-  background: 'white'
+  height: '30em',
+  background: 'inherit'
 }
 
 

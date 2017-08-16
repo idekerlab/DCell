@@ -13,6 +13,7 @@ import style from './style.css'
 import GenotypePanel from './GenotypePanel'
 import GeneList from './GeneList'
 
+import SimulationTypeSelector from './SimulationTypeSelector'
 
 const searchUiStyle = {
   display: 'flex',
@@ -40,24 +41,8 @@ const baseStyle = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  height: '20em',
-  background: 'white'
-}
-
-const buttonPanelStyle = {
-  display: 'flex',
-  flexFlow: 'row wrap',
-  flexDirection: 'row',
-  alignItems: 'flex-start',
-  justifyContent: 'flex-start',
-  padding: '0.2em',
-  width: '100%'
-}
-
-const radioButtonStyle = {
-  flexGrow: '1',
-  fontSize: '0.8em',
-  width: '49%'
+  background: 'inherit',
+  height: '25em'
 }
 
 
@@ -72,6 +57,7 @@ class SearchTab extends Component {
       genes: new Set(),
       selected: {},
       runDisabled: true,
+      explainDisabled: true,
       enabledButton: '',
       queryOption: 'genetic'
     }
@@ -159,11 +145,19 @@ class SearchTab extends Component {
 
     return (
       <div style={this.props.style}>
+
+
+
+        <SimulationTypeSelector
+
+
+        />
+
         <div style={searchUiStyle}>
           <TextField
             style={{width: '5em', flexGrow: 2}}
             hintText="Keywords, etc."
-            floatingLabelText="Keyword Search"
+            floatingLabelText="Genotype Builder"
             floatingLabelFixed={true}
 
             value={this.state.query}
@@ -193,34 +187,7 @@ class SearchTab extends Component {
           queryGenesActions={this.props.queryGenesActions}
         />
 
-
-        <h4 style={{borderTop: 'thin solid #aaaaaa', paddingTop: '0.4em'}}>
-          Query Type:
-        </h4>
-
-        <div style={buttonPanelStyle}>
-
-          <RadioButtonGroup
-            name="queryType"
-            defaultSelected="genetic"
-            style={buttonPanelStyle}
-            onChange={this.queryOptionChanged}
-          >
-            <RadioButton
-              value='genetic'
-              label="Genetic Interaction"
-              style={radioButtonStyle}
-            />
-            <RadioButton
-              value='growth'
-              label='Growth'
-              style={radioButtonStyle}
-            />
-          </RadioButtonGroup>
-        </div>
-
         <div style={actionStyle}>
-
           <RaisedButton
             label="Reset"
             labelPosition="before"
@@ -235,17 +202,19 @@ class SearchTab extends Component {
             secondary={true}
             onClick={this.runSimulation}
           />
+
+          <RaisedButton
+            label="Explain"
+            style={{marginLeft: '0.4em'}}
+            labelPosition="before"
+            primary={true}
+            disabled={this.state.explainDisabled}
+            onClick={this.resetSelection}
+          />
         </div>
       </div>
     )
 
-  }
-
-  queryOptionChanged = (event, value) => {
-    console.log('Query option updated:')
-    this.setState({
-      queryOption: value
-    });
   }
 
   runSimulation = () => {
@@ -320,7 +289,7 @@ class SearchTab extends Component {
       return (
         <div style={baseStyle}>
           <div className={style.loading}></div>
-          <h2 style={{color: '#888888'}}>Searching...</h2>
+          <h2 style={{color: '#888888'}}>Searching222...</h2>
         </div>
       )
     }

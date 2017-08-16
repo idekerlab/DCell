@@ -40,7 +40,7 @@ import * as d3Scale from 'd3-scale'
 
 const labelSizeMapper = d3Scale.scaleLinear()
   .domain([1, 6000])
-  .range([6, 450]);
+  .range([150, 550]);
 
 const calculateLabelSize = network => {
 
@@ -51,7 +51,7 @@ const calculateLabelSize = network => {
       const labelSize = labelSizeMapper(geneCount)
       node.data['labelSize'] = labelSize
     } else {
-      node.data['labelSize'] = 6
+      node.data['labelSize'] = 150
     }
   })
 

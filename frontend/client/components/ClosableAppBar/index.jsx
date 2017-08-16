@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 
 import MainMenu from '../MainMenu'
+import Drawer from 'material-ui/Drawer'
 
 import AppBar from 'material-ui/AppBar'
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 
-import Drawer from 'material-ui/Drawer'
 
 import style from './style.css'
 import classnames from 'classnames'
