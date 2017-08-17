@@ -10,6 +10,9 @@ import (
 
 	"github.com/ericsage/deepcell/dc"
 	"google.golang.org/grpc"
+
+	"github.com/rs/cors"
+
 )
 
 type Response struct {
@@ -58,6 +61,12 @@ func knockout(growth bool, ontology string, genes []string) *dc.Reply {
 }
 
 func deepcellHandler(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "application/json")
+
+	//// CORS support
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
 	defer catchError()
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -93,6 +102,9 @@ func catchError() {
 
 func main() {
 	log.Println("Starting server...")
-	http.HandleFunc("/", deepcellHandler)
-	http.ListenAndServe(":8888", nil)
+	mux := http.NewServeMux()
+	handler := cors.Default().Handler(mux)
+
+	mux.HandleFunc("/", deepcellHandler)
+	http.ListenAndServe(":8888", handler)
 }
