@@ -8,10 +8,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/rs/cors"
-
 	"github.com/ericsage/deepcell/dc"
-
 	"google.golang.org/grpc"
 )
 
@@ -24,6 +21,7 @@ var (
 	tls        = getenv("tls", "false")
 	serverAddr = getenv("SERVER_ADDRESS", "biancone.ucsd.edu")
 	serverPort = getenv("SERVER_PORT", "5000")
+	labels     = []string{"ontology"}
 )
 
 func getenv(key, fallback string) string {
@@ -34,8 +32,9 @@ func getenv(key, fallback string) string {
 	return value
 }
 
-func knockout(ontology string, genes []string) *dc.Reply {
+func knockout(growth bool, ontology string, genes []string) *dc.Reply {
 	log.Println("About to open connection")
+	log.Println("Growth is set to", growth, "ontology is set to", ontology)
 	address := serverAddr + ":" + serverPort
 	log.Println(address)
 	conn, err := grpc.Dial(address, grpc.WithInsecure())
@@ -48,7 +47,7 @@ func knockout(ontology string, genes []string) *dc.Reply {
 	req := &dc.Request{
 		Genes:    genes,
 		Ontology: ontology,
-		Growth:   false,
+		Growth:   growth,
 	}
 	log.Println("About to process request")
 	rep, err := client.Run(context.Background(), req)
@@ -59,11 +58,6 @@ func knockout(ontology string, genes []string) *dc.Reply {
 }
 
 func deepcellHandler(w http.ResponseWriter, r *http.Request) {
-
-	w.Header().Set("Content-Type", "application/json")
-	//// CORS support
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-
 	defer catchError()
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -75,12 +69,13 @@ func deepcellHandler(w http.ResponseWriter, r *http.Request) {
 	if ontology == "" {
 		ontology = "GO"
 	}
+	growth := url.Query().Get("growth")
 	var genes []string
 	err = json.Unmarshal(body, &genes)
 	if err != nil {
 		panic("Could not decode json into genes list!")
 	}
-	termReply := knockout(ontology, genes)
+	termReply := knockout(growth == "true", ontology, genes)
 	res := &Response{
 		Data:   termReply,
 		Errors: []string{},
@@ -98,9 +93,6 @@ func catchError() {
 
 func main() {
 	log.Println("Starting server...")
-	mux := http.NewServeMux()
-	handler := cors.Default().Handler(mux)
-
-	mux.HandleFunc("/", deepcellHandler)
-	http.ListenAndServe(":8888", handler)
+	http.HandleFunc("/", deepcellHandler)
+	http.ListenAndServe(":8888", nil)
 }

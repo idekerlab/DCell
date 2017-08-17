@@ -28,7 +28,7 @@ class SimulationTypeSelector extends Component {
     this.setState({
       value: value
     })
-    // this.props.currentNetworkActions.setCurrentNetwork(value)
+    this.props.queryOptionAction(value)
   }
 
   render = () => (

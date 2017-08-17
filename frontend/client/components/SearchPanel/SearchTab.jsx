@@ -58,7 +58,7 @@ class SearchTab extends Component {
       runDisabled: true,
       explainDisabled: true,
       enabledButton: '',
-      queryOption: 'genetic'
+      queryOption: 'growth'
     }
   }
 
@@ -135,6 +135,13 @@ class SearchTab extends Component {
     }
   }
 
+  setQueryOption = value => {
+    console.log('QQQQQQQQQ - ' + value)
+    this.setState({
+      queryOption: value
+    });
+  }
+
   render() {
 
     const searchResult = this.props.search.result
@@ -149,10 +156,8 @@ class SearchTab extends Component {
       <div style={this.props.style}>
 
 
-
         <SimulationTypeSelector
-
-
+          queryOptionAction={this.setQueryOption}
         />
 
         <div style={searchUiStyle}>
@@ -260,14 +265,23 @@ class SearchTab extends Component {
     console.log(genes)
     console.log(geneMap)
 
-    const url = this.props.backendServices.simulator
+    let url = this.props.backendServices.simulator
+
+
+    // Check optional parameters
+    if(this.state.queryOption === 'growth') {
+      url = url + '?growth=true'
+    } else {
+      url = url + '?growth=false'
+    }
+
+    console.log(url)
 
     this.props.queryGenesActions.runDeletion(url, genesMap, geneMap)
 
     this.setState({
       explainDisabled: false
     })
-
   }
 
 
