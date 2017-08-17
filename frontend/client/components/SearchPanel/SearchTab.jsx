@@ -303,7 +303,7 @@ class SearchTab extends Component {
       return (
         <div style={baseStyle}>
           <div className={style.loading}></div>
-          <h2 style={{color: '#888888'}}>Searching222...</h2>
+          <h2 style={{color: '#888888'}}>Searching...</h2>
         </div>
       )
     }
