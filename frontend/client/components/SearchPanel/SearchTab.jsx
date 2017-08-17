@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {Set} from 'immutable'
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton'
 
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import ClearIcon from 'material-ui/svg-icons/content/clear';
@@ -64,12 +63,14 @@ class SearchTab extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    // Enable Explain button
 
     const genes = nextProps.queryGenes.get('genes')
     const selectedGeneCount = genes.size
 
     const lastGenes = this.props.queryGenes.get('genes')
     const lastCount = lastGenes.size
+
 
     if (selectedGeneCount == lastCount) {
       return
@@ -82,6 +83,7 @@ class SearchTab extends Component {
     } else {
       this.state.enabledButton = ''
     }
+
 
   }
 
@@ -209,7 +211,7 @@ class SearchTab extends Component {
             labelPosition="before"
             primary={true}
             disabled={this.state.explainDisabled}
-            onClick={this.resetSelection}
+            onClick={this.explainResult}
           />
         </div>
       </div>
@@ -261,7 +263,11 @@ class SearchTab extends Component {
     const url = this.props.backendServices.simulator
 
     this.props.queryGenesActions.runDeletion(url, genesMap, geneMap)
-    this.props.uiStateActions.showResult(true)
+
+    this.setState({
+      explainDisabled: false
+    })
+
   }
 
 
@@ -269,7 +275,15 @@ class SearchTab extends Component {
     this.props.queryGenesActions.clearGenes()
     this.props.uiStateActions.showResult(false)
 
+    this.setState({
+      explainDisabled: true
+    })
+
     this.clearQuery()
+  }
+
+  explainResult = () => {
+    this.props.uiStateActions.showResult(true)
   }
 
 

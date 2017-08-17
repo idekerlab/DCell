@@ -17,9 +17,17 @@ import {Map} from 'immutable'
 import * as d3Scale from 'd3-scale'
 
 
-const labelSizeMapper = d3Scale.scaleLog()
-  .domain([0, 5000])
-  .range([20, 300]);
+const loaderStyle = {
+  height: '100%',
+  width: '100%',
+  display: 'flex',
+  flexWrap: 'wrap',
+  flexFlow: 'row wrap',
+  alignItems: 'center',
+  justifyContent: 'center',
+  zIndex: 2800
+}
+
 
 class NetworkPanel extends Component {
 
@@ -37,13 +45,13 @@ class NetworkPanel extends Component {
 
     console.log('====== Custom node select function called! ========');
 
-    window.setTimeout(()=>{
+    window.setTimeout(() => {
       const root = this.props.trees[this.props.currentNetwork.id].rootNode
 
       this.props.eventActions.selected(nodeProps[nodeIds[0]])
       try {
-        this.props.commandActions.findPath({startId:nodeIds[0].replace(/\:/, '\\:'), endId: root.replace(/\:/, '\\:')})
-      } catch(e) {
+        this.props.commandActions.findPath({startId: nodeIds[0].replace(/\:/, '\\:'), endId: root.replace(/\:/, '\\:')})
+      } catch (e) {
         console.log('* Failed FindPath')
         console.log(e)
       }
@@ -80,10 +88,10 @@ class NetworkPanel extends Component {
     const newUrl = nextProps.trees[nextNet.id].url
     const network = this.props.network.get(newUrl)
 
-    if(network === undefined || network === null) {
+    if (network === undefined || network === null) {
 
       // Need to fetch network data
-      if(nextNet.id !== this.props.currentNetwork.id) {
+      if (nextNet.id !== this.props.currentNetwork.id) {
         this.props.networkActions.fetchNetworkFromUrl(newUrl)
       }
     }
@@ -91,7 +99,7 @@ class NetworkPanel extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
 
-    if(nextProps.commands.target === 'subnet') {
+    if (nextProps.commands.target === 'subnet') {
       return false
     }
 
@@ -101,7 +109,7 @@ class NetworkPanel extends Component {
     const curNetId = curNet.id
     const nextNetId = nextNet.id
 
-    if(curNetId === nextNetId && nextProps.network.get('loading') === this.props.network.get('loading')) {
+    if (curNetId === nextNetId && nextProps.network.get('loading') === this.props.network.get('loading')) {
       // Check commands difference
       if (this.props.commands !== nextProps.commands) {
         return true
@@ -113,10 +121,9 @@ class NetworkPanel extends Component {
     const newUrl = nextProps.trees[nextNetId].url
     const network = nextProps.network.get(newUrl)
 
-    if(network === undefined) {
+    if (network === undefined) {
       return false
     }
-
 
 
     return true
@@ -157,30 +164,30 @@ class NetworkPanel extends Component {
   }
 
   getVisualStyle2 = () => ({
-    style: [ {
-      "selector" : "node",
-      "css" : {
-        "text-valign" : "center",
-        "text-halign" : "right",
-        "shape" : "ellipse",
-        "color" : "#555555",
-        "background-color" : "teal",
-        "height" : 'mapData(geneCount, 0, 6000, 10, 400)',
-        "width" : 'mapData(geneCount, 0, 6000, 10, 400)',
-        "content" : "data(name)",
+    style: [{
+      "selector": "node",
+      "css": {
+        "text-valign": "center",
+        "text-halign": "right",
+        "shape": "ellipse",
+        "color": "#555555",
+        "background-color": "teal",
+        "height": 'mapData(geneCount, 0, 6000, 10, 400)',
+        "width": 'mapData(geneCount, 0, 6000, 10, 400)',
+        "content": "data(name)",
         "min-zoomed-font-size": '0.3em',
         // "font-size" : 'mapData(geneCount, 0, 6000, 8, 400)',
         "font-size": "val => (labelSizeMapper(geneCount))",
-        "text-opacity" : 1,
+        "text-opacity": 1,
         'text-wrap': 'wrap',
         'text-max-width': '180px'
       }
     }, {
-      "selector" : "node:selected",
-      "css" : {
-        "background-color" : "red",
-        "font-size" : '3em',
-        "color" : "red",
+      "selector": "node:selected",
+      "css": {
+        "background-color": "red",
+        "font-size": '3em',
+        "color": "red",
         "text-opacity": 0.7,
         'text-max-width': '400px',
         'z-index': 109,
@@ -189,111 +196,111 @@ class NetworkPanel extends Component {
         height: 25
       }
     }, {
-      "selector" : "edge",
-      "css" : {
-        "width" : 10.0,
+      "selector": "edge",
+      "css": {
+        "width": 10.0,
         'opacity': 0.6,
-        "line-color" : "#555555",
+        "line-color": "#555555",
       }
     }, {
-      "selector" : "edge:selected",
-      "css" : {
-        "line-color" : "red",
+      "selector": "edge:selected",
+      "css": {
+        "line-color": "red",
         "width": 20,
         'opacity': 1
       }
-    } ]
+    }]
   })
 
 
   getVisualStyle = () => ({
-    style: [ {
-      "selector" : "node",
-      "css" : {
-        "text-valign" : "center",
-        "text-halign" : "right",
-        "shape" : "ellipse",
-        "color" : "#000000",
-        "background-color" : "rgb(200,200,206)",
-        "height" : 'mapData(geneCount, 1, 6000, 120, 2500)',
-        "width" : 'mapData(geneCount, 1, 6000, 120, 2500)',
-        "content" : "data(name)",
+    style: [{
+      "selector": "node",
+      "css": {
+        "text-valign": "center",
+        "text-halign": "right",
+        "shape": "ellipse",
+        "color": "#000000",
+        "background-color": "rgb(200,200,206)",
+        "height": 'mapData(geneCount, 1, 6000, 120, 2500)',
+        "width": 'mapData(geneCount, 1, 6000, 120, 2500)',
+        "content": "data(name)",
         "min-zoomed-font-size": '0.4em',
-        "font-size" : 'mapData(geneCount, 1, 6000, 70, 1200)',
-        "text-opacity" : 1,
+        "font-size": 'mapData(geneCount, 1, 6000, 70, 1200)',
+        "text-opacity": 1,
         'text-wrap': 'wrap',
         'text-margin-x': '20',
         'z-index': 1
       }
     }, {
-      "selector" : ".invisible",
-      "css" : {
+      "selector": ".invisible",
+      "css": {
         'display': 'none',
       }
     }, {
-      "selector" : "node[type = 'g']",
-      "css" : {
+      "selector": "node[type = 'g']",
+      "css": {
         'font-size': '80',
       }
     }, {
-      "selector" : "node[pLen <= 4][geneCount > 1500]",
-      "css" : {
+      "selector": "node[pLen <= 4][geneCount > 1500]",
+      "css": {
         'font-size': ele => (3200 / (ele.data('pLen'))),
       }
     }, {
-      "selector" : "node[namespace = 'biological_process']",
-      "css" : {
-        "background-color" : "rgb(0,153,204)",
+      "selector": "node[namespace = 'biological_process']",
+      "css": {
+        "background-color": "rgb(0,153,204)",
       }
     }, {
-      "selector" : "node[namespace = 'cellular_component']",
-      "css" : {
-        "background-color" : "rgb(255,102,0)",
+      "selector": "node[namespace = 'cellular_component']",
+      "css": {
+        "background-color": "rgb(255,102,0)",
       }
     }, {
-      "selector" : "node[namespace = 'molecular_function']",
-      "css" : {
-        "background-color" : "rgb(0,204,153)",
+      "selector": "node[namespace = 'molecular_function']",
+      "css": {
+        "background-color": "rgb(0,204,153)",
       }
     }, {
-      "selector" : "node[name = 'biological_process']",
-      "css" : {
-        "color" : "rgb(0,153,204)",
+      "selector": "node[name = 'biological_process']",
+      "css": {
+        "color": "rgb(0,153,204)",
         "label": "Biological Process"
       }
     }, {
-      "selector" : "node[name = 'cellular_component']",
-      "css" : {
-        "color" : "rgb(255,102,0)",
+      "selector": "node[name = 'cellular_component']",
+      "css": {
+        "color": "rgb(255,102,0)",
         "label": "Cellular Component"
       }
     }, {
-      "selector" : "node[name = 'molecular_function']",
-      "css" : {
-        "color" : "rgb(0,204,153)",
+      "selector": "node[name = 'molecular_function']",
+      "css": {
+        "color": "rgb(0,204,153)",
         "label": "Molecular Function"
       }
     }, {
-      "selector" : "node[type = 'r']",
-      "css" : {
+      "selector": "node[type = 'r']",
+      "css": {
         'font-size': '520em',
         'label': 'Root'
       }
     }, {
-      "selector" :
-        "node[id = 'GO:0008150'], " +
-        "node[id = 'GO:0003674'], " +
-        "node[id = 'GO:0005575']",
-      "css" : {
+      "selector":
+      "node[id = 'GO:0008150'], " +
+      "node[id = 'GO:0003674'], " +
+      "node[id = 'GO:0005575']",
+      "css": {
         'font-size': '400em',
         'text-opacity': '0.6'
       }
     }, {
-      "selector" : "node:selected",
-      "css" : {
-        "background-color" : "red",
-        "font-size" : '20em',
-        "color" : "red",
+      "selector": "node:selected",
+      "css": {
+        "background-color": "red",
+        "font-size": '20em',
+        "color": "red",
         "text-opacity": 1,
         'z-index': 999,
         "min-zoomed-font-size": 0,
@@ -301,49 +308,49 @@ class NetworkPanel extends Component {
         height: 225
       }
     }, {
-      "selector" : "edge",
-      "css" : {
-        "width" : 60.0,
+      "selector": "edge",
+      "css": {
+        "width": 60.0,
         'opacity': 1,
-        "line-color" : "rgb(132,132,132)",
+        "line-color": "rgb(132,132,132)",
       }
     }, {
-      "selector" : "edge[branch = 'CC']",
-      "css" : {
-        "line-color" : "rgb(255,102,0)"
+      "selector": "edge[branch = 'CC']",
+      "css": {
+        "line-color": "rgb(255,102,0)"
       }
     }, {
-      "selector" : "edge[branch = 'MF']",
-      "css" : {
-        "line-color" : "rgb(0,204,102)"
+      "selector": "edge[branch = 'MF']",
+      "css": {
+        "line-color": "rgb(0,204,102)"
       }
     }, {
-      "selector" : "edge[branch = 'BP']",
-      "css" : {
-        "line-color" : "rgb(0,153,204)"
+      "selector": "edge[branch = 'BP']",
+      "css": {
+        "line-color": "rgb(0,153,204)"
       }
     }, {
-      "selector" : "edge:selected",
-      "css" : {
-        "line-color" : "red",
+      "selector": "edge:selected",
+      "css": {
+        "line-color": "red",
         "width": 110,
         'opacity': 1
       }
     }, {
-      "selector" : ".faded",
-      "css" : {
-        "background-color" : "black",
-        "line-color" : "black",
+      "selector": ".faded",
+      "css": {
+        "background-color": "black",
+        "line-color": "black",
         color: "black",
         opacity: 0.2
       }
-    },{
-      "selector" : ".focused",
-      "css" : {
+    }, {
+      "selector": ".focused",
+      "css": {
         opacity: 1,
-        "background-color" : "teal",
-        "font-size" : '4em',
-        "color" : "teal",
+        "background-color": "teal",
+        "font-size": '4em',
+        "color": "teal",
         "text-opacity": 1,
         'text-max-width': '500px',
         'z-index': 999,
@@ -351,7 +358,7 @@ class NetworkPanel extends Component {
         width: 50,
         height: 50
       }
-    } ]
+    }]
   })
 
 
@@ -361,14 +368,14 @@ class NetworkPanel extends Component {
 
     const loading = this.props.network.get('loading')
 
-    if(loading) {
+    if (loading) {
       return (
-        <Loading />
+        <Loading/>
       )
     }
 
     let commands = this.props.commands
-    if(commands.target === 'subnet') {
+    if (commands.target === 'subnet') {
       console.log("%%%%%ignore")
       commands = Map({
         command: '',
@@ -398,18 +405,36 @@ class NetworkPanel extends Component {
       style = this.getVisualStyle2()
     }
 
-    console.log(style)
+
+    const result = this.props.queryGenes.get('result')
+    const running = this.props.queryGenes.get('running')
+
+
+    let loading2 = ( <div></div> )
+
+    if ((result === null || result === undefined) && running) {
+      loading2 = (
+        <Loading
+          style={loaderStyle}
+        />
+      )
+    }
 
     return (
-      <CyViewer
-        key="mainView"
-        network={networkData}
-        networkType={'cyjs'}
-        style={networkAreaStyle}
-        networkStyle={style}
-        eventHandlers={this.getCustomEventHandlers()}
-        command={commands}
-      />
+      <div>
+
+        {loading2}
+
+        <CyViewer
+          key="mainView"
+          network={networkData}
+          networkType={'cyjs'}
+          style={networkAreaStyle}
+          networkStyle={style}
+          eventHandlers={this.getCustomEventHandlers()}
+          command={commands}
+        />
+      </div>
     )
   }
 }

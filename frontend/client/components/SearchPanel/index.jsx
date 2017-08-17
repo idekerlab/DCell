@@ -49,7 +49,7 @@ class SearchPanel extends Component {
       position: 'fixed',
       left: '0',
       top: '0',
-      zIndex: 999,
+      zIndex: 990,
       backgroundColor: 'rgba(255, 255, 255, 0.7)'
     };
 

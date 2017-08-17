@@ -7,12 +7,16 @@ const defaultState = Map({
   showAppBar: true,
   showCommands: true,
   showResult: false,
-  showSearchWindow: true
+  showSearchWindow: true,
+  showRunning: false
 })
 
 export default handleActions({
   SHOW_APP_BAR: (state, action) => (
     state.set('showAppBar', action.payload)
+  ),
+  SHOW_RUNNING: (state, action) => (
+    state.set('showRunning', action.payload)
   ),
   SHOW_COMMANDS: (state, action) => (
     state.set('showCommands', action.payload)

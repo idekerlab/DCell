@@ -4,17 +4,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import {TreeViewer, DAGViewer} from 'tree-viewer'
 import Loading from '../Loading'
-
-import ExpandIcon from 'material-ui/svg-icons/navigation/fullscreen'
-import CollapseIcon from 'material-ui/svg-icons/navigation/fullscreen-exit'
-import CloseIcon from 'material-ui/svg-icons/content/clear'
-
-import Toggle from 'material-ui/Toggle';
-
-// For filtering
-import cytoscape from 'cytoscape'
-
-
 const loaderStyle = {
   height: '100%',
   width: '100%',
@@ -25,13 +14,22 @@ const loaderStyle = {
   justifyContent: 'center',
 }
 
+import ExpandIcon from 'material-ui/svg-icons/navigation/fullscreen'
+import CollapseIcon from 'material-ui/svg-icons/navigation/fullscreen-exit'
+import CloseIcon from 'material-ui/svg-icons/content/clear'
+
+// For filtering
+import cytoscape from 'cytoscape'
+
+
+
 
 class SubTreePanel extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      isMax: false,
+      isMax: true,
       expand: false,
       filterDag: null
     }

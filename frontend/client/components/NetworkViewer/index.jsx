@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import {browserHistory} from 'react-router'
 
-import ClosableAppBar from '../ClosableAppBar'
 import NetworkPanel from '../NetworkPanel'
 import PropertyPanel from '../PropertyPanel'
 import Errorbar from 'material-ui/Snackbar';
 import SearchPanel from '../SearchPanel'
+import RunningOverlay from '../RunningOverlay'
 
 import Commands from '../Commands'
 
@@ -60,9 +60,14 @@ export default class NetworkViewer extends Component {
       errorMsg = 'ERROR: ' + errorMsg
     }
 
+
+    const running = this.props.queryGenes.get('running')
+
     return (
 
       <div style={this.props.style}>
+
+
 
         <NetworkPanel
           networkActions={networkActions}
@@ -80,6 +85,12 @@ export default class NetworkViewer extends Component {
           currentNetwork={this.props.currentNetwork.toJS()}
 
           messageActions={messageActions}
+
+
+
+          uiStateActions={uiStateActions}
+          queryGenesActions={this.props.queryGenesActions}
+          queryGenes={this.props.queryGenes}
         />
 
         <Commands
@@ -126,6 +137,13 @@ export default class NetworkViewer extends Component {
             /> :
             <div></div>
         }
+
+        {
+          running ?
+            <RunningOverlay /> : <div></div>
+        }
+
+
 
         <Errorbar
           className={style.errorbar}
