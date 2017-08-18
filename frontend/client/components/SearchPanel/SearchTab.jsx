@@ -335,6 +335,7 @@ class SearchTab extends Component {
         hits={hits}
         queryGenesActions={this.props.queryGenesActions}
         queryGenes={this.props.queryGenes}
+        queryOption={this.state.queryOption}
       />
     )
   }

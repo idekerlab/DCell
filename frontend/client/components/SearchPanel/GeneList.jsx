@@ -43,9 +43,12 @@ class GeneList extends Component {
       const checked = selectedGenes.has(locusName)
 
       let disabled = false
-      if(selectedGenes.size >= 2) {
+      const queryOption = this.props.queryOption
+
+      if(selectedGenes.size >= 2 && queryOption === 'genetic_interaction') {
         disabled = true
       }
+
       return (
         <ListItem
           key={i}
