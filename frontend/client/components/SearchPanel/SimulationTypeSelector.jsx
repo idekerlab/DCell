@@ -19,12 +19,11 @@ class SimulationTypeSelector extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: 'growth'
+      value: 'genetic_interaction'
     }
   }
 
   handleChange = (event, index, value) => {
-    console.log('type selected: ' + value)
     this.setState({
       value: value
     })
