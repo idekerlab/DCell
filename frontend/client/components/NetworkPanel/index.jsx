@@ -1,20 +1,13 @@
 import React, {Component} from 'react'
 import {browserHistory} from 'react-router'
-
 import CyViewer from 'cy-viewer'
-
 import Loading from '../Loading'
-
 import ErrorIcon from 'material-ui/svg-icons/alert/error-outline'
 import BackIcon from 'material-ui/svg-icons/navigation/arrow-back'
 import FlatButton from 'material-ui/FlatButton'
 
 import style from './style.css'
-
 import {Map} from 'immutable'
-
-
-import * as d3Scale from 'd3-scale'
 
 
 const loaderStyle = {
@@ -37,7 +30,6 @@ class NetworkPanel extends Component {
       updating: false
     };
   }
-
 
   selectNodes = (nodeIds, nodeProps) => {
     const node = nodeIds[0]
@@ -95,17 +87,60 @@ class NetworkPanel extends Component {
         this.props.networkActions.fetchNetworkFromUrl(newUrl)
       }
     }
+
+    const nextSelected = this.getSelectedNodes(nextProps)
+    const selected = this.getSelectedNodes(this.props)
+
+
+    if(nextSelected === undefined
+      || nextSelected === []
+      || nextSelected.length === selected.length) {
+      return
+    } else {
+      console.log("44Need to SELECT PATH@@@@@@@@@@@")
+      console.log(nextSelected)
+      const running1 = this.props.queryGenes.get('running')
+      const running2 = nextProps.queryGenes.get('running')
+
+      if(running1 === true && running2 === false) {
+        this.props.commandActions.select({
+          idList: nextSelected,
+          edges: nextProps.queryGenes.get('result').data.edges
+        })
+      }
+    }
+  }
+
+  getSelectedNodes = (data) => {
+    const genes = data.queryGenes.get('result')
+
+    console.log("SELECT PATH@@@@@@@@@@@")
+    console.log(genes)
+
+    if(genes === null) {
+      return []
+    }
+
+    const nodes = genes.data.nodes
+    const selectedNodeIds = nodes.map(node => (node.id)).filter(id=>{
+      if(id.startsWith('GO')) {
+        return true
+      } else {
+        return false
+      }
+    })
+
+    console.log(selectedNodeIds)
+    return selectedNodeIds
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-
     if (nextProps.commands.target === 'subnet') {
       return false
     }
 
     const curNet = this.props.currentNetwork
     const nextNet = nextProps.currentNetwork
-
     const curNetId = curNet.id
     const nextNetId = nextNet.id
 
@@ -229,7 +264,8 @@ class NetworkPanel extends Component {
         "font-size": 'mapData(geneCount, 1, 6000, 70, 1200)',
         "text-opacity": 1,
         'text-wrap': 'wrap',
-        'text-margin-x': '20',
+        'text-max-width': '30000',
+        // 'text-margin-x': '20',
         'z-index': 1
       }
     }, {
@@ -248,39 +284,39 @@ class NetworkPanel extends Component {
         'font-size': ele => (3200 / (ele.data('pLen'))),
       }
     }, {
-      "selector": "node[namespace = 'biological_process']",
-      "css": {
-        "background-color": "rgb(0,153,204)",
-      }
-    }, {
-      "selector": "node[namespace = 'cellular_component']",
-      "css": {
-        "background-color": "rgb(255,102,0)",
-      }
-    }, {
-      "selector": "node[namespace = 'molecular_function']",
-      "css": {
-        "background-color": "rgb(0,204,153)",
-      }
-    }, {
-      "selector": "node[name = 'biological_process']",
-      "css": {
-        "color": "rgb(0,153,204)",
-        "label": "Biological Process"
-      }
-    }, {
-      "selector": "node[name = 'cellular_component']",
-      "css": {
-        "color": "rgb(255,102,0)",
-        "label": "Cellular Component"
-      }
-    }, {
-      "selector": "node[name = 'molecular_function']",
-      "css": {
-        "color": "rgb(0,204,153)",
-        "label": "Molecular Function"
-      }
-    }, {
+    //   "selector": "node[namespace = 'biological_process']",
+    //   "css": {
+    //     "background-color": "rgb(0,153,204)",
+    //   }
+    // }, {
+    //   "selector": "node[namespace = 'cellular_component']",
+    //   "css": {
+    //     "background-color": "rgb(255,102,0)",
+    //   }
+    // }, {
+    //   "selector": "node[namespace = 'molecular_function']",
+    //   "css": {
+    //     "background-color": "rgb(0,204,153)",
+    //   }
+    // }, {
+    //   "selector": "node[name = 'biological_process']",
+    //   "css": {
+    //     "color": "rgb(0,153,204)",
+    //     "label": "Biological Process"
+    //   }
+    // }, {
+    //   "selector": "node[name = 'cellular_component']",
+    //   "css": {
+    //     "color": "rgb(255,102,0)",
+    //     "label": "Cellular Component"
+    //   }
+    // }, {
+    //   "selector": "node[name = 'molecular_function']",
+    //   "css": {
+    //     "color": "rgb(0,204,153)",
+    //     "label": "Molecular Function"
+    //   }
+    // }, {
       "selector": "node[type = 'r']",
       "css": {
         'font-size': '520em',
@@ -292,48 +328,48 @@ class NetworkPanel extends Component {
       "node[id = 'GO:0003674'], " +
       "node[id = 'GO:0005575']",
       "css": {
-        'font-size': '400em',
+        'font-size': '300em',
         'text-opacity': '0.6'
       }
     }, {
       "selector": "node:selected",
       "css": {
         "background-color": "red",
-        "font-size": '20em',
+        "font-size": '40em',
         "color": "red",
-        "text-opacity": 1,
+        "text-opacity": 0.8,
         'z-index': 999,
         "min-zoomed-font-size": 0,
-        width: 225,
-        height: 225
+        'width': 325,
+        'height': 325
       }
     }, {
       "selector": "edge",
       "css": {
-        "width": 60.0,
-        'opacity': 1,
-        "line-color": "rgb(132,132,132)",
+        "width": 20.0,
+        'opacity': 0.7,
+        "line-color": "rgb(100,100,100)",
       }
     }, {
-      "selector": "edge[branch = 'CC']",
-      "css": {
-        "line-color": "rgb(255,102,0)"
-      }
-    }, {
-      "selector": "edge[branch = 'MF']",
-      "css": {
-        "line-color": "rgb(0,204,102)"
-      }
-    }, {
-      "selector": "edge[branch = 'BP']",
-      "css": {
-        "line-color": "rgb(0,153,204)"
-      }
-    }, {
+    //   "selector": "edge[branch = 'CC']",
+    //   "css": {
+    //     "line-color": "rgb(255,102,0)"
+    //   }
+    // }, {
+    //   "selector": "edge[branch = 'MF']",
+    //   "css": {
+    //     "line-color": "rgb(0,204,102)"
+    //   }
+    // }, {
+    //   "selector": "edge[branch = 'BP']",
+    //   "css": {
+    //     "line-color": "rgb(0,153,204)"
+    //   }
+    // }, {
       "selector": "edge:selected",
       "css": {
         "line-color": "red",
-        "width": 110,
+        "width": 180,
         'opacity': 1
       }
     }, {
@@ -349,14 +385,13 @@ class NetworkPanel extends Component {
       "css": {
         opacity: 1,
         "background-color": "teal",
-        "font-size": '4em',
+        "font-size": '5em',
         "color": "teal",
         "text-opacity": 1,
-        'text-max-width': '500px',
         'z-index': 999,
         "min-zoomed-font-size": 0,
-        width: 50,
-        height: 50
+        width: 80,
+        height: 80
       }
     }]
   })
@@ -392,7 +427,6 @@ class NetworkPanel extends Component {
       height: '100%',
     };
 
-
     const curNetId = this.props.currentNetwork.id
     const url = this.props.trees[curNetId].url
     const networkProp = this.props.network
@@ -408,7 +442,6 @@ class NetworkPanel extends Component {
 
     const result = this.props.queryGenes.get('result')
     const running = this.props.queryGenes.get('running')
-
 
     let loading2 = ( <div></div> )
 

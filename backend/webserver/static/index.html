@@ -1,98 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
     <title>DeepCell 1.2</title>
+    <style>
+      body {
+        min-width:800px;
+        min-height:600px;
+      }
+      #root {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.1/css/bulma.min.css"/>
-    <link rel="stylesheet" href="style.css"/>
-</head>
-<body>
+    <div id="root"></div>
 
+    <!-- Web Font loading -->
+    <script>
+      (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+          '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
 
-<section class="hero is-info is-fullheight">
-    <!-- Hero header: will stick at the top -->
-    <div class="hero-head">
-        <header class="nav">
-            <div class="container">
-                <div class="nav-right nav-menu">
-                    <a class="nav-item is-active" href="index.html">
-                        Home
-                    </a>
-                    <a class="nav-item" href="https://github.com/idekerlab/deep-cell/wiki">
-                        Documentation
-                    </a>
-                    <span class="nav-item">
-            <a class="button is-info is-inverted" href="https://github.com/idekerlab/deep-cell">
-              <span class="icon">
-                <i class="fa fa-github"></i>
-              </span>
-              <span>Source</span>
-            </a>
-          </span>
-                </div>
-            </div>
-        </header>
-    </div>
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+      })();
+    </script>
 
-    <section class="hero is-info">
-        <div class="hero-body">
-            <div class="container">
-                <div class="columns">
-                    <div class="column is-8">
-                        <h1 class="title main-title">
-                            DeepCell 1.2
-                        </h1>
-                        <h2 class="subtitle is-3">
-                            a neural network to interpret cell structure and function
-                        </h2>
-                    </div>
-
-                    <div class="column">
-                        <a class="button is-primary is-inverted is-outlined is-large" href="app">
-                            Start App
-                        </a>
-                        <a class="button is-info is-inverted is-large" href="https://github.com/idekerlab/deep-cell/wiki/Quick-Start-Guide">
-                            Quick Start Guide
-                        </a>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- Hero content: will be in the middle -->
-    <div class="hero-body main-background">
-        <div class="container has-text-centered">
-
-        </div>
-    </div>
-
-
-    <div class="hero-foot">
-        <nav class="tabs">
-            <div class="container">
-                <ul>
-                    <li>
-                        <a href="https://healthsciences.ucsd.edu/som/medicine/research/labs/ideker/Pages/default.aspx">
-                            &copy; 2017 UC, San Diego Trey Ideker Lab
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://cytoscape.org/">Cytoscape
-                        </a>
-                    </li>
-                    <li><a href="http://nrnb.org/">NRNB</a></li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-
-</section>
-
-
-</body>
+    <script src="vendor.bundle.js"></script>
+    <script src="bundle.js"></script>
+  </body>
 </html>
