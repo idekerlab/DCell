@@ -211,7 +211,6 @@ class NetworkPanel extends Component {
         "width": 'mapData(geneCount, 0, 6000, 10, 400)',
         "content": "data(name)",
         "min-zoomed-font-size": '0.3em',
-        // "font-size" : 'mapData(geneCount, 0, 6000, 8, 400)',
         "font-size": "val => (labelSizeMapper(geneCount))",
         "text-opacity": 1,
         'text-wrap': 'wrap',
@@ -335,7 +334,7 @@ class NetworkPanel extends Component {
       "selector": "node:selected",
       "css": {
         "background-color": "red",
-        "font-size": '40em',
+        "font-size": '60em',
         "color": "red",
         "text-opacity": 0.8,
         'z-index': 999,
