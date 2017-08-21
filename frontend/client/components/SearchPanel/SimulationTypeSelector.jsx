@@ -16,23 +16,13 @@ const selectedStyle = {
 class SimulationTypeSelector extends Component {
 
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      value: 'genetic_interaction'
-    }
-  }
-
   handleChange = (event, index, value) => {
-    this.setState({
-      value: value
-    })
     this.props.queryOptionAction(value)
   }
 
   render = () => (
     <SelectField
-      value={this.state.value}
+      value={this.props.queryOption}
       labelStyle={selectedStyle}
       style={style}
       onChange={this.handleChange}

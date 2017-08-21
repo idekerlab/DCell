@@ -18,6 +18,7 @@ import TextField from 'material-ui/TextField';
 import style from './style.css'
 
 import StructureSelectorPanel from './StructureSelectorPanel'
+import ExampleTermSearch from './ExampleTermSearch'
 
 import Avatar from 'material-ui/Avatar';
 
@@ -61,7 +62,7 @@ class TermSearchPanel extends Component {
   }
 
 
-  search = () => {
+  search = q => {
 
     const options = this.props.trees[this.props.currentNetwork.id].searchOptions
 
@@ -71,6 +72,9 @@ class TermSearchPanel extends Component {
     })
 
     let query = this.state.query
+    if(q !== undefined) {
+      query = q
+    }
 
     // Special case: exact match for CLIXO
     if(query !== undefined && query !== null && query != '') {
@@ -98,6 +102,12 @@ class TermSearchPanel extends Component {
   handleChange = event => {
     this.setState({
       query: event.target.value
+    });
+  }
+
+  setQuery = query => {
+    this.setState({
+      query: query
     });
   }
 
@@ -149,6 +159,11 @@ class TermSearchPanel extends Component {
 
     return (
       <div style={this.props.style}>
+
+        <ExampleTermSearch
+          setQueryAction={this.setQuery}
+          searchAction={this.search}
+        />
 
         <StructureSelectorPanel
           trees={this.props.trees}

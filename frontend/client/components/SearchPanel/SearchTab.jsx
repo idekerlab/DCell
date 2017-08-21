@@ -13,6 +13,8 @@ import GenotypePanel from './GenotypePanel'
 import GeneList from './GeneList'
 
 import SimulationTypeSelector from './SimulationTypeSelector'
+import ExampleQueries from './ExampleQueries'
+
 
 const searchUiStyle = {
   display: 'flex',
@@ -83,8 +85,6 @@ class SearchTab extends Component {
     } else {
       this.state.enabledButton = ''
     }
-
-
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -97,14 +97,17 @@ class SearchTab extends Component {
     }
   }
 
+  search = (q) => {
 
-  search = () => {
+    let query = this.state.query
+    if(q !== undefined) {
+      query = q
+    }
 
     this.setState({
       noSearchYet: false
     })
 
-    const query = this.state.query
     const options = {
       index: 'genes',
       type: 'gene'
@@ -127,6 +130,13 @@ class SearchTab extends Component {
     this.setState({
       query: event.target.value
     });
+  }
+
+  setQuery = (query) => {
+    this.setState({
+      query: query
+    });
+    this.search(query)
   }
 
   handleKey = event => {
@@ -155,8 +165,14 @@ class SearchTab extends Component {
     return (
       <div style={this.props.style}>
 
+        <ExampleQueries
+          setQueryAction={this.setQuery}
+          queryOptionAction={this.setQueryOption}
+          resetSelectionAction={this.resetSelection}
+        />
 
         <SimulationTypeSelector
+          queryOption={this.state.queryOption}
           queryOptionAction={this.setQueryOption}
         />
 

@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import {Card, CardActions, CardHeader} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 
+
+import style from './style.css'
+
 import {TreeViewer, DAGViewer} from 'tree-viewer'
 import Loading from '../Loading'
 const loaderStyle = {
@@ -104,7 +107,7 @@ class SubTreePanel extends Component {
     }
 
     return (
-      <div>
+      <div className={style.container}>
         <div style={titleStyle}>
           {"Deleted Genes: " + genotype}
         </div>

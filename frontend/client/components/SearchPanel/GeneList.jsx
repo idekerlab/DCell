@@ -26,7 +26,7 @@ class GeneList extends Component {
   render() {
     return (
       <List style={listStyle}>
-        <Subheader>Search Result</Subheader>
+        <Subheader>Search Result (Click to select genotype)</Subheader>
         {this.getGene(this.props.hits)}
       </List>
     )
