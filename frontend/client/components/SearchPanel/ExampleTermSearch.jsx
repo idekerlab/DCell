@@ -3,8 +3,8 @@ import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
 const style = {
-  color: '#777777',
-  width: '90%',
+  color: '#555555',
+  width: '90%'
 }
 
 const selectedStyle = {
@@ -60,7 +60,7 @@ class ExampleTermSearch extends Component {
       style={style}
       onChange={this.handleChange}
       floatingLabelText="Subsystem Search Examples:"
-      floatingLabelStyle={{color: '#999999', fontWeight: 300}}
+      floatingLabelStyle={{color: 'teal', fontWeight: 500}}
     >
 
       <MenuItem key={1} value='example0' primaryText={EXAMPLES.example0.label}/>

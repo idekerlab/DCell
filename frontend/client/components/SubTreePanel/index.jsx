@@ -3,9 +3,12 @@ import {Card, CardActions, CardHeader} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 
 
+import LegendColor from './LegendColor'
+
+
 import style from './style.css'
 
-import {TreeViewer, DAGViewer} from 'tree-viewer'
+import {DAGViewer} from 'tree-viewer'
 import Loading from '../Loading'
 const loaderStyle = {
   height: '100%',
@@ -112,6 +115,8 @@ class SubTreePanel extends Component {
           {"Deleted Genes: " + genotype}
         </div>
 
+        <LegendColor />
+
         <Card
           style={cardStyle}
         >
@@ -120,6 +125,7 @@ class SubTreePanel extends Component {
           <CardActions
             style={actionStyle}
           >
+
             <RaisedButton
               icon={this.state.isMax ? <CollapseIcon /> : <ExpandIcon />}
               onClick={this.toggleWindow}
@@ -186,8 +192,11 @@ class SubTreePanel extends Component {
       //   dag = this.filter(dag, this.state.filterDag.source, this.state.filterDag.target)
       // }
 
+      const queryType = this.props.queryGenes.get('queryType')
+
       return (
         <DAGViewer
+          queryType={queryType}
           data={dag}
           label="long_name"
           style={treeStyle}

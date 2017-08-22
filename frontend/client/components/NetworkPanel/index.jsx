@@ -219,7 +219,7 @@ class NetworkPanel extends Component {
     }, {
       "selector": "node:selected",
       "css": {
-        "background-color": "red",
+        "background-color": "#FF6666",
         "font-size": '3em',
         "color": "red",
         "text-opacity": 0.7,
@@ -232,9 +232,9 @@ class NetworkPanel extends Component {
     }, {
       "selector": "edge",
       "css": {
-        "width": 10.0,
-        'opacity': 0.6,
-        "line-color": "#555555",
+        "width": 20.0,
+        'opacity': 1,
+        "line-color": "#111111",
       }
     }, {
       "selector": "edge:selected",
@@ -254,17 +254,17 @@ class NetworkPanel extends Component {
         "text-valign": "center",
         "text-halign": "right",
         "shape": "ellipse",
-        "color": "#000000",
+        "color": "#66666a",
         "background-color": "rgb(200,200,206)",
-        "height": 'mapData(geneCount, 1, 6000, 120, 2500)',
-        "width": 'mapData(geneCount, 1, 6000, 120, 2500)',
+        "height": 'mapData(geneCount, 1, 6000, 140, 2000)',
+        "width": 'mapData(geneCount, 1, 6000, 140, 2000)',
         "content": "data(name)",
         "min-zoomed-font-size": '0.4em',
         "font-size": 'mapData(geneCount, 1, 6000, 70, 1200)',
         "text-opacity": 1,
         'text-wrap': 'wrap',
         'text-max-width': '30000',
-        // 'text-margin-x': '20',
+        'text-margin-x': '20',
         'z-index': 1
       }
     }, {
@@ -283,43 +283,17 @@ class NetworkPanel extends Component {
         'font-size': ele => (3200 / (ele.data('pLen'))),
       }
     }, {
-    //   "selector": "node[namespace = 'biological_process']",
-    //   "css": {
-    //     "background-color": "rgb(0,153,204)",
-    //   }
-    // }, {
-    //   "selector": "node[namespace = 'cellular_component']",
-    //   "css": {
-    //     "background-color": "rgb(255,102,0)",
-    //   }
-    // }, {
-    //   "selector": "node[namespace = 'molecular_function']",
-    //   "css": {
-    //     "background-color": "rgb(0,204,153)",
-    //   }
-    // }, {
-    //   "selector": "node[name = 'biological_process']",
-    //   "css": {
-    //     "color": "rgb(0,153,204)",
-    //     "label": "Biological Process"
-    //   }
-    // }, {
-    //   "selector": "node[name = 'cellular_component']",
-    //   "css": {
-    //     "color": "rgb(255,102,0)",
-    //     "label": "Cellular Component"
-    //   }
-    // }, {
-    //   "selector": "node[name = 'molecular_function']",
-    //   "css": {
-    //     "color": "rgb(0,204,153)",
-    //     "label": "Molecular Function"
-    //   }
-    // }, {
       "selector": "node[type = 'r']",
       "css": {
-        'font-size': '520em',
-        'label': 'Root'
+        'font-size': '300em',
+        'width': 10000,
+        'height': 10000,
+        "text-valign": "center",
+        "text-halign": "center",
+        'label': 'Cell',
+        'border-width': 400,
+        'border-color': '#555555',
+        'background-color': '#FFFFFF'
       }
     }, {
       "selector":
@@ -327,16 +301,17 @@ class NetworkPanel extends Component {
       "node[id = 'GO:0003674'], " +
       "node[id = 'GO:0005575']",
       "css": {
-        'font-size': '300em',
+        'font-size': '200em',
+        "text-valign": "top",
         'text-opacity': '0.6'
       }
     }, {
       "selector": "node:selected",
       "css": {
         "background-color": "red",
-        "font-size": '60em',
+        "font-size": '50em',
         "color": "red",
-        "text-opacity": 0.8,
+        "text-opacity": 0.9,
         'z-index': 999,
         "min-zoomed-font-size": 0,
         'width': 325,
@@ -345,30 +320,15 @@ class NetworkPanel extends Component {
     }, {
       "selector": "edge",
       "css": {
-        "width": 20.0,
-        'opacity': 0.7,
-        "line-color": "rgb(100,100,100)",
+        "width": 50.0,
+        'opacity': 1,
+        "line-color": "#000000",
       }
     }, {
-    //   "selector": "edge[branch = 'CC']",
-    //   "css": {
-    //     "line-color": "rgb(255,102,0)"
-    //   }
-    // }, {
-    //   "selector": "edge[branch = 'MF']",
-    //   "css": {
-    //     "line-color": "rgb(0,204,102)"
-    //   }
-    // }, {
-    //   "selector": "edge[branch = 'BP']",
-    //   "css": {
-    //     "line-color": "rgb(0,153,204)"
-    //   }
-    // }, {
       "selector": "edge:selected",
       "css": {
         "line-color": "red",
-        "width": 180,
+        "width": 200,
         'opacity': 1
       }
     }, {

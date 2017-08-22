@@ -13,22 +13,24 @@ const client = new Client({
 
 export const RUN_SIMULATION = 'RUN_SIMULATION'
 
-const runSimulation = (serviceUrl, genesMap) => {
+const runSimulation = (serviceUrl, queryType, genesMap) => {
 
   return {
     type: RUN_SIMULATION,
     serviceUrl,
+    queryType,
     genes: genesMap
   }
 }
 
 
 export const RECEIVE_SIMULATION_RESULT = 'RECEIVE_SIMULATION_RESULT'
-const receiveSimulationResult = (serviceUrl, genesMap, json) => {
+const receiveSimulationResult = (serviceUrl, queryType, genesMap, json) => {
 
   return {
     type: RECEIVE_SIMULATION_RESULT,
     serviceUrl,
+    queryType,
     genes: genesMap,
     result: json
   }
@@ -114,10 +116,10 @@ export const pivot = (currentDag, serviceUrl, termId) => {
 
 }
 
-export const runDeletion = (serviceUrl, genesMap, geneMap) => {
+export const runDeletion = (serviceUrl, queryType, genesMap, geneMap) => {
 
   return dispatch => {
-    dispatch(runSimulation(serviceUrl, genesMap))
+    dispatch(runSimulation(serviceUrl, queryType, genesMap))
 
     return fetchResult(serviceUrl, genesMap)
       .then(response => {
@@ -148,7 +150,7 @@ export const runDeletion = (serviceUrl, genesMap, geneMap) => {
           .then(json2 => {
             console.log(json2)
 
-            return dispatch(receiveSimulationResult(serviceUrl, genesMap, json))
+            return dispatch(receiveSimulationResult(serviceUrl, queryType, genesMap, json))
           })
       })
   }

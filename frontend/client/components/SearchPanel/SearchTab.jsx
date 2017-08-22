@@ -78,12 +78,21 @@ class SearchTab extends Component {
       return
     }
 
-    this.state.runDisabled = (selectedGeneCount < 2)
-
-    if (this.state.runDisabled == false) {
-      this.state.enabledButton = style.blinkbutton
+    if(selectedGeneCount >= 1 && this.state.queryOption === 'growth') {
+      this.setState({
+        runDisabled: false,
+        enabledButton: style.blinkbutton
+      })
+    } else if(selectedGeneCount < 2) {
+      this.setState({
+        runDisabled: true,
+        enabledButton: ''
+      })
     } else {
-      this.state.enabledButton = ''
+      this.setState({
+        runDisabled: false,
+        enabledButton: style.blinkbutton
+      })
     }
   }
 
@@ -293,7 +302,7 @@ class SearchTab extends Component {
 
     console.log(url)
 
-    this.props.queryGenesActions.runDeletion(url, genesMap, geneMap)
+    this.props.queryGenesActions.runDeletion(url, this.state.queryOption, genesMap, geneMap)
 
     this.setState({
       explainDisabled: false

@@ -10,6 +10,7 @@ const SERVICE_URL = 'http://localhost:8888'
 const defState = Map({
   serviceURL: SERVICE_URL,
   genes: Map(),
+  queryType: 'genetic_interaction',
   running: false,
   result: null,
   pivot: null
@@ -55,6 +56,7 @@ export default function queryGeneState(state = defState, action) {
         .set(RUNNING, true)
         .set('serviceURL', action.serviceUrl)
         .set('genes', action.genes)
+        .set('queryType', action.queryType)
 
     case RECEIVE_SIMULATION_RESULT:
       console.log('+++++++++++++++ Simulation finished ++++++++++++++')
