@@ -27,7 +27,8 @@ class NetworkPanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      updating: false
+      updating: false,
+      statusMessage: 'Initializing application.  Please be patient...'
     };
   }
 
@@ -135,6 +136,7 @@ class NetworkPanel extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+
     if (nextProps.commands.target === 'subnet') {
       return false
     }
@@ -165,14 +167,17 @@ class NetworkPanel extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("##################################################################################################################RENDERED!!!!!!!!!")
+    console.log("###############################################RENDERED!!!!!!!!!")
 
-    // this.props.messageActions.setMessage('Neural network browser is ready!')
-    //
+    this.props.messageActions.setMessage('')
+    console.log("Message updated.")
+
     // window.setTimeout(() => {
-    //   this.props.messageActions.setMessage('DeepCell v1.0')
+    //   this.props.messageActions.setMessage('')
+    //   console.log("Message updated.")
     // }, 3000)
   }
+
 
   getError() {
     return (
@@ -412,10 +417,12 @@ class NetworkPanel extends Component {
       )
     }
 
+
+
     return (
       <div>
 
-        {loading2}
+
 
         <CyViewer
           key="mainView"

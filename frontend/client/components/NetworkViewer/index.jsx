@@ -11,7 +11,7 @@ import Commands from '../Commands'
 
 import style from './style.css'
 import SubTreePanel from '../SubTreePanel'
-
+import MessagePanel from '../MessagePanel'
 
 
 export default class NetworkViewer extends Component {
@@ -68,6 +68,9 @@ export default class NetworkViewer extends Component {
       <div style={this.props.style}>
 
 
+        <MessagePanel
+          message={message}
+        />
 
         <NetworkPanel
           networkActions={networkActions}
@@ -87,6 +90,7 @@ export default class NetworkViewer extends Component {
           messageActions={messageActions}
 
 
+          message={message}
 
           uiStateActions={uiStateActions}
           queryGenesActions={this.props.queryGenesActions}
