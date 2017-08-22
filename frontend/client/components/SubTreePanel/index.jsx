@@ -105,19 +105,42 @@ class SubTreePanel extends Component {
       bottom: '1em',
       left: '1em',
       zIndex: 1210,
-      background: 'rgba(0,0,0,0)'
+      background: 'rgba(0,0,0,0)',
+      display: 'flex',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      width: '40%'
+    }
 
+    const labelStyle = {
+      color: '#777777',
+      fontSize: '1em',
+      fontWeight: 300,
+      padding: '0.5em'
+    }
+
+    const textStyle = {
+      flexGrow: '4',
     }
 
     return (
       <div className={style.container}>
 
-
         <div style={titleStyle}>
 
-          {"Deleted Genes: " + genotype}
+          <div style={textStyle}>
+            {"Deleted Genes: " + genotype}
+          </div>
+
+          <div style={labelStyle}>
+            0
+          </div>
 
           <LegendColor />
+
+          <div style={labelStyle}>
+            1
+          </div>
         </div>
 
 
