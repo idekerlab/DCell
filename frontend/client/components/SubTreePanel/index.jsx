@@ -111,11 +111,15 @@ class SubTreePanel extends Component {
 
     return (
       <div className={style.container}>
+
+
         <div style={titleStyle}>
+
           {"Deleted Genes: " + genotype}
+
+          <LegendColor />
         </div>
 
-        <LegendColor />
 
         <Card
           style={cardStyle}
