@@ -52,6 +52,24 @@ class SubTreePanel extends Component {
 
 
   componentWillReceiveProps(nextProps) {
+
+    console.log('--------------------- WILL SUB ------------------------')
+    console.log(this.props)
+    console.log(nextProps)
+
+
+    // Open view automatically
+    const runningLast = this.props.queryGenes.get('running')
+    const running = nextProps.queryGenes.get('running')
+
+    console.log('Last = ' + runningLast)
+    console.log('next = ' + running)
+
+    if(runningLast && running === false) {
+      console.log('---------------------> show!!!!!!!!!!')
+      this.props.uiStateActions.showResult(true)
+    }
+
     const result = nextProps.queryGenes.get('result')
     if(result === null || result === undefined) {
       return
@@ -60,6 +78,13 @@ class SubTreePanel extends Component {
 
 
   render() {
+
+    const show = this.props.uiState.get('showResult')
+
+    if(!show) {
+      // Return empty result
+      return(<div></div>)
+    }
 
     const cardStyle = {
       height: this.getHeight(),
@@ -120,7 +145,7 @@ class SubTreePanel extends Component {
     }
 
     const textStyle = {
-      flexGrow: '4',
+      flexGrow: '4'
     }
 
     return (

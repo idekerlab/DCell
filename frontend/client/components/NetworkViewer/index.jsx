@@ -132,15 +132,12 @@ export default class NetworkViewer extends Component {
           backendServices={config.get('backendServices').toJS()}
         />
 
-        {
-          uiState.get('showResult') ?
-            <SubTreePanel
-              uiStateActions={uiStateActions}
-              queryGenesActions={this.props.queryGenesActions}
-              queryGenes={this.props.queryGenes}
-            /> :
-            <div></div>
-        }
+        <SubTreePanel
+          uiState={uiState}
+          uiStateActions={uiStateActions}
+          queryGenesActions={this.props.queryGenesActions}
+          queryGenes={this.props.queryGenes}
+        />
 
         {
           running ?

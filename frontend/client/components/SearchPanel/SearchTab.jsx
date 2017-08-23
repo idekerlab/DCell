@@ -300,9 +300,16 @@ class SearchTab extends Component {
       url = url + '?growth=false'
     }
 
+    const ontologyType = this.props.currentNetwork.id
+
+    url = url + '&ontology=' + ontologyType.toUpperCase()
+
     console.log(url)
 
     this.props.queryGenesActions.runDeletion(url, this.state.queryOption, genesMap, geneMap)
+
+    // Reset the selection
+    this.props.commandActions.unselectAll()
 
     this.setState({
       explainDisabled: false

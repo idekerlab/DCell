@@ -104,6 +104,7 @@ class SearchPanel extends Component {
           >
             <SearchTab
               searchMode={this.state.searchMode}
+              currentNetwork={this.props.currentNetwork}
 
               style={searchStyle}
               search={this.props.search}
@@ -112,6 +113,7 @@ class SearchPanel extends Component {
               backendServices={this.props.backendServices}
               queryGenesActions={this.props.queryGenesActions}
               queryGenes={this.props.queryGenes}
+              commandActions={this.props.commandActions}
             />
           </Tab>
         </Tabs>

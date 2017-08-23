@@ -98,8 +98,6 @@ class NetworkPanel extends Component {
       || nextSelected.length === selected.length) {
       return
     } else {
-      console.log("44Need to SELECT PATH@@@@@@@@@@@")
-      console.log(nextSelected)
       const running1 = this.props.queryGenes.get('running')
       const running2 = nextProps.queryGenes.get('running')
 
@@ -114,9 +112,6 @@ class NetworkPanel extends Component {
 
   getSelectedNodes = (data) => {
     const genes = data.queryGenes.get('result')
-
-    console.log("SELECT PATH@@@@@@@@@@@")
-    console.log(genes)
 
     if(genes === null) {
       return []
