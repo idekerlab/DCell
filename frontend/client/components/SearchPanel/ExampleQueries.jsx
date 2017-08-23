@@ -63,7 +63,7 @@ class ExampleQueries extends Component {
       style={style}
       onChange={this.handleChange}
       floatingLabelText="Simulation Examples"
-      floatingLabelStyle={{color: '#999999', fontWeight: 300}}
+      floatingLabelStyle={{color: '#4444FF', fontWeight: 300}}
     >
 
       <MenuItem key={1} value='example0' primaryText={EXAMPLES.example0.label}/>

@@ -175,7 +175,7 @@ class TermSearchPanel extends Component {
         <div style={searchUiStyle}>
           <TextField
             style={{width: '5em', flexGrow: 3}}
-            hintText="Keywords, etc."
+            hintText="e.g. dna repair, rad57"
             floatingLabelText="Subsystem Search"
             floatingLabelFixed={true}
 

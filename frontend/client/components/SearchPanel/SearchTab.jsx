@@ -202,7 +202,7 @@ class SearchTab extends Component {
         <div style={searchUiStyle}>
           <TextField
             style={{width: '5em', flexGrow: 2}}
-            hintText="Keywords, etc."
+            hintText="e.g. dna repair, rad57"
             floatingLabelText="Genotype Builder"
             floatingLabelFixed={true}
 
