@@ -119,7 +119,7 @@ class SearchTab extends Component {
     }
   }
 
-  search = (q) => {
+  search = (event, q) => {
 
     let query = this.state.query
     if(q !== undefined) {
@@ -158,7 +158,7 @@ class SearchTab extends Component {
     this.setState({
       query: query
     });
-    this.search(query)
+    this.search(null, query)
   }
 
   handleKey = event => {
