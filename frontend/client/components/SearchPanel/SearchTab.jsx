@@ -168,7 +168,6 @@ class SearchTab extends Component {
   }
 
   setQueryOption = value => {
-    console.log('QQQQQQQQQ - ' + value)
     this.setState({
       queryOption: value
     });

@@ -53,20 +53,11 @@ class SubTreePanel extends Component {
 
   componentWillReceiveProps(nextProps) {
 
-    console.log('--------------------- WILL SUB ------------------------')
-    console.log(this.props)
-    console.log(nextProps)
-
-
     // Open view automatically
     const runningLast = this.props.queryGenes.get('running')
     const running = nextProps.queryGenes.get('running')
 
-    console.log('Last = ' + runningLast)
-    console.log('next = ' + running)
-
     if(runningLast && running === false) {
-      console.log('---------------------> show!!!!!!!!!!')
       this.props.uiStateActions.showResult(true)
     }
 
@@ -269,9 +260,6 @@ class SubTreePanel extends Component {
 
 
   nodeSelected = (selectedNode) => {
-    console.log('# Node Selected in Application: ')
-    console.log(selectedNode) // This is an ID of node
-
 
     const result = this.props.queryGenes.get('result')
     // this.props.queryGenesActions.pivot(result, 'http://localhost:5000/', selectedNode)
