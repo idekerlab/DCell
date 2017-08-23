@@ -171,13 +171,13 @@ const replaceNodeData = (nodes, docs, genesMap, geneMap) => {
   })
 
   const genes = Object.keys(genesMap.toJS())
+  const gm = genesMap.toJS()
+
+
   genes.forEach(gene => {
     mapping[gene] = geneMap[gene]
   })
 
-
-  console.log("MAP-_________________________________")
-  console.log(mapping)
 
   return nodes.map(node => {
     const data = mapping[node.id]
@@ -186,7 +186,11 @@ const replaceNodeData = (nodes, docs, genesMap, geneMap) => {
       node.name = data.name
       node.namespace = data.namespace
     } else {
-      node.name = node.id
+      if(gm[node.id] !== undefined) {
+        node.name = gm[node.id]
+      } else {
+        node.name = node.id
+      }
       node.namespace = "N/A"
     }
 
