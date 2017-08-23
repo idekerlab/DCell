@@ -60,7 +60,8 @@ class SearchTab extends Component {
       runDisabled: true,
       explainDisabled: true,
       enabledButton: '',
-      queryOption: 'genetic_interaction'
+      queryOption: 'genetic_interaction',
+      disableQueryOption: false
     }
   }
 
@@ -72,6 +73,18 @@ class SearchTab extends Component {
 
     const lastGenes = this.props.queryGenes.get('genes')
     const lastCount = lastGenes.size
+
+    // Ontology mode: if CLIXO, only GI works for now.
+    const ontologyType = this.props.currentNetwork.id
+    if(ontologyType === 'clixo') {
+      this.setState({
+        disableQueryOption: true
+      })
+
+
+      this.setQueryOption('genetic_interaction')
+    }
+
 
 
     if (selectedGeneCount == lastCount) {
@@ -181,6 +194,7 @@ class SearchTab extends Component {
         />
 
         <SimulationTypeSelector
+          disabled={this.state.disableQueryOption}
           queryOption={this.state.queryOption}
           queryOptionAction={this.setQueryOption}
         />

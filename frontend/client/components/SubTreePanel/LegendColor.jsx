@@ -3,11 +3,8 @@ import React from 'react'
 
 const LegendColor = props => {
 
-  return(
-    <div
-      style={props.style}
-    >
-    </div>
+  return (
+    <div style={props.style}></div>
   )
 }
 

@@ -145,7 +145,13 @@ class SubTreePanel extends Component {
     }
 
     const textStyle = {
-      flexGrow: '4'
+      flexGrow: '4',
+      width: '20em'
+    }
+
+    const legendTitleStyle = {
+      color: '#555555',
+      width: '30em'
     }
 
     return (
@@ -156,6 +162,8 @@ class SubTreePanel extends Component {
           <div style={textStyle}>
             {"Deleted Genes: " + genotype}
           </div>
+
+          <h3 style={legendTitleStyle}>Absolute Change in State:</h3>
 
           <div style={labelStyle}>
             0

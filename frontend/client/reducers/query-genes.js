@@ -46,6 +46,7 @@ export default function queryGeneState(state = defState, action) {
       console.log('+++++ CLEAR RES: ')
       return state
         .set('result', null)
+        .set(RUNNING, false)
 
     case RUN_SIMULATION:
       console.log('+++++++++++++++ Run simulation! ++++++++++++++')

@@ -28,6 +28,7 @@ class SimulationTypeSelector extends Component {
       onChange={this.handleChange}
       floatingLabelText="Select Phenotype"
       floatingLabelStyle={{color: '#999999', fontWeight: 300}}
+      disabled={this.props.disabled}
     >
 
       <MenuItem key={1} value='growth' primaryText='Growth'/>
