@@ -84,7 +84,7 @@ func deepcellHandler(w http.ResponseWriter, r *http.Request) {
 	errors := []string{}
 	if err != nil {
 		errors = []string{ err.Error() }
-		termReply = ""
+		termReply = &dc.Reply{}
 	}
 	res := &Response{
 		Data:   termReply,
