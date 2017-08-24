@@ -34,7 +34,7 @@ func getenv(key, fallback string) string {
 	return value
 }
 
-func knockout(ontology string, genes []string) *dc.Reply, error {
+func knockout(ontology string, genes []string) (*dc.Reply, error) {
 	log.Println("About to open connection")
 	address := serverAddr + ":" + serverPort
 	log.Println(address)
