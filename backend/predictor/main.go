@@ -8,11 +8,11 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/ericsage/deepcell/dc"
-	"google.golang.org/grpc"
-
 	"github.com/rs/cors"
 
+	"github.com/ericsage/deepcell/dc"
+
+	"google.golang.org/grpc"
 )
 
 type Response struct {
@@ -24,7 +24,6 @@ var (
 	tls        = getenv("tls", "false")
 	serverAddr = getenv("SERVER_ADDRESS", "biancone.ucsd.edu")
 	serverPort = getenv("SERVER_PORT", "5000")
-	labels     = []string{"ontology"}
 )
 
 func getenv(key, fallback string) string {
@@ -35,14 +34,13 @@ func getenv(key, fallback string) string {
 	return value
 }
 
-func knockout(growth bool, ontology string, genes []string) *dc.Reply {
+func knockout(ontology string, genes []string) *dc.Reply, error {
 	log.Println("About to open connection")
-	log.Println("Growth is set to", growth, "ontology is set to", ontology)
 	address := serverAddr + ":" + serverPort
 	log.Println(address)
 	conn, err := grpc.Dial(address, grpc.WithInsecure())
 	if err != nil {
-		panic("Could not connect to the deep cell server!")
+		return nil, err
 	}
 	log.Println("Dialed server")
 	defer conn.Close()
@@ -50,20 +48,19 @@ func knockout(growth bool, ontology string, genes []string) *dc.Reply {
 	req := &dc.Request{
 		Genes:    genes,
 		Ontology: ontology,
-		Growth:   growth,
+		Growth:   false,
 	}
 	log.Println("About to process request")
 	rep, err := client.Run(context.Background(), req)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
-	return rep
+	return rep, nil
 }
 
 func deepcellHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
-
 	//// CORS support
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
@@ -78,16 +75,20 @@ func deepcellHandler(w http.ResponseWriter, r *http.Request) {
 	if ontology == "" {
 		ontology = "GO"
 	}
-	growth := url.Query().Get("growth")
 	var genes []string
 	err = json.Unmarshal(body, &genes)
 	if err != nil {
 		panic("Could not decode json into genes list!")
 	}
-	termReply := knockout(growth == "true", ontology, genes)
+	termReply, err := knockout(ontology, genes)
+	errors := []string{}
+	if err != nil {
+		errors = []string{ err.Error() }
+		termReply = ""
+	}
 	res := &Response{
 		Data:   termReply,
-		Errors: []string{},
+		Errors: errors,
 	}
 	json.NewEncoder(w).Encode(res)
 }
