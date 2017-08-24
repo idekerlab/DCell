@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import * as colors from 'material-ui/styles/colors';
 import {Tabs, Tab} from 'material-ui/Tabs';
 
 import SearchTab from './SearchTab'
@@ -15,30 +14,20 @@ class SearchPanel extends Component {
     super(props);
     this.state = {
       searchMode: GENE_SEARCH_MODE
-    };
+    }
   }
 
-  handleChange = () => {
-
-    let selected = this.state.searchMode;
-
-    if(selected === TERM_SEARCH_MODE) {
-      selected = GENE_SEARCH_MODE
-    } else {
-      selected = TERM_SEARCH_MODE
-    }
-
+  onActive = tab => {
     this.setState({
-      searchMode: selected,
+      searchMode: tab.props.value
     })
   }
 
   render() {
-
     // Check show or hide
     const uiState = this.props.uiState
 
-    if(!uiState.get('showSearchWindow')) {
+    if (!uiState.get('showSearchWindow')) {
       return (<div></div>)
     }
 
@@ -71,13 +60,13 @@ class SearchPanel extends Component {
       <div style={style}>
         <Tabs
           style={tabStyle}
-          value={this.state.searchMode}
-          onChange={this.handleChange}
+          initialSelectedIndex={1}
         >
           <Tab
             value={TERM_SEARCH_MODE}
             label='Browse Cell Structure'
             style={tabTitleStyle}
+            onActive={this.onActive}
           >
             <TermSearchPanel
 
@@ -101,6 +90,7 @@ class SearchPanel extends Component {
             value={GENE_SEARCH_MODE}
             label="Simulate Cell Function"
             style={tabTitleStyle}
+            onActive={this.onActive}
           >
             <SearchTab
               searchMode={this.state.searchMode}
@@ -119,7 +109,6 @@ class SearchPanel extends Component {
         </Tabs>
       </div>
     )
-
   }
 }
 

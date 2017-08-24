@@ -61,8 +61,12 @@ class TermSearchPanel extends Component {
     return true
   }
 
+  search = (event, q) => {
 
-  search = q => {
+    let query = this.state.query
+    if(q !== undefined) {
+      query = q
+    }
 
     const options = this.props.trees[this.props.currentNetwork.id].searchOptions
 
@@ -71,10 +75,6 @@ class TermSearchPanel extends Component {
       noSearchYet: false
     })
 
-    let query = this.state.query
-    if(q !== undefined) {
-      query = q
-    }
 
     // Special case: exact match for CLIXO
     if(query !== undefined && query !== null && query != '') {
@@ -271,7 +271,7 @@ class TermSearchPanel extends Component {
           const termId = hit._id
 
           const ns = hit._source.namespace
-          if (curNetId === 'go') {
+          if (curNetId === 'go' && namespace[ns] !== undefined) {
             nsColor = namespace[ns].color
             nsTag = namespace[ns].tag
           }

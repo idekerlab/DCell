@@ -49,7 +49,7 @@ class ExampleTermSearch extends Component {
     } else {
       const val = EXAMPLES[value].value
       this.props.setQueryAction(val)
-      this.props.searchAction(val)
+      this.props.searchAction(null, val)
     }
   }
 
