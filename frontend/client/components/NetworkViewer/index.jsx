@@ -23,7 +23,8 @@ export default class NetworkViewer extends Component {
     this.state = {
       autoHideDuration: 1000000,
       open: false,
-      openErrorDialog: false
+      openErrorDialog: false,
+      errorMessage: ''
     };
   }
 
@@ -40,9 +41,10 @@ export default class NetworkViewer extends Component {
     });
   };
 
-  openDialogAction = open => {
+  openDialogAction = (open, message) => {
     this.setState({
-      openErrorDialog: open
+      openErrorDialog: open,
+      errorMessage: message
     });
   };
 
@@ -52,7 +54,11 @@ export default class NetworkViewer extends Component {
     const run = nextProps.queryGenes.get('running')
 
     if(error !== null && runLast === true && run === false) {
-      this.openDialogAction(true)
+      if(error.includes('Input Error')) {
+        this.openDialogAction(true, 'Invalid input parameters.')
+      } else {
+        this.openDialogAction(true, 'Simulator is running other jobs.  Please try again later.')
+      }
     }
   }
 
@@ -86,6 +92,7 @@ export default class NetworkViewer extends Component {
         <ErrorDialog
           openDialog={this.state.openErrorDialog}
           openDialogAction={this.openDialogAction}
+          errorMessage={this.state.errorMessage}
         />
 
         <MessagePanel

@@ -6,7 +6,7 @@ class ErrorDialog extends Component {
 
 
   handleClose = () => {
-    this.props.openDialogAction(false)
+    this.props.openDialogAction(false, '')
   }
 
   render() {
@@ -20,12 +20,12 @@ class ErrorDialog extends Component {
 
     return (
         <Dialog
-          title="Error: Server is busy"
+          title="Remote Server Error"
           actions={actions}
           modal={true}
           open={this.props.openDialog}
         >
-          Simulator server is running other jobs.  Please try again later.
+          {this.props.errorMessage}
         </Dialog>
     );
   }
