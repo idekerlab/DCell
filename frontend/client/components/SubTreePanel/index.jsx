@@ -71,8 +71,9 @@ class SubTreePanel extends Component {
   render() {
 
     const show = this.props.uiState.get('showResult')
+    const result = this.props.queryGenes.get('result')
 
-    if(!show) {
+    if(!show || result === null ) {
       // Return empty result
       return(<div></div>)
     }
@@ -111,7 +112,6 @@ class SubTreePanel extends Component {
     )
 
 
-    const result = this.props.queryGenes.get('result')
     const running = this.props.queryGenes.get('running')
 
     const titleStyle = {

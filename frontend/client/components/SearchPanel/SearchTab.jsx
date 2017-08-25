@@ -85,9 +85,17 @@ class SearchTab extends Component {
       this.setQueryOption('genetic_interaction')
     }
 
+    const runLast = this.props.queryGenes.get('running')
+    const run = nextProps.queryGenes.get('running')
+
+    if(runLast === true && run === false) {
+      this.setState({
+        runDisabled: false
+      })
+    }
 
 
-    if (selectedGeneCount == lastCount) {
+    if (selectedGeneCount === lastCount) {
       return
     }
 

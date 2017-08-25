@@ -13,7 +13,8 @@ const defState = Map({
   queryType: 'genetic_interaction',
   running: false,
   result: null,
-  pivot: null
+  pivot: null,
+  error: null
 })
 
 
@@ -60,11 +61,12 @@ export default function queryGeneState(state = defState, action) {
         .set('queryType', action.queryType)
 
     case RECEIVE_SIMULATION_RESULT:
-      console.log('+++++++++++++++ Simulation finished ++++++++++++++')
+      console.log('+++++++++++++++ Simulation finished!!!!!!!!!!! ++++++++++++++')
 
       return state
         .set(RUNNING, false)
         .set('result', action.result)
+        .set('error', action.error)
 
     case FETCH_CHILDREN:
       console.log('+++++++++++++++ Fetching children ++++++++++++++')

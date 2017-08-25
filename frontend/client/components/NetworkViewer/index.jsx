@@ -13,6 +13,8 @@ import style from './style.css'
 import SubTreePanel from '../SubTreePanel'
 import MessagePanel from '../MessagePanel'
 
+import ErrorDialog from '../ErrorDialog'
+
 
 export default class NetworkViewer extends Component {
 
@@ -21,6 +23,7 @@ export default class NetworkViewer extends Component {
     this.state = {
       autoHideDuration: 1000000,
       open: false,
+      openErrorDialog: false
     };
   }
 
@@ -37,7 +40,20 @@ export default class NetworkViewer extends Component {
     });
   };
 
+  openDialogAction = open => {
+    this.setState({
+      openErrorDialog: open
+    });
+  };
+
   componentWillReceiveProps(nextProps) {
+    const error = nextProps.queryGenes.get('error')
+    const runLast = this.props.queryGenes.get('running')
+    const run = nextProps.queryGenes.get('running')
+
+    if(error !== null && runLast === true && run === false) {
+      this.openDialogAction(true)
+    }
   }
 
   render() {
@@ -67,6 +83,10 @@ export default class NetworkViewer extends Component {
 
       <div style={this.props.style}>
 
+        <ErrorDialog
+          openDialog={this.state.openErrorDialog}
+          openDialogAction={this.openDialogAction}
+        />
 
         <MessagePanel
           message={message}
@@ -143,8 +163,6 @@ export default class NetworkViewer extends Component {
           running ?
             <RunningOverlay /> : <div></div>
         }
-
-
 
         <Errorbar
           className={style.errorbar}

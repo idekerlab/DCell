@@ -1,8 +1,7 @@
-import { createAction } from 'redux-actions'
+import {createAction} from 'redux-actions'
 import {Client} from 'elasticsearch'
 
 import config from '../assets/config.json'
-
 
 
 const client = new Client({
@@ -19,20 +18,22 @@ const runSimulation = (serviceUrl, queryType, genesMap) => {
     type: RUN_SIMULATION,
     serviceUrl,
     queryType,
-    genes: genesMap
+    genes: genesMap,
+    error: null
   }
 }
 
 
 export const RECEIVE_SIMULATION_RESULT = 'RECEIVE_SIMULATION_RESULT'
-const receiveSimulationResult = (serviceUrl, queryType, genesMap, json) => {
+const receiveSimulationResult = (serviceUrl, queryType, genesMap, json, error) => {
 
   return {
     type: RECEIVE_SIMULATION_RESULT,
     serviceUrl,
     queryType,
     genes: genesMap,
-    result: json
+    result: json,
+    error: error
   }
 }
 
@@ -54,7 +55,8 @@ const receiveChildren = (serviceUrl, json, pivot) => {
     type: RECEIVE_SIMULATION_RESULT,
     serviceUrl,
     pivot,
-    result: json
+    result: json,
+    error: null
   }
 }
 
@@ -90,7 +92,7 @@ export const pivot = (currentDag, serviceUrl, termId) => {
 
         nodes.forEach(n => {
           console.log(n)
-          if(n.id !== termId) {
+          if (n.id !== termId) {
             currentDag.data.nodes.push({
               id: n.data.id,
               name: n.data.name,
@@ -102,7 +104,7 @@ export const pivot = (currentDag, serviceUrl, termId) => {
           }
         })
 
-        edges.forEach(e=> {
+        edges.forEach(e => {
           console.log(e)
           currentDag.data.edges.push({
             source: e.data.source,
@@ -122,6 +124,7 @@ export const runDeletion = (serviceUrl, queryType, genesMap, geneMap) => {
     dispatch(runSimulation(serviceUrl, queryType, genesMap))
 
     return fetchResult(serviceUrl, genesMap)
+
       .then(response => {
         console.log(response)
         return response.json()
@@ -130,30 +133,45 @@ export const runDeletion = (serviceUrl, queryType, genesMap, geneMap) => {
         console.log('got DAG json in cyjs format')
         console.log(json)
 
-        const nodes = json.data.nodes
-        const nodeIds = nodes.map(node => {
-          return node.id
-        })
+        const errors = json.errors
 
-        console.log("IDS:")
-        console.log(nodeIds)
+        if (errors !== undefined && errors.length !== 0) {
+          console.log('########### E 223222!!')
 
-        searchIdMapping(nodeIds)
-          .then(res2 => {
-            console.log('got new res2')
-            console.log(res2)
+          return dispatch(receiveSimulationResult(serviceUrl, queryType, genesMap, null, errors[0]))
 
-            const docs = res2.docs
-            const result = replaceNodeData(nodes, docs, genesMap, geneMap)
-
+        } else {
+          const nodes = json.data.nodes
+          const nodeIds = nodes.map(node => {
+            return node.id
           })
-          .then(json2 => {
-            console.log(json2)
 
-            return dispatch(receiveSimulationResult(serviceUrl, queryType, genesMap, json))
-          })
+          searchIdMapping(nodeIds)
+            .then(res2 => {
+              console.log('got new res2')
+              console.log(res2)
+
+              const docs = res2.docs
+              const result = replaceNodeData(nodes, docs, genesMap, geneMap)
+
+            })
+            .then(json2 => {
+              console.log(json2)
+              return dispatch(receiveSimulationResult(serviceUrl, queryType, genesMap, json, null))
+            })
+        }
+
       })
+
+      .catch(onServerError)
   }
+}
+
+
+const onServerError = serverErr => {
+  console.log('!! There has been a problem with your fetch operation: ');
+  console.log(serverErr)
+
 }
 
 const replaceNodeData = (nodes, docs, genesMap, geneMap) => {
@@ -162,7 +180,7 @@ const replaceNodeData = (nodes, docs, genesMap, geneMap) => {
 
   docs.forEach(entry => {
 
-    if(entry['found']) {
+    if (entry['found']) {
       mapping[entry._id] = {
         name: entry._source.name,
         namespace: entry._source.namespace
@@ -182,11 +200,11 @@ const replaceNodeData = (nodes, docs, genesMap, geneMap) => {
   return nodes.map(node => {
     const data = mapping[node.id]
 
-    if(data !== undefined) {
+    if (data !== undefined) {
       node.name = data.name
       node.namespace = data.namespace
     } else {
-      if(gm[node.id] !== undefined) {
+      if (gm[node.id] !== undefined) {
         node.name = gm[node.id]
       } else {
         node.name = node.id
@@ -196,14 +214,6 @@ const replaceNodeData = (nodes, docs, genesMap, geneMap) => {
 
     return node
   })
-}
-
-const mergeGraph = (serviceUrl, termid) => {
-
-  const url = serviceUrl + termid + '/children'
-
-  return fetch(url)
-
 }
 
 
