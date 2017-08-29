@@ -1,24 +1,28 @@
 import React, {Component} from 'react'
-import Immutable, {Set} from 'immutable'
+import {Set} from 'immutable'
 
 import * as colors from 'material-ui/styles/colors';
 
 import {List, ListItem} from 'material-ui/List';
+
+import Subheader from 'material-ui/Subheader';
+
 
 import SearchIcon from 'material-ui/svg-icons/action/search';
 
 import ClearIcon from 'material-ui/svg-icons/content/clear';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import Subheader from 'material-ui/Subheader';
-
 import TextField from 'material-ui/TextField';
 
 import style from './style.css'
 
-
+import StructureSelectorPanel from './StructureSelectorPanel'
+import ExampleTermSearch from './ExampleTermSearch'
 
 import Avatar from 'material-ui/Avatar';
+
+
 
 
 
@@ -57,8 +61,12 @@ class TermSearchPanel extends Component {
     return true
   }
 
+  search = (event, q) => {
 
-  search = () => {
+    let query = this.state.query
+    if(q !== undefined) {
+      query = q
+    }
 
     const options = this.props.trees[this.props.currentNetwork.id].searchOptions
 
@@ -67,7 +75,6 @@ class TermSearchPanel extends Component {
       noSearchYet: false
     })
 
-    let query = this.state.query
 
     // Special case: exact match for CLIXO
     if(query !== undefined && query !== null && query != '') {
@@ -98,6 +105,12 @@ class TermSearchPanel extends Component {
     });
   }
 
+  setQuery = query => {
+    this.setState({
+      query: query
+    });
+  }
+
   handleKey = event => {
     if (event.key === 'Enter') {
       this.search()
@@ -105,7 +118,6 @@ class TermSearchPanel extends Component {
   }
 
   handleItemClick = termId => {
-
     this.props.commandActions.focus({idList: [termId]})
   }
 
@@ -147,11 +159,24 @@ class TermSearchPanel extends Component {
 
     return (
       <div style={this.props.style}>
+
+        <ExampleTermSearch
+          setQueryAction={this.setQuery}
+          searchAction={this.search}
+        />
+
+        <StructureSelectorPanel
+          trees={this.props.trees}
+          currentNetwork={this.props.currentNetwork}
+          currentNetworkActions={this.props.currentNetworkActions}
+          propertyActions={this.props.propertyActions}
+        />
+
         <div style={searchUiStyle}>
           <TextField
             style={{width: '5em', flexGrow: 3}}
-            hintText="Keywords, etc."
-            floatingLabelText="Term Search"
+            hintText="e.g. dna repair, rad57"
+            floatingLabelText="Subsystem Search"
             floatingLabelFixed={true}
 
             value={this.state.query}
@@ -199,6 +224,7 @@ class TermSearchPanel extends Component {
 
 
     const isLoading = this.props.search.loading
+
     if(this.state.noSearchYet && isLoading === false) {
       style.background = '#EFEFEF'
       style.color = '#AAAAAA'
@@ -234,17 +260,18 @@ class TermSearchPanel extends Component {
     let nsColor = 'teal'
     let nsTag = 'CX'
 
-
-
-    return (<List style={listStyle}>
+    return (
+      <List style={listStyle}>
       <Subheader>Search Result</Subheader>
 
       {
         hits.map((hit, i) => {
 
+
           const termId = hit._id
+
           const ns = hit._source.namespace
-          if (curNetId === 'go') {
+          if (curNetId === 'go' && namespace[ns] !== undefined) {
             nsColor = namespace[ns].color
             nsTag = namespace[ns].tag
           }

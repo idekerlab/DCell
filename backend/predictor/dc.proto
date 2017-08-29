@@ -19,6 +19,13 @@ message Node {
   string id = 1;
   double importance = 2;
   double phenotype = 3;
+  repeated double neurons = 4;
+  Coordinate coordinate = 5;
+}
+
+message Coordinate {
+  double x = 1;
+  double y = 2;
 }
 
 message Edge {

@@ -10,9 +10,11 @@ const SERVICE_URL = 'http://localhost:8888'
 const defState = Map({
   serviceURL: SERVICE_URL,
   genes: Map(),
+  queryType: 'genetic_interaction',
   running: false,
   result: null,
-  pivot: null
+  pivot: null,
+  error: null
 })
 
 
@@ -30,10 +32,13 @@ export default function queryGeneState(state = defState, action) {
 
       return state
         .set('genes', state.get('genes').set(orf, symbol))
+        .set('error', null)
 
     case DELETE_GENE:
       console.log('+++++DELETING gene: ' + action)
-      return state.set('genes', state.get('genes').delete(action.payload))
+      return state
+        .set('genes', state.get('genes').delete(action.payload))
+        .set('error', null)
 
     case CLEAR_GENES:
       console.log('+++++ CLEAR: ')
@@ -41,10 +46,14 @@ export default function queryGeneState(state = defState, action) {
       return state
         .set('genes', Map())
         .set('result', null)
+        .set('error', null)
+
     case CLEAR_RESULTS:
       console.log('+++++ CLEAR RES: ')
       return state
         .set('result', null)
+        .set(RUNNING, false)
+        .set('error', null)
 
     case RUN_SIMULATION:
       console.log('+++++++++++++++ Run simulation! ++++++++++++++')
@@ -55,13 +64,16 @@ export default function queryGeneState(state = defState, action) {
         .set(RUNNING, true)
         .set('serviceURL', action.serviceUrl)
         .set('genes', action.genes)
+        .set('queryType', action.queryType)
+        .set('error', null)
 
     case RECEIVE_SIMULATION_RESULT:
-      console.log('+++++++++++++++ Simulation finished ++++++++++++++')
+      console.log('+++++++++++++++ Simulation finished!!!!!!!!!!! ++++++++++++++')
 
       return state
         .set(RUNNING, false)
         .set('result', action.result)
+        .set('error', action.error)
 
     case FETCH_CHILDREN:
       console.log('+++++++++++++++ Fetching children ++++++++++++++')

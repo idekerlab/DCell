@@ -4,7 +4,7 @@ import Chip from 'material-ui/Chip';
 
 const style = {
   background: 'white',
-  padding: 0,
+  padding: '0.2em'
 }
 
 const containerStyle = {
@@ -22,6 +22,10 @@ class GenotypePanel extends Component {
     if(genes === undefined || genes.size === 0) {
       return (
         <div style={style}>
+          <h4>Genotype:</h4>
+          <div style={containerStyle}>
+            (No genes selected yet)
+          </div>
         </div>
       )
     }

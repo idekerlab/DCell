@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {browserHistory} from 'react-router'
 
 import classnames from 'classnames'
 
@@ -15,7 +14,6 @@ import style from './style.css'
 import logo from '../../assets/images/cytoscape-logo-orange.svg'
 
 
-// TODO: Split into smaller sub-menus
 export default class MainMenu extends Component {
 
   handleHome = event => {
@@ -88,26 +86,17 @@ export default class MainMenu extends Component {
     }
 
     const uiState = this.props.uiState
-    const showAppBar = uiState.get('showAppBar')
     const showCommands = uiState.get('showCommands')
     const showSearchWindow = uiState.get('showSearchWindow')
 
-    const styles = this.props.styles
-    const {currentVsActions, backgroundColorActions,
-      backgroundColor, currentVs} = this.props
 
     return (
       <div>
         <div className={classnames(style.grid, style.top)}>
-          <img
-            className={style.icon}
-            src={logo}
-          />
           <h1 className={style.title}>
-            DeepCell v1.0
+            DeepCell v1.2
           </h1>
         </div>
-
 
         <Divider />
 
@@ -115,7 +104,7 @@ export default class MainMenu extends Component {
         <List>
           <ListItem
             key={1}
-            primaryText="Settings"
+            primaryText="Display Settings"
             leftIcon={<Settings />}
             initiallyOpen={true}
             primaryTogglesNestedList={true}
@@ -132,18 +121,7 @@ export default class MainMenu extends Component {
                 }
               />,
               <ListItem
-                key={2}
-                primaryText="Toolbar"
-                rightToggle={
-                  <Toggle
-                    ref="appBar"
-                    toggled={showAppBar}
-                    onToggle={this.handleShowAppBar}
-                  />
-                }
-              />,
-              <ListItem
-              key={3}
+              key={2}
               primaryText="Search Window"
               rightToggle={
               <Toggle

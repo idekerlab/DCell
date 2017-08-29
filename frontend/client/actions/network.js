@@ -38,14 +38,11 @@ export const fetchNetworkFromUrl = url => {
 
 import * as d3Scale from 'd3-scale'
 
-const labelSizeMapper = d3Scale.scaleLog()
+const labelSizeMapper = d3Scale.scaleLinear()
   .domain([1, 6000])
-  .range([3, 130]);
+  .range([150, 550]);
 
 const calculateLabelSize = network => {
-
-  console.log('Score calculator called--')
-  console.log(network)
 
   const nodes = network.elements.nodes
   nodes.forEach(node => {
@@ -54,7 +51,7 @@ const calculateLabelSize = network => {
       const labelSize = labelSizeMapper(geneCount)
       node.data['labelSize'] = labelSize
     } else {
-      node.data['labelSize'] = 3
+      node.data['labelSize'] = 150
     }
   })
 

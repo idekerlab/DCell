@@ -2,19 +2,14 @@ import React, {Component} from 'react';
 import {Card, CardActions, CardHeader} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import {TreeViewer, DAGViewer} from 'tree-viewer'
+
+import LegendColor from './LegendColor'
+
+
+import style from './style.css'
+
+import {DAGViewer} from 'tree-viewer'
 import Loading from '../Loading'
-
-import ExpandIcon from 'material-ui/svg-icons/navigation/fullscreen'
-import CollapseIcon from 'material-ui/svg-icons/navigation/fullscreen-exit'
-import CloseIcon from 'material-ui/svg-icons/content/clear'
-
-import Toggle from 'material-ui/Toggle';
-
-// For filtering
-import cytoscape from 'cytoscape'
-
-
 const loaderStyle = {
   height: '100%',
   width: '100%',
@@ -25,13 +20,22 @@ const loaderStyle = {
   justifyContent: 'center',
 }
 
+import ExpandIcon from 'material-ui/svg-icons/navigation/fullscreen'
+import CollapseIcon from 'material-ui/svg-icons/navigation/fullscreen-exit'
+import CloseIcon from 'material-ui/svg-icons/content/clear'
+
+// For filtering
+import cytoscape from 'cytoscape'
+
+
+
 
 class SubTreePanel extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      isMax: false,
+      isMax: true,
       expand: false,
       filterDag: null
     }
@@ -48,6 +52,15 @@ class SubTreePanel extends Component {
 
 
   componentWillReceiveProps(nextProps) {
+
+    // Open view automatically
+    const runningLast = this.props.queryGenes.get('running')
+    const running = nextProps.queryGenes.get('running')
+
+    if(runningLast && running === false) {
+      this.props.uiStateActions.showResult(true)
+    }
+
     const result = nextProps.queryGenes.get('result')
     if(result === null || result === undefined) {
       return
@@ -56,6 +69,14 @@ class SubTreePanel extends Component {
 
 
   render() {
+
+    const show = this.props.uiState.get('showResult')
+    const result = this.props.queryGenes.get('result')
+
+    if(!show || result === null ) {
+      // Return empty result
+      return(<div></div>)
+    }
 
     const cardStyle = {
       height: this.getHeight(),
@@ -91,7 +112,6 @@ class SubTreePanel extends Component {
     )
 
 
-    const result = this.props.queryGenes.get('result')
     const running = this.props.queryGenes.get('running')
 
     const titleStyle = {
@@ -101,15 +121,52 @@ class SubTreePanel extends Component {
       bottom: '1em',
       left: '1em',
       zIndex: 1210,
-      background: 'rgba(0,0,0,0)'
+      background: 'rgba(0,0,0,0)',
+      display: 'flex',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      width: '40%'
+    }
 
+    const labelStyle = {
+      color: '#777777',
+      fontSize: '1em',
+      fontWeight: 300,
+      padding: '0.5em'
+    }
+
+    const textStyle = {
+      flexGrow: '4',
+      width: '20em'
+    }
+
+    const legendTitleStyle = {
+      color: '#555555',
+      width: '30em'
     }
 
     return (
-      <div>
+      <div className={style.container}>
+
         <div style={titleStyle}>
-          {"Deleted Genes: " + genotype}
+
+          <div style={textStyle}>
+            {"Deleted Genes: " + genotype}
+          </div>
+
+          <h3 style={legendTitleStyle}>Absolute Change in State:</h3>
+
+          <div style={labelStyle}>
+            0
+          </div>
+
+          <LegendColor />
+
+          <div style={labelStyle}>
+            1
+          </div>
         </div>
+
 
         <Card
           style={cardStyle}
@@ -119,6 +176,7 @@ class SubTreePanel extends Component {
           <CardActions
             style={actionStyle}
           >
+
             <RaisedButton
               icon={this.state.isMax ? <CollapseIcon /> : <ExpandIcon />}
               onClick={this.toggleWindow}
@@ -185,8 +243,11 @@ class SubTreePanel extends Component {
       //   dag = this.filter(dag, this.state.filterDag.source, this.state.filterDag.target)
       // }
 
+      const queryType = this.props.queryGenes.get('queryType')
+
       return (
         <DAGViewer
+          queryType={queryType}
           data={dag}
           label="long_name"
           style={treeStyle}
@@ -199,9 +260,6 @@ class SubTreePanel extends Component {
 
 
   nodeSelected = (selectedNode) => {
-    console.log('# Node Selected in Application: ')
-    console.log(selectedNode) // This is an ID of node
-
 
     const result = this.props.queryGenes.get('result')
     // this.props.queryGenesActions.pivot(result, 'http://localhost:5000/', selectedNode)

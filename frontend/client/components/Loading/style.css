@@ -14,7 +14,7 @@
 }
 
 .loader {
-    z-index: 1000;
+    z-index: 3000;
 }
 
 .square {

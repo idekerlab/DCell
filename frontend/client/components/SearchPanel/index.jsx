@@ -1,11 +1,7 @@
 import React, {Component} from 'react'
-import * as colors from 'material-ui/styles/colors';
 import {Tabs, Tab} from 'material-ui/Tabs';
-import SearchIcon from 'material-ui/svg-icons/action/search';
-import LocationIcon from 'material-ui/svg-icons/device/location-searching';
 
 import SearchTab from './SearchTab'
-
 import TermSearchPanel from './TermSearchPanel'
 
 const TERM_SEARCH_MODE = 'term'
@@ -18,30 +14,20 @@ class SearchPanel extends Component {
     super(props);
     this.state = {
       searchMode: GENE_SEARCH_MODE
-    };
+    }
   }
 
-  handleChange = () => {
-
-    let selected = this.state.searchMode;
-
-    if(selected === TERM_SEARCH_MODE) {
-      selected = GENE_SEARCH_MODE
-    } else {
-      selected = TERM_SEARCH_MODE
-    }
-
+  onActive = tab => {
     this.setState({
-      searchMode: selected,
+      searchMode: tab.props.value
     })
   }
 
   render() {
-
     // Check show or hide
     const uiState = this.props.uiState
 
-    if(!uiState.get('showSearchWindow')) {
+    if (!uiState.get('showSearchWindow')) {
       return (<div></div>)
     }
 
@@ -50,20 +36,19 @@ class SearchPanel extends Component {
       minWidth: '400px',
       maxWidth: '450px',
       position: 'fixed',
-      left: '0.3em',
-      top: '5em',
-      zIndex: 999
+      left: '0',
+      top: '0',
+      zIndex: 990,
+      backgroundColor: 'rgba(255, 255, 255, 0.7)'
     };
 
     const tabStyle = {
-      background: colors.blueGrey500,
-      height: '100%',
       fontSize: '0.7em'
     }
 
     const searchStyle = {
       background: 'white',
-      padding: '0.5em'
+      padding: '0.5em',
     }
 
     const tabTitleStyle = {
@@ -75,13 +60,13 @@ class SearchPanel extends Component {
       <div style={style}>
         <Tabs
           style={tabStyle}
-          value={this.state.searchMode}
-          onChange={this.handleChange}
+          initialSelectedIndex={1}
         >
           <Tab
             value={TERM_SEARCH_MODE}
-            label='Locate Terms'
+            label='Browse Cell Structure'
             style={tabTitleStyle}
+            onActive={this.onActive}
           >
             <TermSearchPanel
 
@@ -95,16 +80,21 @@ class SearchPanel extends Component {
 
               trees={this.props.trees}
               currentNetwork={this.props.currentNetwork}
+
+              currentNetworkActions={this.props.currentNetworkActions}
+              propertyActions={this.props.propertyActions}
             />
           </Tab>
 
           <Tab
             value={GENE_SEARCH_MODE}
-            label="Select Gene/Genotype"
+            label="Simulate Cell Function"
             style={tabTitleStyle}
+            onActive={this.onActive}
           >
             <SearchTab
               searchMode={this.state.searchMode}
+              currentNetwork={this.props.currentNetwork}
 
               style={searchStyle}
               search={this.props.search}
@@ -113,12 +103,12 @@ class SearchPanel extends Component {
               backendServices={this.props.backendServices}
               queryGenesActions={this.props.queryGenesActions}
               queryGenes={this.props.queryGenes}
+              commandActions={this.props.commandActions}
             />
           </Tab>
         </Tabs>
       </div>
     )
-
   }
 }
 

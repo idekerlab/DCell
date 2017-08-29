@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {Set} from 'immutable'
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton'
 
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import ClearIcon from 'material-ui/svg-icons/content/clear';
@@ -12,6 +11,9 @@ import style from './style.css'
 
 import GenotypePanel from './GenotypePanel'
 import GeneList from './GeneList'
+
+import SimulationTypeSelector from './SimulationTypeSelector'
+import ExampleQueries from './ExampleQueries'
 
 
 const searchUiStyle = {
@@ -40,24 +42,8 @@ const baseStyle = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  height: '20em',
-  background: 'white'
-}
-
-const buttonPanelStyle = {
-  display: 'flex',
-  flexFlow: 'row wrap',
-  flexDirection: 'row',
-  alignItems: 'flex-start',
-  justifyContent: 'flex-start',
-  padding: '0.2em',
-  width: '100%'
-}
-
-const radioButtonStyle = {
-  flexGrow: '1',
-  fontSize: '0.8em',
-  width: '49%'
+  background: 'inherit',
+  height: '25em'
 }
 
 
@@ -72,12 +58,15 @@ class SearchTab extends Component {
       genes: new Set(),
       selected: {},
       runDisabled: true,
+      explainDisabled: true,
       enabledButton: '',
-      queryOption: 'genetic'
+      queryOption: 'genetic_interaction',
+      disableQueryOption: false
     }
   }
 
   componentWillReceiveProps(nextProps) {
+    // Enable Explain button
 
     const genes = nextProps.queryGenes.get('genes')
     const selectedGeneCount = genes.size
@@ -85,18 +74,47 @@ class SearchTab extends Component {
     const lastGenes = this.props.queryGenes.get('genes')
     const lastCount = lastGenes.size
 
-    if (selectedGeneCount == lastCount) {
+    // Ontology mode: if CLIXO, only GI works for now.
+    const ontologyType = this.props.currentNetwork.id
+    if(ontologyType === 'clixo') {
+      this.setState({
+        disableQueryOption: true
+      })
+
+
+      this.setQueryOption('genetic_interaction')
+    }
+
+    const runLast = this.props.queryGenes.get('running')
+    const run = nextProps.queryGenes.get('running')
+
+    if(runLast === true && run === false) {
+      this.setState({
+        runDisabled: false
+      })
+    }
+
+
+    if (selectedGeneCount === lastCount) {
       return
     }
 
-    this.state.runDisabled = (selectedGeneCount < 2)
-
-    if (this.state.runDisabled == false) {
-      this.state.enabledButton = style.blinkbutton
+    if(selectedGeneCount >= 1 && this.state.queryOption === 'growth') {
+      this.setState({
+        runDisabled: false,
+        enabledButton: style.blinkbutton
+      })
+    } else if(selectedGeneCount < 2) {
+      this.setState({
+        runDisabled: true,
+        enabledButton: ''
+      })
     } else {
-      this.state.enabledButton = ''
+      this.setState({
+        runDisabled: false,
+        enabledButton: style.blinkbutton
+      })
     }
-
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -109,14 +127,17 @@ class SearchTab extends Component {
     }
   }
 
+  search = (event, q) => {
 
-  search = () => {
+    let query = this.state.query
+    if(q !== undefined) {
+      query = q
+    }
 
     this.setState({
       noSearchYet: false
     })
 
-    const query = this.state.query
     const options = {
       index: 'genes',
       type: 'gene'
@@ -141,10 +162,23 @@ class SearchTab extends Component {
     });
   }
 
+  setQuery = (query) => {
+    this.setState({
+      query: query
+    });
+    this.search(null, query)
+  }
+
   handleKey = event => {
     if (event.key === 'Enter') {
       this.search()
     }
+  }
+
+  setQueryOption = value => {
+    this.setState({
+      queryOption: value
+    });
   }
 
   render() {
@@ -159,11 +193,24 @@ class SearchTab extends Component {
 
     return (
       <div style={this.props.style}>
+
+        <ExampleQueries
+          setQueryAction={this.setQuery}
+          queryOptionAction={this.setQueryOption}
+          resetSelectionAction={this.resetSelection}
+        />
+
+        <SimulationTypeSelector
+          disabled={this.state.disableQueryOption}
+          queryOption={this.state.queryOption}
+          queryOptionAction={this.setQueryOption}
+        />
+
         <div style={searchUiStyle}>
           <TextField
             style={{width: '5em', flexGrow: 2}}
-            hintText="Keywords, etc."
-            floatingLabelText="Keyword Search"
+            hintText="e.g. dna repair, rad57"
+            floatingLabelText="Genotype Builder"
             floatingLabelFixed={true}
 
             value={this.state.query}
@@ -193,34 +240,7 @@ class SearchTab extends Component {
           queryGenesActions={this.props.queryGenesActions}
         />
 
-
-        <h4 style={{borderTop: 'thin solid #aaaaaa', paddingTop: '0.4em'}}>
-          Query Type:
-        </h4>
-
-        <div style={buttonPanelStyle}>
-
-          <RadioButtonGroup
-            name="queryType"
-            defaultSelected="genetic"
-            style={buttonPanelStyle}
-            onChange={this.queryOptionChanged}
-          >
-            <RadioButton
-              value='genetic'
-              label="Genetic Interaction"
-              style={radioButtonStyle}
-            />
-            <RadioButton
-              value='growth'
-              label='Growth'
-              style={radioButtonStyle}
-            />
-          </RadioButtonGroup>
-        </div>
-
         <div style={actionStyle}>
-
           <RaisedButton
             label="Reset"
             labelPosition="before"
@@ -235,17 +255,19 @@ class SearchTab extends Component {
             secondary={true}
             onClick={this.runSimulation}
           />
+
+          <RaisedButton
+            label="Explain"
+            style={{marginLeft: '0.4em'}}
+            labelPosition="before"
+            primary={true}
+            disabled={this.state.explainDisabled}
+            onClick={this.explainResult}
+          />
         </div>
       </div>
     )
 
-  }
-
-  queryOptionChanged = (event, value) => {
-    console.log('Query option updated:')
-    this.setState({
-      queryOption: value
-    });
   }
 
   runSimulation = () => {
@@ -289,10 +311,30 @@ class SearchTab extends Component {
     console.log(genes)
     console.log(geneMap)
 
-    const url = this.props.backendServices.simulator
+    let url = this.props.backendServices.simulator
 
-    this.props.queryGenesActions.runDeletion(url, genesMap, geneMap)
-    this.props.uiStateActions.showResult(true)
+
+    // Check optional parameters
+    if(this.state.queryOption === 'growth') {
+      url = url + '?growth=true'
+    } else {
+      url = url + '?growth=false'
+    }
+
+    const ontologyType = this.props.currentNetwork.id
+
+    url = url + '&ontology=' + ontologyType.toUpperCase()
+
+    console.log(url)
+
+    this.props.queryGenesActions.runDeletion(url, this.state.queryOption, genesMap, geneMap)
+
+    // Reset the selection
+    this.props.commandActions.unselectAll()
+
+    this.setState({
+      explainDisabled: false
+    })
   }
 
 
@@ -300,7 +342,15 @@ class SearchTab extends Component {
     this.props.queryGenesActions.clearGenes()
     this.props.uiStateActions.showResult(false)
 
+    this.setState({
+      explainDisabled: true
+    })
+
     this.clearQuery()
+  }
+
+  explainResult = () => {
+    this.props.uiStateActions.showResult(true)
   }
 
 
@@ -338,6 +388,7 @@ class SearchTab extends Component {
         hits={hits}
         queryGenesActions={this.props.queryGenesActions}
         queryGenes={this.props.queryGenes}
+        queryOption={this.state.queryOption}
       />
     )
   }

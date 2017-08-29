@@ -19,6 +19,9 @@ export default handleActions({
   RESET: (state, action) => ({
     command: 'reset'
   }),
+  UNSELECT_ALL: (state, action) => ({
+    command: 'unselectAll'
+  }),
 
   FIND_PATH: (state, action) => ({
     command: 'findPath',

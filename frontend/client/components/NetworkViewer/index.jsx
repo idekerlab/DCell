@@ -1,17 +1,19 @@
 import React, {Component} from 'react'
 import {browserHistory} from 'react-router'
 
-import ClosableAppBar from '../ClosableAppBar'
 import NetworkPanel from '../NetworkPanel'
 import PropertyPanel from '../PropertyPanel'
 import Errorbar from 'material-ui/Snackbar';
 import SearchPanel from '../SearchPanel'
+import RunningOverlay from '../RunningOverlay'
 
 import Commands from '../Commands'
 
 import style from './style.css'
 import SubTreePanel from '../SubTreePanel'
+import MessagePanel from '../MessagePanel'
 
+import ErrorDialog from '../ErrorDialog'
 
 
 export default class NetworkViewer extends Component {
@@ -21,6 +23,8 @@ export default class NetworkViewer extends Component {
     this.state = {
       autoHideDuration: 1000000,
       open: false,
+      openErrorDialog: false,
+      errorMessage: ''
     };
   }
 
@@ -37,7 +41,25 @@ export default class NetworkViewer extends Component {
     });
   };
 
+  openDialogAction = (open, message) => {
+    this.setState({
+      openErrorDialog: open,
+      errorMessage: message
+    });
+  };
+
   componentWillReceiveProps(nextProps) {
+    const error = nextProps.queryGenes.get('error')
+    const runLast = this.props.queryGenes.get('running')
+    const run = nextProps.queryGenes.get('running')
+
+    if(error !== null && runLast === true && run === false) {
+      if(error.includes('Input Error')) {
+        this.openDialogAction(true, 'Invalid input parameters.')
+      } else {
+        this.openDialogAction(true, 'Simulator is running other jobs.  Please try again later.')
+      }
+    }
   }
 
   render() {
@@ -61,30 +83,20 @@ export default class NetworkViewer extends Component {
     }
 
 
-    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ UI")
-    console.log(this.props)
+    const running = this.props.queryGenes.get('running')
 
     return (
 
       <div style={this.props.style}>
-        <ClosableAppBar
-          title={message.get('message')}
-          messageActions={messageActions}
-          networkId={networkId}
-          networks={networks}
-          uiState={uiState}
-          uiStateActions={uiStateActions}
-          styles={styles}
-          currentVsActions={currentVsActions}
-          currentVs={currentVs}
-          backgroundColorActions={backgroundColorActions}
-          backgroundColor={backgroundColor}
-          datasource={datasource}
-          trees={config.get('trees').toJS()}
-          currentNetwork={this.props.currentNetwork.toJS()}
-          currentNetworkActions={this.props.currentNetworkActions}
 
-          propertyActions={propertyActions}
+        <ErrorDialog
+          openDialog={this.state.openErrorDialog}
+          openDialogAction={this.openDialogAction}
+          errorMessage={this.state.errorMessage}
+        />
+
+        <MessagePanel
+          message={message}
         />
 
         <NetworkPanel
@@ -103,11 +115,19 @@ export default class NetworkViewer extends Component {
           currentNetwork={this.props.currentNetwork.toJS()}
 
           messageActions={messageActions}
+
+
+          message={message}
+
+          uiStateActions={uiStateActions}
+          queryGenesActions={this.props.queryGenesActions}
+          queryGenes={this.props.queryGenes}
         />
 
         <Commands
           commandActions={commandActions}
           uiState={uiState}
+          uiStateActions={uiStateActions}
         />
 
         <SearchPanel
@@ -124,6 +144,9 @@ export default class NetworkViewer extends Component {
           queryGenes={this.props.queryGenes}
 
           uiState={uiState}
+
+          currentNetworkActions={this.props.currentNetworkActions}
+          propertyActions={this.props.propertyActions}
         />
 
         <PropertyPanel
@@ -136,14 +159,16 @@ export default class NetworkViewer extends Component {
           backendServices={config.get('backendServices').toJS()}
         />
 
+        <SubTreePanel
+          uiState={uiState}
+          uiStateActions={uiStateActions}
+          queryGenesActions={this.props.queryGenesActions}
+          queryGenes={this.props.queryGenes}
+        />
+
         {
-          uiState.get('showResult') ?
-            <SubTreePanel
-              uiStateActions={uiStateActions}
-              queryGenesActions={this.props.queryGenesActions}
-              queryGenes={this.props.queryGenes}
-            /> :
-            <div></div>
+          running ?
+            <RunningOverlay /> : <div></div>
         }
 
         <Errorbar

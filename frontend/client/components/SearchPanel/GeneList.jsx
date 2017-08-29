@@ -7,8 +7,8 @@ import Checkbox from 'material-ui/Checkbox';
 
 const listStyle = {
   overflow: 'scroll',
-  height: '20em',
-  background: 'white'
+  height: '30em',
+  background: 'inherit'
 }
 
 
@@ -26,7 +26,7 @@ class GeneList extends Component {
   render() {
     return (
       <List style={listStyle}>
-        <Subheader>Search Result</Subheader>
+        <Subheader>Search Result (Click to select genotype)</Subheader>
         {this.getGene(this.props.hits)}
       </List>
     )
@@ -43,9 +43,12 @@ class GeneList extends Component {
       const checked = selectedGenes.has(locusName)
 
       let disabled = false
-      if(selectedGenes.size >= 2) {
+      const queryOption = this.props.queryOption
+
+      if(selectedGenes.size >= 2 && queryOption === 'genetic_interaction') {
         disabled = true
       }
+
       return (
         <ListItem
           key={i}
