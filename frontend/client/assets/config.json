@@ -1,8 +1,8 @@
 {
   "title": "DeepCell 1.0",
   "backendServices": {
-    "db": "http://deep-cell.ucsd.edu:9200",
-    "simulator": "http://localhost:8888"
+    "db": "http://deep-cell-dev.ucsd.edu:9200",
+    "simulator": "http://deep-cell-dev.ucsd.edu:8888"
   },
 
   "defaultNetwork": "go",
