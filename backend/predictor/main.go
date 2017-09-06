@@ -22,7 +22,7 @@ type Response struct {
 var (
 	tls        = getenv("tls", "false")
 	serverAddr = getenv("SERVER_ADDRESS", "biancone.ucsd.edu")
-	serverPort = getenv("SERVER_PORT", "5000")
+	serverPort = getenv("SERVER_PORT", "5001")
 	labels     = []string{"ontology"}
 )
 
