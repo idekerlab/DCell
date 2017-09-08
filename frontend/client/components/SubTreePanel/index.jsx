@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 
 import LegendColor from './LegendColor'
+import RootLegendColor from './RootLegendColor'
 
 
 import style from './style.css'
@@ -70,6 +71,7 @@ class SubTreePanel extends Component {
 
   render() {
 
+    const queryType = this.props.queryGenes.get('queryType')
     const show = this.props.uiState.get('showResult')
     const result = this.props.queryGenes.get('result')
 
@@ -128,6 +130,22 @@ class SubTreePanel extends Component {
       width: '40%'
     }
 
+    const verticalBarStyle = {
+      color: 'black',
+      fontWeight: 700,
+      position: 'fixed',
+      top: 0,
+      right: '0.5em',
+      zIndex: 1220,
+      background: 'rgba(0,0,0,0)',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '4em',
+      height: '100%'
+    }
+
     const labelStyle = {
       color: '#777777',
       fontSize: '1em',
@@ -144,6 +162,7 @@ class SubTreePanel extends Component {
       color: '#555555',
       width: '30em'
     }
+
 
     return (
       <div className={style.container}>
@@ -168,6 +187,11 @@ class SubTreePanel extends Component {
         </div>
 
 
+        <div style={verticalBarStyle}>
+          {this.getRootLegend(queryType)}
+        </div>
+
+
         <Card
           style={cardStyle}
         >
@@ -188,8 +212,57 @@ class SubTreePanel extends Component {
             />
           </CardActions>
         </Card>
+
+
+
       </div>
     )
+  }
+
+  getRootLegend = resultType => {
+    const growthStyle = {
+      width: '100%',
+      height: '30em',
+      borderStyle: 'solid',
+      borderWidth: '1px',
+      borderColor: '#777777',
+      background: 'linear-gradient(red 0%, white 33%, red 66%)'
+    }
+
+    const gradientStyle = {
+      width: '100%',
+      height: '30em',
+      borderStyle: 'solid',
+      borderWidth: '1px',
+      borderColor: '#777777',
+      background: 'linear-gradient(red 0%, white 50%, red 100%)'
+    }
+
+    const labelStyle = {
+      color: '#777777',
+      fontSize: '1em',
+      fontWeight: 300
+    }
+
+    if (resultType === 'growth') {
+      return (
+        <RootLegendColor
+          min={0}
+          max={1.5}
+          gradientStyle={growthStyle}
+          labelStyle={labelStyle}
+        />
+      )
+    } else {
+      return (
+        <RootLegendColor
+          min={-1.0}
+          max={1.0}
+          gradientStyle={gradientStyle}
+          labelStyle={labelStyle}
+        />
+      )
+    }
   }
 
 
