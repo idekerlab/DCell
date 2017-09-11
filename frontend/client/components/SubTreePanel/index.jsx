@@ -226,7 +226,7 @@ class SubTreePanel extends Component {
       borderStyle: 'solid',
       borderWidth: '1px',
       borderColor: '#777777',
-      background: 'linear-gradient(red 0%, white 33%, red 66%)'
+      background: 'linear-gradient(red 0%, white 50%, red 100%)'
     }
 
     const gradientStyle = {
@@ -247,7 +247,7 @@ class SubTreePanel extends Component {
     if (resultType === 'growth') {
       return (
         <RootLegendColor
-          min={0}
+          min={.5}
           max={1.5}
           gradientStyle={growthStyle}
           labelStyle={labelStyle}
