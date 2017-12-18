@@ -6,7 +6,6 @@
 .main-background {
     background: url(images/title-final.svg) no-repeat center;
     background-size: 97% 100%;
-
 }
 
 .ex-large-button {
@@ -24,4 +23,17 @@
     margin-bottom: 4em;
     background-color: rgba(255, 255, 255, 0.0);
     z-index: 999;
+}
+
+.link-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-button {
+    flex-grow: 1;
+    margin-bottom: 0.5em;
+    width: 10em;
 }
