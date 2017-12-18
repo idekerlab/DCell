@@ -1,12 +1,18 @@
-# DeepCell Web
+# D-Cell Web
 a neural network to interpret cell structure and function
 
 ## Introduction
-DeepCell Web is an application to provide easy-to-use user interface to the DeepCell neural network for translate cell structure and functions.
+D-Cell Web is an application to provide easy-to-use user interface to the D-Cell neural network for translate cell structure and functions.
 
 Reference implementation is available here:
 
 http://deep-cell.ucsd.edu/
+
+## Running Example for Training and predicting using D-Cell
+cd training_testing
+th Train_DCell.lua -train training_file -test testing_file -topo ontology_file
+th Predict_Dcell.lua -load model_file -test testing_file -out predicting_results
+Detail usage of other parameters is the folder.
 
 ## Documentation
 
@@ -22,6 +28,6 @@ This application requires GPU-based backend service.  Source code for that servi
 
 
 ----
-&copy; UC, San Diego Trey Ideker Lab
+&copy; 2017-2018 UC, San Diego Trey Ideker Lab
 
 Developed and Maintained by Keiichiro Ono (kono ucsd edu)
