@@ -1,8 +1,8 @@
-# D-Cell Web
-a neural network to interpret cell structure and function
+# DCell
+A neural network to interpret cell structure and function
 
 ## Introduction
-D-Cell Web is an application to provide easy-to-use user interface to the D-Cell neural network for translate cell structure and functions.
+DCell is an application to provide easy-to-use user interface to the D-Cell neural network for translate cell structure and functions.
 
 Reference implementation is available here:
 
@@ -15,7 +15,6 @@ th Predict_Dcell.lua -load model_file -test testing_file -out predicting_results
 Detail usage of other parameters is the folder.
 
 ## Documentation
-
 Please visit our [wiki](https://github.com/idekerlab/deep-cell/wiki).
 
 
