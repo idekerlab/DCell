@@ -16,6 +16,12 @@ import MessagePanel from '../MessagePanel'
 import ErrorDialog from '../ErrorDialog'
 
 
+const containerStyle = {
+  display: 'flex',
+  height: '100%',
+  width: '100%'
+}
+
 export default class NetworkViewer extends Component {
 
   constructor(props) {
@@ -95,41 +101,7 @@ export default class NetworkViewer extends Component {
           errorMessage={this.state.errorMessage}
         />
 
-        <MessagePanel
-          message={message}
-        />
-
-        <NetworkPanel
-          networkActions={networkActions}
-          commands={commands}
-          commandActions={commandActions}
-          events={events}
-          eventActions={eventActions}
-          currentProperty={currentProperty}
-          propertyActions={propertyActions}
-
-          network={network}
-          search={search}
-
-          trees={config.get('trees').toJS()}
-          currentNetwork={this.props.currentNetwork.toJS()}
-
-          messageActions={messageActions}
-
-
-          message={message}
-
-          uiStateActions={uiStateActions}
-          queryGenesActions={this.props.queryGenesActions}
-          queryGenes={this.props.queryGenes}
-        />
-
-        <Commands
-          commandActions={commandActions}
-          uiState={uiState}
-          uiStateActions={uiStateActions}
-        />
-
+<div style={containerStyle}>
         <SearchPanel
           search={search}
           searchActions={searchActions}
@@ -149,16 +121,6 @@ export default class NetworkViewer extends Component {
           propertyActions={this.props.propertyActions}
         />
 
-        <PropertyPanel
-          commands={commands}
-          commandActions={commandActions}
-          events={events}
-          currentProperty={currentProperty}
-          currentNetwork={this.props.currentNetwork.toJS()}
-          trees={config.get('trees').toJS()}
-          backendServices={config.get('backendServices').toJS()}
-        />
-
         <SubTreePanel
           uiState={uiState}
           uiStateActions={uiStateActions}
@@ -166,6 +128,7 @@ export default class NetworkViewer extends Component {
           queryGenes={this.props.queryGenes}
         />
 
+</div>
         {
           running ?
             <RunningOverlay /> : <div></div>

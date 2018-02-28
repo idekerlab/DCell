@@ -1,8 +1,15 @@
 .container {
     animation: fadeIn 1s ease 0s 1 normal;
+    height: 100%;
+    flex-grow: 1;
+    background: inherit;
 }
 
 @keyframes fadeIn {
-    0% {opacity: 0}
-    100% {opacity: 1}
+    0% {
+        opacity: 0
+    }
+    100% {
+        opacity: 1
+    }
 }

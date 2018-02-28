@@ -79,14 +79,10 @@ class SubTreePanel extends Component {
     }
 
     const cardStyle = {
-      height: this.getHeight(),
       zIndex: '1200',
-      width: '100%',
       position: 'fixed',
       margin: 0,
       padding: 0,
-      background: '#FFFFFF',
-      left: 0,
       bottom: 0,
     }
 
@@ -119,7 +115,7 @@ class SubTreePanel extends Component {
       fontWeight: 700,
       position: 'fixed',
       bottom: '1em',
-      left: '1em',
+      paddingLeft: '1em',
       zIndex: 1210,
       background: 'rgba(0,0,0,0)',
       display: 'flex',
@@ -146,7 +142,9 @@ class SubTreePanel extends Component {
     }
 
     return (
-      <div className={style.container}>
+      <div
+        className={style.container}
+      >
 
         <div style={titleStyle}>
 
@@ -167,27 +165,9 @@ class SubTreePanel extends Component {
           </div>
         </div>
 
-
-        <Card
-          style={cardStyle}
-        >
+        <div style={cardStyle}>
           {this.getMainContents(result, running)}
-
-          <CardActions
-            style={actionStyle}
-          >
-
-            <RaisedButton
-              icon={this.state.isMax ? <CollapseIcon /> : <ExpandIcon />}
-              onClick={this.toggleWindow}
-            />
-            <RaisedButton
-              icon={<CloseIcon />}
-              primary={true}
-              onClick={this.handleClose}
-            />
-          </CardActions>
-        </Card>
+        </div>
       </div>
     )
   }
@@ -226,7 +206,7 @@ class SubTreePanel extends Component {
       }
     } else {
 
-      const w = window.innerWidth
+      const w = window.innerWidth * 0.88
       const h = this.state.isMax ? window.innerHeight : window.innerHeight * 0.4
 
       const treeStyle = {

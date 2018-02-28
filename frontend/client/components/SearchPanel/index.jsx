@@ -33,11 +33,9 @@ class SearchPanel extends Component {
 
     const style = {
       width: '23%',
+      height: '100%',
       minWidth: '400px',
       maxWidth: '450px',
-      position: 'fixed',
-      left: '0',
-      top: '0',
       zIndex: 990,
       backgroundColor: 'rgba(255, 255, 255, 0.7)'
     };

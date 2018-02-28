@@ -17,7 +17,7 @@ import * as searchActions from '../../actions/search'
 
 import * as networkActions from '../../actions/network'
 
-import {grey50, grey800} from 'material-ui/styles/colors';
+import {grey100, grey800} from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -46,7 +46,7 @@ const baseStyle = {
   left: 0,
   top: 0,
   zIndex: 0,
-  background: grey50,
+  background: grey100,
   height: '100%',
   width: '100%'
 }
