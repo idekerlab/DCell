@@ -145,9 +145,7 @@ class SubTreePanel extends Component {
       <div
         className={style.container}
       >
-
         <div style={titleStyle}>
-
           <div style={textStyle}>
             {"Deleted Genes: " + genotype}
           </div>
@@ -188,11 +186,8 @@ class SubTreePanel extends Component {
     this.props.uiStateActions.showResult(false)
   }
 
-
   getMainContents = (result, running) => {
-
     if (result === null || result === undefined) {
-
       if (running) {
         return (
           <Loading
@@ -206,7 +201,7 @@ class SubTreePanel extends Component {
       }
     } else {
 
-      const w = window.innerWidth * 0.88
+      const w = window.innerWidth - 450
       const h = this.state.isMax ? window.innerHeight : window.innerHeight * 0.4
 
       const treeStyle = {
