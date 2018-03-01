@@ -249,15 +249,6 @@ class SearchTab extends Component {
             secondary={true}
             onClick={this.runSimulation}
           />
-
-          <RaisedButton
-            label="Explain"
-            style={{marginLeft: '0.4em'}}
-            labelPosition="before"
-            primary={true}
-            disabled={this.state.explainDisabled}
-            onClick={this.explainResult}
-          />
         </div>
       </div>
     )
