@@ -160,45 +160,12 @@ class TermSearchPanel extends Component {
     return (
       <div style={this.props.style}>
 
-        <ExampleTermSearch
-          setQueryAction={this.setQuery}
-          searchAction={this.search}
-        />
-
         <StructureSelectorPanel
           trees={this.props.trees}
           currentNetwork={this.props.currentNetwork}
           currentNetworkActions={this.props.currentNetworkActions}
           propertyActions={this.props.propertyActions}
         />
-
-        <div style={searchUiStyle}>
-          <TextField
-            style={{width: '5em', flexGrow: 3}}
-            hintText="e.g. dna repair, rad57"
-            floatingLabelText="Subsystem Search"
-            floatingLabelFixed={true}
-
-            value={this.state.query}
-            onChange={this.handleChange}
-            onKeyPress={this.handleKey}
-          />
-
-          <RaisedButton
-            style={buttonStyle}
-            icon={<ClearIcon />}
-            onClick={this.clearQuery}
-          />
-          <RaisedButton
-            style={buttonStyle}
-            icon={<SearchIcon />}
-            primary={true}
-            onClick={this.search}
-          />
-        </div>
-
-
-        {this.getListPanel(hits)}
 
       </div>
     )

@@ -200,12 +200,6 @@ class SearchTab extends Component {
           resetSelectionAction={this.resetSelection}
         />
 
-        <SimulationTypeSelector
-          disabled={this.state.disableQueryOption}
-          queryOption={this.state.queryOption}
-          queryOptionAction={this.setQueryOption}
-        />
-
         <div style={searchUiStyle}>
           <TextField
             style={{width: '5em', flexGrow: 2}}
