@@ -60,8 +60,10 @@ for i,term_name in ipairs(term_list) do
 	if #children_gene_list ~= 0 then
 
 		print(term_name, neuron_size_map[term_name])
+		
 		local linear_layer = nn.Linear(feature_dim,neuron_size_map[term_name])(gene_layer):annotate{name= 'gene_'..term_name}
-        gene_node_map[term_name] = linear_layer
+        
+		gene_node_map[term_name] = linear_layer
 
         term_mask = torch.zeros(feature_dim,neuron_size_map[term_name])
    
@@ -124,12 +126,15 @@ while true do
             linear_layer = nn.Linear(input_size,hidden_num)(input_layer)
 
             -- Batch normalization
-            BatchNorm_layer = nn.BatchNormalization(hidden_num)(linear_layer)
+            --BatchNorm_layer = nn.BatchNormalization(hidden_num)(linear_layer)
             
 			-- Soft tanh 
-            Tanh_layer = nn.Tanh()(BatchNorm_layer)
-            term_node_map[term_name] = Tanh_layer
-            
+            --Tanh_layer = nn.Tanh()(BatchNorm_layer)
+			Tanh_layer = nn.Tanh()(linear_layer)
+			BatchNorm_layer = nn.BatchNormalization(hidden_num)(Tanh_layer)
+            --term_node_map[term_name] = Tanh_layer
+           	term_node_map[term_name] = BatchNorm_layer
+ 
             --if term_size_map[term_name] > 30 then
             --auxillary_linear_layer = nn.Tanh()(nn.Linear(neuron_size_map[term_name],1)(input_layer))
             auxillary_layer = nn.Tanh()(nn.Linear(hidden_num,1)(Tanh_layer))
@@ -138,12 +143,16 @@ while true do
         else
             linear_layer = nn.Linear(input_size, hidden_num)(input_layer)
         
-            BatchNorm_layer = nn.BatchNormalization(neuron_size_map[term_name])(linear_layer)
+            --BatchNorm_layer = nn.BatchNormalization(neuron_size_map[term_name])(linear_layer)
 
-            Tanh_layer = nn.Tanh()(BatchNorm_layer)           
+            --Tanh_layer = nn.Tanh()(BatchNorm_layer)           
+			Tanh_layer = nn.Tanh()(linear_layer)
 
-            linear_layer2 = nn.Linear(hidden_num,1)(Tanh_layer)
-            
+			BatchNorm_layer = nn.BatchNormalization(hidden_num)(Tanh_layer)
+
+            --linear_layer2 = nn.Linear(hidden_num,1)(Tanh_layer)
+			linear_layer2 = nn.Linear(hidden_num,1)(BatchNorm_layer)            
+
             term_node_map[term_name] = linear_layer2
 
             loss_node_map[term_name] = linear_layer2
@@ -173,7 +182,7 @@ for i,term_name in ipairs(term_list) do
     if term_name == opt.root then
         loss_vector:add(regression_loss)
     else
-        loss_vector:add(regression_loss,0.3)
+        loss_vector:add(regression_loss,0.5)
     end
 end
 --[[

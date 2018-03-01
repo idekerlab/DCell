@@ -95,22 +95,42 @@ for term, id in pairs(gene2id) do wfile:write(term..' '..tostring(id)..'\n') end
 wfile:close()
 ----------------------Initialization---------------------------------------
 for k, layer in ipairs(model.modules) do
+	--print(k, layer)
 	if layer.__typename == 'nn.Linear' then
-		model.modules[k].weight:mul(0.01)
+		model.modules[k].weight:mul(0.001)
 	end
 end
 
-----------------------Save model-------------------------------------------------------
-os.execute('mkdir -p ' .. opt.save)
-
 ----------------------Cuda-------------------------------------------------------
 if opt.type =='cuda' then
-	cutorch.setDevice(opt.devid)
-	cutorch.setHeapTracking(true)
-	model:cuda()
-	loss = loss:cuda()
-	TensorType = 'torch.CudaTensor'
+    cutorch.setDevice(opt.devid)
+    cutorch.setHeapTracking(true)
+    model:cuda()
+    loss = loss:cuda()
+    TensorType = 'torch.CudaTensor'
 end
+
+for _,node in ipairs(model.forwardnodes) do
+	--print(node.data.annotations.name)
+	if node.data.annotations.name ~= nil and string.sub(node.data.annotations.name,1,5) == "gene_" then
+		--print(term_name,node.data.module.weight:size())
+		term_name = string.sub(node.data.annotations.name,6)
+		grad_mask = term_mask[term_name]:cuda()
+
+		if grad_mask == nil then print("There is no mask there..") end
+		--print(term_name,node.data.module.weight:size(), grad_mask:size())
+		weight_size = node.data.module.weight:size()
+		
+		mask_size = grad_mask:size()
+		if mask_size[1] ~= weight_size[1] or mask_size[2] ~= weight_size[2] then
+			print("Gradient mistakes, size not match!",term_name)
+			os.exit()
+		end
+		node.data.module.weight:cmul(grad_mask)
+	end
+end
+----------------------Save model-------------------------------------------------------
+os.execute('mkdir -p ' .. opt.save)
 
 ---Support for multiple GPUs - currently data parallel scheme
 if opt.nGPU > 1 then
@@ -128,6 +148,7 @@ local Weights,Gradients = model:getParameters()
 
 Weights,Gradients = model:getParameters()
 
+---Adam config------------
 local config = {
 	learningRate = 0.001,
 	beta1 = 0.9,
@@ -173,13 +194,14 @@ local function Learn4OneEpoch(Data, Label, train_mode, epoch)
 		local currLoss = loss:forward(y,yt)
 		
 		if train_mode == true then
+			
 			function feval()
 				model:zeroGradParameters()
 				local dE_dy = loss:backward(y, yt)
 				model:backward(xx, dE_dy)
 
 				for _,node in ipairs(model.forwardnodes) do
-					if node.data.annotations.name ~= nil and string.sub(node.data.annotations.name,1,5) ~= "gene_" then
+					if node.data.annotations.name ~= nil and string.sub(node.data.annotations.name,1,5) == "gene_" then
 						--print(term_name,node.data.module.gradWeight:size())
 						term_name = string.sub(node.data.annotations.name,6)
 						grad_mask = term_mask[term_name]:cuda()
