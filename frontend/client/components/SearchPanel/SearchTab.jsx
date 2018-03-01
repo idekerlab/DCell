@@ -60,7 +60,7 @@ class SearchTab extends Component {
       runDisabled: true,
       explainDisabled: true,
       enabledButton: '',
-      queryOption: 'genetic_interaction',
+      queryOption: 'growth',
       disableQueryOption: false
     }
   }
