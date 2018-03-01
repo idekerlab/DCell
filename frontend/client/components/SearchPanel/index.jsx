@@ -61,7 +61,7 @@ class SearchPanel extends Component {
         >
           <Tab
             value={TERM_SEARCH_MODE}
-            label='Browse Cell Structure'
+            label='Switch Ontology Type'
             style={tabTitleStyle}
             onActive={this.onActive}
           >

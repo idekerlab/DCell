@@ -172,7 +172,6 @@ class TermSearchPanel extends Component {
 
   }
 
-
   getListPanel = hits => {
     const listStyle ={
       overflow: 'scroll',
