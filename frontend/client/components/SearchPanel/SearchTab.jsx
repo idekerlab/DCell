@@ -18,6 +18,11 @@ import ExampleQueries from './ExampleQueries'
 import Divider from 'material-ui/Divider';
 
 
+// TODO: This is a hack
+import geneList from './gene-list'
+
+const geneSet = new Set(geneList)
+
 
 const searchUiStyle = {
   display: 'flex',
@@ -195,6 +200,9 @@ class SearchTab extends Component {
     if (searchResult !== null) {
       hits = searchResult.hits.hits
     }
+
+
+    console.log()
 
     const genes = this.props.queryGenes.get('genes')
 
@@ -382,9 +390,20 @@ class SearchTab extends Component {
       )
     }
 
+    const filtered = hits.filter((value, index) => {
+      const locusName = value._source.locus
+
+      if(geneSet.has(locusName)) {
+        return true
+      } else {
+        return false
+      }
+    })
+    console.log(filtered)
+
     return (
       <GeneList
-        hits={hits}
+        hits={filtered}
         queryGenesActions={this.props.queryGenesActions}
         queryGenes={this.props.queryGenes}
         queryOption={this.state.queryOption}

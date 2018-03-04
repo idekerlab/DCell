@@ -1,11 +1,9 @@
 import React, {Component} from 'react'
-import {Tabs, Tab} from 'material-ui/Tabs';
-
 import SearchTab from './SearchTab'
-import TermSearchPanel from './TermSearchPanel'
 
 const TERM_SEARCH_MODE = 'term'
 const GENE_SEARCH_MODE = 'gene'
+
 
 
 class SearchPanel extends Component {
@@ -17,13 +15,8 @@ class SearchPanel extends Component {
     }
   }
 
-  onActive = tab => {
-    this.setState({
-      searchMode: tab.props.value
-    })
-  }
-
   render() {
+
     // Check show or hide
     const uiState = this.props.uiState
 
@@ -33,25 +26,17 @@ class SearchPanel extends Component {
 
     const style = {
       width: '450px',
-      height: '100%',
       maxWidth: '450px',
+      height: '92%',
+      overflow: 'scroll',
       zIndex: 990,
-      backgroundColor: 'rgba(255, 255, 255, 0.7)'
+      backgroundColor: 'rgb(255, 255, 255)'
     };
-
-    const tabStyle = {
-      fontSize: '0.7em'
-    }
 
     const searchStyle = {
       background: 'white',
       padding: '0.5em',
     }
-
-    const tabTitleStyle = {
-      fontSize: '1em'
-    }
-
 
     return (
       <div style={style}>
