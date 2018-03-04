@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Card, CardActions, CardHeader} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import TreeTitleBar from '../TreeTitleBar'
 
 import LegendColor from './LegendColor'
 
@@ -145,10 +145,8 @@ class SubTreePanel extends Component {
       <div
         className={style.container}
       >
+
         <div style={titleStyle}>
-          <div style={textStyle}>
-            {"Deleted Genes: " + genotype}
-          </div>
 
           <h3 style={legendTitleStyle}>Absolute Change in State:</h3>
 

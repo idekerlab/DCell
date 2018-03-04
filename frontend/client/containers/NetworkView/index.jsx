@@ -17,7 +17,7 @@ import * as searchActions from '../../actions/search'
 
 import * as networkActions from '../../actions/network'
 
-import {grey100, grey800} from 'material-ui/styles/colors';
+import {blueGrey50, grey800} from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -33,7 +33,7 @@ injectTapEventPlugin()
 // Theme settings
 const muiTheme = getMuiTheme({
   appBar: {
-    color: grey800,
+    color: grey800
   },
   snackbar:{
     textColor: 'white',
@@ -46,7 +46,7 @@ const baseStyle = {
   left: 0,
   top: 0,
   zIndex: 0,
-  background: grey100,
+  background: blueGrey50,
   height: '100%',
   width: '100%'
 }

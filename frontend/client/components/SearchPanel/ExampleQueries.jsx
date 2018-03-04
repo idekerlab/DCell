@@ -21,13 +21,14 @@ const EXAMPLES = {
     value: ''
   },
   'example1': {
-    label: 'Growth: Delete REV7 and RAD57',
+    label: 'Delete REV7 and RAD57',
     type: 'growth',
     value: 'REV7 RAD57'
   },
   'example2': {
-    label: 'Genetic Interaction: Delete CYT1 and COX7',
-    type: 'genetic_interaction',
+    label: 'Delete CYT1 and COX7',
+    // type: 'genetic_interaction',
+    type: 'growth',
     value: 'CYT1 COX7'
   }
 }

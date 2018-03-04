@@ -55,55 +55,19 @@ class SearchPanel extends Component {
 
     return (
       <div style={style}>
-        <Tabs
-          style={tabStyle}
-          initialSelectedIndex={1}
-        >
-          <Tab
-            value={TERM_SEARCH_MODE}
-            label='Switch Ontology Type'
-            style={tabTitleStyle}
-            onActive={this.onActive}
-          >
-            <TermSearchPanel
-
-              searchMode={this.state.searchMode}
-
-              style={searchStyle}
-              search={this.props.search}
-              searchActions={this.props.searchActions}
-              uiStateActions={this.props.uiStateActions}
-              commandActions={this.props.commandActions}
-
-              trees={this.props.trees}
-              currentNetwork={this.props.currentNetwork}
-
-              currentNetworkActions={this.props.currentNetworkActions}
-              propertyActions={this.props.propertyActions}
-            />
-          </Tab>
-
-          <Tab
-            value={GENE_SEARCH_MODE}
-            label="Simulate Cell Function"
-            style={tabTitleStyle}
-            onActive={this.onActive}
-          >
-            <SearchTab
-              searchMode={this.state.searchMode}
-              currentNetwork={this.props.currentNetwork}
-
-              style={searchStyle}
-              search={this.props.search}
-              searchActions={this.props.searchActions}
-              uiStateActions={this.props.uiStateActions}
-              backendServices={this.props.backendServices}
-              queryGenesActions={this.props.queryGenesActions}
-              queryGenes={this.props.queryGenes}
-              commandActions={this.props.commandActions}
-            />
-          </Tab>
-        </Tabs>
+        <SearchTab
+          {...this.props}
+          searchMode={this.state.searchMode}
+          currentNetwork={this.props.currentNetwork}
+          style={searchStyle}
+          search={this.props.search}
+          searchActions={this.props.searchActions}
+          uiStateActions={this.props.uiStateActions}
+          backendServices={this.props.backendServices}
+          queryGenesActions={this.props.queryGenesActions}
+          queryGenes={this.props.queryGenes}
+          commandActions={this.props.commandActions}
+        />
       </div>
     )
   }

@@ -24,7 +24,7 @@ class GenotypePanel extends Component {
         <div style={style}>
           <h4>Genotype:</h4>
           <div style={containerStyle}>
-            (No genes selected yet)
+
           </div>
         </div>
       )
@@ -45,10 +45,6 @@ class GenotypePanel extends Component {
 
   getGenes = genes => {
     const orfs = Object.keys(genes)
-
-    console.log(genes)
-    console.log(orfs)
-
     return orfs.map(orf => (this.renderGene(orf, genes[orf])))
   }
 

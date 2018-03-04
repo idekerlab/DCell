@@ -14,7 +14,7 @@ LegendColor.defaultProps = {
   style: {
     flexGrow: '3',
     width: '100%',
-    height: '3em',
+    height: '1em',
     padding: '0.2em',
     borderStyle: 'solid',
     borderWidth: '1px',
