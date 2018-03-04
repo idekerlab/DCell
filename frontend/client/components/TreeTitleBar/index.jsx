@@ -5,9 +5,6 @@ import React, {Component} from 'react'
 
 const TreeTitlebar = (props) => {
 
-  console.log("$$$$$$$$$$$$$$$$$")
-  console.log(props)
-
   const genes = props.genes.toJS()
 
   console.log(genes)
@@ -24,11 +21,10 @@ const TreeTitlebar = (props) => {
   return (
     <Toolbar>
       <ToolbarGroup firstChild={true}>
-        <ToolbarSeparator />
-
-        <MenuIcon />
-
-        <ToolbarTitle text="DCell v1.4" />
+        <ToolbarTitle
+          text="DCell v1.4"
+          style={{marginLeft: '1em'}}
+        />
       </ToolbarGroup>
       <ToolbarGroup>
         <ToolbarTitle text={message} />

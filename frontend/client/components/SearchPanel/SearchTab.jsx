@@ -235,8 +235,6 @@ class SearchTab extends Component {
           queryGenesActions={this.props.queryGenesActions}
         />
 
-        <Divider/>
-
 
         <div style={actionStyle}>
           <RaisedButton
