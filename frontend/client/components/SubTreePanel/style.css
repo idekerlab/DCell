@@ -14,7 +14,9 @@
 /* Tooltip text */
 .tooltip .tooltiptext {
     visibility: hidden;
-    width: 120px;
+    width: 30em;
+    font-size: 0.4em;
+
     background-color: #555;
     color: #fff;
     text-align: center;

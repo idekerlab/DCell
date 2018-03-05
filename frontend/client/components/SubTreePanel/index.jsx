@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TreeTitleBar from '../TreeTitleBar'
 
 import LegendColor from './LegendColor'
-
+import LegendLine from './LegendLine'
 
 import style from './style.css'
 
@@ -163,6 +163,9 @@ class SubTreePanel extends Component {
           <div style={labelStyle}>
             1
           </div>
+
+          <LegendLine/>
+
         </div>
 
         <div style={cardStyle}>

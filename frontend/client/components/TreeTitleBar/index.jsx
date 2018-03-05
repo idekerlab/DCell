@@ -24,13 +24,13 @@ const TreeTitlebar = (props) => {
 
         <a href={'http://deep-cell.ucsd.edu/'}>
           <HomeIcon
-            style={{marginLeft: '0.8em'}}
+            style={{marginLeft: '0.6em'}}
           />
         </a>
 
         <ToolbarTitle
-          text="DCell: A neural network to simulate cell structure and function"
-          style={{marginLeft: '0.3em'}}
+          text="DCell v1.4"
+          style={{marginLeft: '0.4em'}}
         />
       </ToolbarGroup>
       <ToolbarGroup>

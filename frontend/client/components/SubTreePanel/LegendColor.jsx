@@ -16,7 +16,12 @@ const LegendColor = props => {
       <div className={style.tooltip}>
         <div style={props.style}>
         </div>
-        <span className={style.tooltiptext}>TOOLTIP</span>
+        <span className={style.tooltiptext}>
+          The change in state is defined as a z-score,
+          with the center defined as the wildtype state
+          and the standard deviation calculated across
+          the simulated states of all double knockout genotypes
+        </span>
       </div>
     </div>
   )
