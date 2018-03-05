@@ -276,7 +276,7 @@ class SearchTab extends Component {
   runExample = () => {
     this.resetSelection()
     this.setQueryOption('growth')
-    this.setQuery('REV7 RAD57')
+    this.setQuery('CYT1 COX7')
   }
 
   runSimulation = () => {

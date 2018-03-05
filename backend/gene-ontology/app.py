@@ -48,9 +48,15 @@ class Children(Resource):
     def get(self, goid):
         return go.get_children(goid)
 
+class Name(Resource):
+
+    def get(self, goid):
+        return go.get_name(goid)
+
 
 api.add_resource(Status, '/')
 api.add_resource(Details, '/<goid>')
+api.add_resource(Name, '/<goid>/name')
 api.add_resource(Children, '/<goid>/children')
 
 
