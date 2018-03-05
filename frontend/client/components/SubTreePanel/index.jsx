@@ -5,6 +5,7 @@ import TreeTitleBar from '../TreeTitleBar'
 
 import LegendColor from './LegendColor'
 import LegendLine from './LegendLine'
+import DefaultPanel from './DefaultPanel'
 
 import style from './style.css'
 
@@ -70,12 +71,12 @@ class SubTreePanel extends Component {
 
   render() {
 
-    const show = this.props.uiState.get('showResult')
     const result = this.props.queryGenes.get('result')
+    const running = this.props.queryGenes.get('running')
 
-    if(!show || result === null ) {
-      // Return empty result
-      return(<div></div>)
+    // Placeholder
+    if(result === null && !running) {
+      return(<DefaultPanel/>)
     }
 
     const cardStyle = {
@@ -86,17 +87,6 @@ class SubTreePanel extends Component {
       bottom: 0,
     }
 
-    const actionStyle = {
-      display: 'flex',
-      justifyContent: 'flex-end',
-      alignItems: 'center',
-      position: 'fixed',
-      bottom: '1em',
-      right: '1em',
-      background: 'rgba(0,0,0,0)',
-
-      zIndex: 1300,
-    }
 
     const genesMap = this.props.queryGenes.get('genes')
     const genes = Object.values(genesMap.toJS())
@@ -108,7 +98,6 @@ class SubTreePanel extends Component {
     )
 
 
-    const running = this.props.queryGenes.get('running')
 
     const titleStyle = {
       color: '#26C6DA',

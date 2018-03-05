@@ -136,7 +136,6 @@ export const runDeletion = (serviceUrl, queryType, genesMap, geneMap) => {
         const errors = json.errors
 
         if (errors !== undefined && errors.length !== 0) {
-          console.log('########### E 223222!!')
 
           return dispatch(receiveSimulationResult(serviceUrl, queryType, genesMap, null, errors[0]))
 
@@ -156,7 +155,6 @@ export const runDeletion = (serviceUrl, queryType, genesMap, geneMap) => {
 
             })
             .then(json2 => {
-              console.log(json2)
               return dispatch(receiveSimulationResult(serviceUrl, queryType, genesMap, json, null))
             })
         }
@@ -173,6 +171,7 @@ const onServerError = serverErr => {
   console.log(serverErr)
 
 }
+
 
 const replaceNodeData = (nodes, docs, genesMap, geneMap) => {
 

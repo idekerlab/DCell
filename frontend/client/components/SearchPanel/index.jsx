@@ -26,7 +26,7 @@ class SearchPanel extends Component {
 
     const style = {
       width: '450px',
-      maxWidth: '450px',
+      minWidth: '450px',
       height: '92%',
       overflow: 'scroll',
       zIndex: 990,

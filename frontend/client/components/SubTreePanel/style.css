@@ -62,3 +62,84 @@
         opacity: 1
     }
 }
+
+.logocontainer {
+    padding: 3em;
+    border-radius: 25px;
+    background: #0097A7;
+    width: 65%;
+}
+
+.treecontainer {
+    width: 100%;
+    height: 100%;
+    flex-grow: 1;
+    background: #EFEFEF;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+.title {
+    color: #FFFFFF;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 2em;
+    font-weight: 200;
+    padding-bottom: 2em;
+}
+
+
+.arrowLogo {
+    width: 10em;
+    height: 5em;
+}
+
+.arrow {
+    width: 3em;
+    height: 3em;
+    border: 0.6em solid;
+    border-color: #333333 transparent transparent #333333;
+    transform: rotate(-45deg);
+}
+
+
+.arrowSliding {
+    position: absolute;
+    -webkit-animation: slide 4s linear infinite;
+    animation: slide 4s linear infinite;
+}
+
+.delay1 {
+    position: absolute;
+    -webkit-animation: slide 4s linear infinite;
+    animation: slide 4s linear infinite;
+    -webkit-animation-delay: 1s;
+    animation-delay: 1s;
+}
+.delay2 {
+    position: absolute;
+    -webkit-animation: slide 4s linear infinite;
+    animation: slide 4s linear infinite;
+    -webkit-animation-delay: 2s;
+    animation-delay: 2s;
+}
+.delay3 {
+    position: absolute;
+    -webkit-animation: slide 4s linear infinite;
+    animation: slide 4s linear infinite;
+    -webkit-animation-delay: 3s;
+    animation-delay: 3s;
+}
+
+@-webkit-keyframes slide {
+    0% { opacity:0; transform: translateX(5em); }
+    20% { opacity:1; transform: translateX(3em); }
+    80% { opacity:1; transform: translateX(-3em); }
+    100% { opacity:0; transform: translateX(-5em); }
+}
+@keyframes slide {
+    0% { opacity:0; transform: translateX(5em); }
+    20% { opacity:1; transform: translateX(3em); }
+    80% { opacity:1; transform: translateX(-3em); }
+    100% { opacity:0; transform: translateX(-5em); }
+}
+
