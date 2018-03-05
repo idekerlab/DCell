@@ -49,7 +49,7 @@ Genetic interaction and growth is at:
 http://thecellmap.org/costanzo2016/
 The running time on a standard Tesla K20 GPU takes <2 minutes for terms like "DNA repair", and 2-3 days for the real data.
 
-## Documentation
+## User Documentation
 Please visit our [wiki](https://github.com/idekerlab/deep-cell/wiki).
 
 

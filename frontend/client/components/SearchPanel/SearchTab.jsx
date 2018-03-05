@@ -15,6 +15,14 @@ import GeneList from './GeneList'
 import SimulationTypeSelector from './SimulationTypeSelector'
 import ExampleQueries from './ExampleQueries'
 
+import Divider from 'material-ui/Divider';
+
+
+// TODO: This is a hack
+import geneList from './gene-list'
+
+const geneSet = new Set(geneList)
+
 
 const searchUiStyle = {
   display: 'flex',
@@ -46,6 +54,10 @@ const baseStyle = {
   height: '25em'
 }
 
+const EXAMPLE = [
+  ["YDR004W", "RAD57"],["YIL139C", "REV7"]
+]
+
 
 class SearchTab extends Component {
 
@@ -60,7 +72,7 @@ class SearchTab extends Component {
       runDisabled: true,
       explainDisabled: true,
       enabledButton: '',
-      queryOption: 'genetic_interaction',
+      queryOption: 'growth',
       disableQueryOption: false
     }
   }
@@ -189,23 +201,13 @@ class SearchTab extends Component {
       hits = searchResult.hits.hits
     }
 
+
+    console.log()
+
     const genes = this.props.queryGenes.get('genes')
 
     return (
       <div style={this.props.style}>
-
-        <ExampleQueries
-          setQueryAction={this.setQuery}
-          queryOptionAction={this.setQueryOption}
-          resetSelectionAction={this.resetSelection}
-        />
-
-        <SimulationTypeSelector
-          disabled={this.state.disableQueryOption}
-          queryOption={this.state.queryOption}
-          queryOptionAction={this.setQueryOption}
-        />
-
         <div style={searchUiStyle}>
           <TextField
             style={{width: '5em', flexGrow: 2}}
@@ -234,20 +236,30 @@ class SearchTab extends Component {
 
         {this.getListPanel(hits)}
 
+        <Divider/>
 
         <GenotypePanel
           genes={genes}
           queryGenesActions={this.props.queryGenesActions}
         />
 
+
         <div style={actionStyle}>
+          <RaisedButton
+            label="Example"
+            labelPosition="before"
+            primary={true}
+            onClick={this.runExample}
+          />
+
           <RaisedButton
             label="Reset"
             labelPosition="before"
+            style={{marginLeft: '0.4em'}}
             onClick={this.resetSelection}
           />
           <RaisedButton
-            label='Run'
+            label='Simulate'
             className={this.state.enabledButton}
             disabled={this.state.runDisabled}
             style={{marginLeft: '0.4em'}}
@@ -255,24 +267,22 @@ class SearchTab extends Component {
             secondary={true}
             onClick={this.runSimulation}
           />
-
-          <RaisedButton
-            label="Explain"
-            style={{marginLeft: '0.4em'}}
-            labelPosition="before"
-            primary={true}
-            disabled={this.state.explainDisabled}
-            onClick={this.explainResult}
-          />
         </div>
       </div>
     )
 
   }
 
+  runExample = () => {
+    this.resetSelection()
+    this.setQueryOption('growth')
+    this.setQuery('REV7 RAD57')
+  }
+
   runSimulation = () => {
 
-    console.log('Q option = ' + this.state.queryOption)
+
+    // Clear
     this.props.queryGenesActions.clearResults()
     this.state.runDisabled = true
     this.state.enabledButton = ''
@@ -282,7 +292,9 @@ class SearchTab extends Component {
     console.log('GENES IMM:')
     console.log(genesMap)
 
-    const genesObj = genesMap.toJS()
+    let genesObj = genesMap.toJS()
+
+
     const genes = Object.keys(genesObj)
 
     const hits = this.props.search.result.hits.hits
@@ -306,10 +318,6 @@ class SearchTab extends Component {
       }
     })
 
-    console.log("============= Gene Map ==============")
-
-    console.log(genes)
-    console.log(geneMap)
 
     let url = this.props.backendServices.simulator
 
@@ -363,7 +371,6 @@ class SearchTab extends Component {
 
       return (
         <div style={baseStyle}>
-          <p>No search result yet</p>
         </div>
       )
     } else if (this.props.search.loading) {
@@ -383,9 +390,20 @@ class SearchTab extends Component {
       )
     }
 
+    const filtered = hits.filter((value, index) => {
+      const locusName = value._source.locus
+
+      if(geneSet.has(locusName)) {
+        return true
+      } else {
+        return false
+      }
+    })
+    console.log(filtered)
+
     return (
       <GeneList
-        hits={hits}
+        hits={filtered}
         queryGenesActions={this.props.queryGenesActions}
         queryGenes={this.props.queryGenes}
         queryOption={this.state.queryOption}

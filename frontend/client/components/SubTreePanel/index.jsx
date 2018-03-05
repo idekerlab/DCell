@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {Card, CardActions, CardHeader} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import TreeTitleBar from '../TreeTitleBar'
 
 import LegendColor from './LegendColor'
-
+import LegendLine from './LegendLine'
 
 import style from './style.css'
 
@@ -79,14 +79,10 @@ class SubTreePanel extends Component {
     }
 
     const cardStyle = {
-      height: this.getHeight(),
       zIndex: '1200',
-      width: '100%',
       position: 'fixed',
       margin: 0,
       padding: 0,
-      background: '#FFFFFF',
-      left: 0,
       bottom: 0,
     }
 
@@ -119,7 +115,7 @@ class SubTreePanel extends Component {
       fontWeight: 700,
       position: 'fixed',
       bottom: '1em',
-      left: '1em',
+      paddingLeft: '1em',
       zIndex: 1210,
       background: 'rgba(0,0,0,0)',
       display: 'flex',
@@ -130,9 +126,10 @@ class SubTreePanel extends Component {
 
     const labelStyle = {
       color: '#777777',
-      fontSize: '1em',
+      fontSize: '0.6em',
       fontWeight: 300,
-      padding: '0.5em'
+      padding: '0.5em',
+      width: '2em'
     }
 
     const textStyle = {
@@ -141,23 +138,24 @@ class SubTreePanel extends Component {
     }
 
     const legendTitleStyle = {
-      color: '#555555',
-      width: '30em'
+      color: '#444444',
+      width: '25em',
+      fontSize: '0.8em'
     }
 
     return (
-      <div className={style.container}>
+      <div
+        className={style.container}
+      >
 
         <div style={titleStyle}>
 
-          <div style={textStyle}>
-            {"Deleted Genes: " + genotype}
+          <div style={legendTitleStyle}>
+            Absolute Change in State from wildtype:
           </div>
 
-          <h3 style={legendTitleStyle}>Absolute Change in State:</h3>
-
           <div style={labelStyle}>
-            0
+            0 (wt)
           </div>
 
           <LegendColor />
@@ -165,29 +163,14 @@ class SubTreePanel extends Component {
           <div style={labelStyle}>
             1
           </div>
+
+          <LegendLine/>
+
         </div>
 
-
-        <Card
-          style={cardStyle}
-        >
+        <div style={cardStyle}>
           {this.getMainContents(result, running)}
-
-          <CardActions
-            style={actionStyle}
-          >
-
-            <RaisedButton
-              icon={this.state.isMax ? <CollapseIcon /> : <ExpandIcon />}
-              onClick={this.toggleWindow}
-            />
-            <RaisedButton
-              icon={<CloseIcon />}
-              primary={true}
-              onClick={this.handleClose}
-            />
-          </CardActions>
-        </Card>
+        </div>
       </div>
     )
   }
@@ -208,11 +191,8 @@ class SubTreePanel extends Component {
     this.props.uiStateActions.showResult(false)
   }
 
-
   getMainContents = (result, running) => {
-
     if (result === null || result === undefined) {
-
       if (running) {
         return (
           <Loading
@@ -226,7 +206,7 @@ class SubTreePanel extends Component {
       }
     } else {
 
-      const w = window.innerWidth
+      const w = window.innerWidth - 450
       const h = this.state.isMax ? window.innerHeight : window.innerHeight * 0.4
 
       const treeStyle = {

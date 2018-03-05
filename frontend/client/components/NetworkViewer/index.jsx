@@ -13,8 +13,18 @@ import style from './style.css'
 import SubTreePanel from '../SubTreePanel'
 import MessagePanel from '../MessagePanel'
 
+import AppBar from 'material-ui/AppBar';
+
+import TreeTitleBar from '../TreeTitleBar'
+
 import ErrorDialog from '../ErrorDialog'
 
+
+const containerStyle = {
+  display: 'flex',
+  height: '100%',
+  width: '100%'
+}
 
 export default class NetworkViewer extends Component {
 
@@ -53,8 +63,8 @@ export default class NetworkViewer extends Component {
     const runLast = this.props.queryGenes.get('running')
     const run = nextProps.queryGenes.get('running')
 
-    if(error !== null && runLast === true && run === false) {
-      if(error.includes('Input Error')) {
+    if (error !== null && runLast === true && run === false) {
+      if (error.includes('Input Error')) {
         this.openDialogAction(true, 'Invalid input parameters.')
       } else {
         this.openDialogAction(true, 'Simulator is running other jobs.  Please try again later.')
@@ -76,7 +86,7 @@ export default class NetworkViewer extends Component {
     } = this.props
 
     let errorMsg = null
-    if(errorMsg === null || errorMsg === undefined) {
+    if (errorMsg === null || errorMsg === undefined) {
       errorMsg = 'N/A'
     } else {
       errorMsg = 'ERROR: ' + errorMsg
@@ -84,10 +94,16 @@ export default class NetworkViewer extends Component {
 
 
     const running = this.props.queryGenes.get('running')
+    const genes = this.props.queryGenes.get('genes')
+    const result = this.props.queryGenes.get('result')
 
     return (
 
       <div style={this.props.style}>
+        <TreeTitleBar
+          result={result}
+          genes={genes}
+        />
 
         <ErrorDialog
           openDialog={this.state.openErrorDialog}
@@ -95,80 +111,37 @@ export default class NetworkViewer extends Component {
           errorMessage={this.state.errorMessage}
         />
 
-        <MessagePanel
-          message={message}
-        />
+        <div style={containerStyle}>
+          <SearchPanel
+            search={search}
+            searchActions={searchActions}
+            uiStateActions={uiStateActions}
+            commandActions={commandActions}
 
-        <NetworkPanel
-          networkActions={networkActions}
-          commands={commands}
-          commandActions={commandActions}
-          events={events}
-          eventActions={eventActions}
-          currentProperty={currentProperty}
-          propertyActions={propertyActions}
+            backendServices={config.get('backendServices').toJS()}
+            trees={config.get('trees').toJS()}
+            currentNetwork={this.props.currentNetwork.toJS()}
 
-          network={network}
-          search={search}
+            queryGenesActions={this.props.queryGenesActions}
+            queryGenes={this.props.queryGenes}
 
-          trees={config.get('trees').toJS()}
-          currentNetwork={this.props.currentNetwork.toJS()}
+            uiState={uiState}
 
-          messageActions={messageActions}
+            currentNetworkActions={this.props.currentNetworkActions}
+            propertyActions={this.props.propertyActions}
+          />
 
+          <SubTreePanel
+            uiState={uiState}
+            uiStateActions={uiStateActions}
+            queryGenesActions={this.props.queryGenesActions}
+            queryGenes={this.props.queryGenes}
+          />
 
-          message={message}
-
-          uiStateActions={uiStateActions}
-          queryGenesActions={this.props.queryGenesActions}
-          queryGenes={this.props.queryGenes}
-        />
-
-        <Commands
-          commandActions={commandActions}
-          uiState={uiState}
-          uiStateActions={uiStateActions}
-        />
-
-        <SearchPanel
-          search={search}
-          searchActions={searchActions}
-          uiStateActions={uiStateActions}
-          commandActions={commandActions}
-
-          backendServices={config.get('backendServices').toJS()}
-          trees={config.get('trees').toJS()}
-          currentNetwork={this.props.currentNetwork.toJS()}
-
-          queryGenesActions={this.props.queryGenesActions}
-          queryGenes={this.props.queryGenes}
-
-          uiState={uiState}
-
-          currentNetworkActions={this.props.currentNetworkActions}
-          propertyActions={this.props.propertyActions}
-        />
-
-        <PropertyPanel
-          commands={commands}
-          commandActions={commandActions}
-          events={events}
-          currentProperty={currentProperty}
-          currentNetwork={this.props.currentNetwork.toJS()}
-          trees={config.get('trees').toJS()}
-          backendServices={config.get('backendServices').toJS()}
-        />
-
-        <SubTreePanel
-          uiState={uiState}
-          uiStateActions={uiStateActions}
-          queryGenesActions={this.props.queryGenesActions}
-          queryGenes={this.props.queryGenes}
-        />
-
+        </div>
         {
           running ?
-            <RunningOverlay /> : <div></div>
+            <RunningOverlay/> : <div></div>
         }
 
         <Errorbar

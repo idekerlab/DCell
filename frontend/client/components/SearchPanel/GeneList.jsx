@@ -5,6 +5,7 @@ import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Checkbox from 'material-ui/Checkbox';
 
+
 const listStyle = {
   overflow: 'scroll',
   height: '30em',
@@ -35,6 +36,8 @@ class GeneList extends Component {
   getGene = hits => {
 
     const selectedGenes = this.props.queryGenes.get('genes')
+
+    //Filter
     const newList = hits.map((hit, i) => {
 
       const gene = hit._source
