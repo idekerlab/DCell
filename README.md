@@ -1,5 +1,5 @@
 # DCell
-A neural network to interpret cell structure and function
+> A deep neural network simulating cell structure and function
 
 ## Introduction
 DCell is an application to provide an easy-to-use user interface and interpretable neural network structure for modeling cell structure and function.
