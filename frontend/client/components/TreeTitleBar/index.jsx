@@ -1,6 +1,6 @@
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
-import MenuIcon from 'material-ui/svg-icons/navigation/menu';
+import HomeIcon from 'material-ui/svg-icons/action/home';
 import React, {Component} from 'react'
 
 const TreeTitlebar = (props) => {
@@ -12,7 +12,7 @@ const TreeTitlebar = (props) => {
   let message = ''
 
   const searchResult = props.result
-  if(searchResult !== null) {
+  if (searchResult !== null) {
     const geneNames = Object.values(genes)
     const geneStr = geneNames.join(', ')
     message = 'Explanation of growth phenotype for ' + geneStr
@@ -21,14 +21,21 @@ const TreeTitlebar = (props) => {
   return (
     <Toolbar>
       <ToolbarGroup firstChild={true}>
+
+        <a href={'http://deep-cell.ucsd.edu/'}>
+          <HomeIcon
+            style={{marginLeft: '0.8em'}}
+          />
+        </a>
+
         <ToolbarTitle
-          text="DCell v1.4"
-          style={{marginLeft: '1em'}}
+          text="DCell: A neural network to simulate cell structure and function"
+          style={{marginLeft: '0.3em'}}
         />
       </ToolbarGroup>
       <ToolbarGroup>
-        <ToolbarTitle text={message} />
-        <ToolbarSeparator />
+        <ToolbarTitle text={message}/>
+        <ToolbarSeparator/>
       </ToolbarGroup>
     </Toolbar>
   )

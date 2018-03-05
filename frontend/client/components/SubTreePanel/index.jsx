@@ -126,9 +126,10 @@ class SubTreePanel extends Component {
 
     const labelStyle = {
       color: '#777777',
-      fontSize: '1em',
+      fontSize: '0.6em',
       fontWeight: 300,
-      padding: '0.5em'
+      padding: '0.5em',
+      width: '2em'
     }
 
     const textStyle = {
@@ -137,8 +138,9 @@ class SubTreePanel extends Component {
     }
 
     const legendTitleStyle = {
-      color: '#555555',
-      width: '30em'
+      color: '#444444',
+      width: '25em',
+      fontSize: '0.8em'
     }
 
     return (
@@ -148,10 +150,12 @@ class SubTreePanel extends Component {
 
         <div style={titleStyle}>
 
-          <h3 style={legendTitleStyle}>Absolute Change in State:</h3>
+          <div style={legendTitleStyle}>
+            Absolute Change in State from wildtype:
+          </div>
 
           <div style={labelStyle}>
-            0
+            0 (wt)
           </div>
 
           <LegendColor />
