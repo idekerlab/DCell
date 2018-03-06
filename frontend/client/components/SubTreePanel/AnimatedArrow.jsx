@@ -16,6 +16,11 @@ const AnimatedArrow = props =>
     <div className={style.delay3}>
       <div className={style.arrow}/>
     </div>
+
+
+    <div className={style.message}>
+      Please select a set of genes to be deleted
+    </div>
   </div>
 
 

@@ -19,12 +19,12 @@ const DefaultPanel = props => {
 
       <AnimatedArrow/>
 
-      <div className={style.logocontainer}>
-        <div className={style.title}>
-          Please build a list of genes to be deleted with Genotype Builder
+      <div className={style.logoarea}>
+        <div className={style.logocontainer}>
+          <img style={logoStyle} src={logo}/>
         </div>
-        <img style={logoStyle} src={logo}/>
       </div>
+
     </div>
   )
 }

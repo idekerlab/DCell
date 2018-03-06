@@ -1,7 +1,9 @@
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
 import HomeIcon from 'material-ui/svg-icons/action/home';
-import React, {Component} from 'react'
+import React from 'react'
+import FlatButton from 'material-ui/FlatButton';
+
 
 const TreeTitlebar = (props) => {
 
@@ -18,20 +20,38 @@ const TreeTitlebar = (props) => {
     message = 'Explanation of growth phenotype for ' + geneStr
   }
 
+  const firstStyle = {
+    display: 'inline-flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  }
+
+  const buttonStyle = {
+    margin: 0
+  }
+
+  const labelStyle = {
+    color: '#666666',
+    fontWeight: 200,
+    fontSize: '1.2em',
+    textTransform: 'none'
+  }
+
   return (
     <Toolbar>
-      <ToolbarGroup firstChild={true}>
+      <ToolbarGroup firstChild={true} >
 
-        <a href={'http://deep-cell.ucsd.edu/'}>
-          <HomeIcon
-            style={{marginLeft: '0.6em'}}
-          />
-        </a>
+        <FlatButton
+          icon={<HomeIcon />}
+          href={'http://deep-cell.ucsd.edu/'}
+          style={buttonStyle}
+          label={'DCell 1.4'}
+          labelStyle={labelStyle}
+          hoverColor={'rgba(0,0,0,0)'}
+          disableTouchRipple={true}
 
-        <ToolbarTitle
-          text="DCell v1.4"
-          style={{marginLeft: '0.4em'}}
         />
+
       </ToolbarGroup>
       <ToolbarGroup>
         <ToolbarTitle text={message}/>

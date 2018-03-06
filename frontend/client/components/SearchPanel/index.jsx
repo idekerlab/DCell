@@ -5,7 +5,6 @@ const TERM_SEARCH_MODE = 'term'
 const GENE_SEARCH_MODE = 'gene'
 
 
-
 class SearchPanel extends Component {
 
   constructor(props) {
@@ -24,13 +23,18 @@ class SearchPanel extends Component {
       return (<div></div>)
     }
 
-    const style = {
+
+    const wrapper = {
+      overflow: 'scroll',
       width: '450px',
       minWidth: '450px',
-      height: '92%',
-      overflow: 'scroll',
-      zIndex: 990,
+      height: '100%',
       backgroundColor: 'rgb(255, 255, 255)'
+    }
+
+    const style = {
+      zIndex: 990,
+      height: '90%',
     };
 
     const searchStyle = {
@@ -39,20 +43,22 @@ class SearchPanel extends Component {
     }
 
     return (
-      <div style={style}>
-        <SearchTab
-          {...this.props}
-          searchMode={this.state.searchMode}
-          currentNetwork={this.props.currentNetwork}
-          style={searchStyle}
-          search={this.props.search}
-          searchActions={this.props.searchActions}
-          uiStateActions={this.props.uiStateActions}
-          backendServices={this.props.backendServices}
-          queryGenesActions={this.props.queryGenesActions}
-          queryGenes={this.props.queryGenes}
-          commandActions={this.props.commandActions}
-        />
+      <div style={wrapper}>
+        <div style={style}>
+          <SearchTab
+            {...this.props}
+            searchMode={this.state.searchMode}
+            currentNetwork={this.props.currentNetwork}
+            style={searchStyle}
+            search={this.props.search}
+            searchActions={this.props.searchActions}
+            uiStateActions={this.props.uiStateActions}
+            backendServices={this.props.backendServices}
+            queryGenesActions={this.props.queryGenesActions}
+            queryGenes={this.props.queryGenes}
+            commandActions={this.props.commandActions}
+          />
+        </div>
       </div>
     )
   }
