@@ -145,22 +145,31 @@ export const runDeletion = (serviceUrl, queryType, genesMap, geneMap) => {
             return node.id
           })
 
+          let newNodes = null
+
           searchIdMapping(nodeIds)
             .then(res2 => {
-              console.log('got new res2')
-              console.log(res2)
-
               const docs = res2.docs
               const result = replaceNodeData(nodes, docs, genesMap, geneMap)
 
             })
-            .then(json2 => {
-              return dispatch(receiveSimulationResult(serviceUrl, queryType, genesMap, json, null))
+
+            .then(result2 => {
+              const ids = nodeIds.join(',')
+              const mapUrl = 'http://localhost:5000/map/' + ids
+              fetch(mapUrl)
+                .then(response => (response.json()))
+                .then(idmap => {
+                  newNodes = id2Name(nodes, idmap)
+                })
+                .then(json2 => {
+
+                  return dispatch(receiveSimulationResult(serviceUrl, queryType, genesMap, json, null))
+                })
             })
         }
 
       })
-
       .catch(onServerError)
   }
 }
@@ -170,6 +179,17 @@ const onServerError = serverErr => {
   console.log('!! There has been a problem with your fetch operation: ');
   console.log(serverErr)
 
+}
+
+const id2Name = (nodes, idmap) => {
+  nodes.forEach(n => {
+    if(n.name === n.id) {
+      const name = idmap[n.id]
+      if(name !== undefined) {
+        n.name = idmap[n.id]
+      }
+    }
+  })
 }
 
 
@@ -229,6 +249,7 @@ const searchIdMapping = query => {
     }
   )
 }
+
 
 export const ADD_GENE = 'ADD_GENE'
 export const addGene = createAction(ADD_GENE)

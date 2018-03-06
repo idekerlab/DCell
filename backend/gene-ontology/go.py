@@ -27,6 +27,16 @@ class Go:
 
     def get_name(self, goId):
         return self.__id2name[goId]
+    
+    def get_names(self, goIds):
+        ids = goIds.split(',')
+
+        resultMap = {}
+        for x in ids:
+            if x in self.__id2name:
+                resultMap[x] = self.__id2name[x]
+        
+        return resultMap
 
     def get_children(self, goid):
 

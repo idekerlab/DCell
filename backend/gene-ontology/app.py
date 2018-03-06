@@ -52,11 +52,16 @@ class Name(Resource):
 
     def get(self, goid):
         return go.get_name(goid)
+class Names(Resource):
+
+    def get(self, goids):
+        return go.get_names(goids)
 
 
 api.add_resource(Status, '/')
 api.add_resource(Details, '/<goid>')
 api.add_resource(Name, '/<goid>/name')
+api.add_resource(Names, '/map/<goids>')
 api.add_resource(Children, '/<goid>/children')
 
 

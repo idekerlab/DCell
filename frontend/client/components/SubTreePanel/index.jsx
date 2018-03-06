@@ -1,35 +1,21 @@
 import React, {Component} from 'react';
-import {Card, CardActions, CardHeader} from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
-import TreeTitleBar from '../TreeTitleBar'
-
 import LegendColor from './LegendColor'
 import LegendLine from './LegendLine'
 import DefaultPanel from './DefaultPanel'
+import {DAGViewer} from 'tree-viewer'
+
+import cytoscape from 'cytoscape'
 
 import style from './style.css'
 
-import {DAGViewer} from 'tree-viewer'
-import Loading from '../Loading'
-const loaderStyle = {
-  height: '100%',
-  width: '100%',
-  display: 'flex',
-  flexWrap: 'wrap',
-  flexFlow: 'row wrap',
-  alignItems: 'center',
-  justifyContent: 'center',
+
+const cardStyle = {
+  zIndex: '1200',
+  position: 'fixed',
+  margin: 0,
+  padding: 0,
+  bottom: 0,
 }
-
-import ExpandIcon from 'material-ui/svg-icons/navigation/fullscreen'
-import CollapseIcon from 'material-ui/svg-icons/navigation/fullscreen-exit'
-import CloseIcon from 'material-ui/svg-icons/content/clear'
-
-// For filtering
-import cytoscape from 'cytoscape'
-
-
-
 
 class SubTreePanel extends Component {
 
@@ -39,15 +25,6 @@ class SubTreePanel extends Component {
       isMax: true,
       expand: false,
       filterDag: null
-    }
-  }
-
-
-  getHeight = () => {
-    if (this.state.isMax) {
-      return '100%'
-    } else {
-      return '45%'
     }
   }
 
@@ -77,15 +54,12 @@ class SubTreePanel extends Component {
     // Placeholder
     if(result === null && !running) {
       return(<DefaultPanel/>)
+    } else if(result === null && running) {
+      return (
+        <div />
+      )
     }
 
-    const cardStyle = {
-      zIndex: '1200',
-      position: 'fixed',
-      margin: 0,
-      padding: 0,
-      bottom: 0,
-    }
 
 
     const genesMap = this.props.queryGenes.get('genes')
@@ -96,7 +70,6 @@ class SubTreePanel extends Component {
         return previousValue + ", " + currentValue
       }
     )
-
 
 
     const titleStyle = {
@@ -121,10 +94,6 @@ class SubTreePanel extends Component {
       width: '2em'
     }
 
-    const textStyle = {
-      flexGrow: '4',
-      width: '20em'
-    }
 
     const legendTitleStyle = {
       color: '#444444',
@@ -133,9 +102,11 @@ class SubTreePanel extends Component {
     }
 
     return (
-      <div
-        className={style.container}
-      >
+      <div className={style.container}>
+
+        <div style={cardStyle}>
+          {this.getMainContents(result, running)}
+        </div>
 
         <div style={titleStyle}>
 
@@ -157,9 +128,6 @@ class SubTreePanel extends Component {
 
         </div>
 
-        <div style={cardStyle}>
-          {this.getMainContents(result, running)}
-        </div>
       </div>
     )
   }
@@ -181,49 +149,35 @@ class SubTreePanel extends Component {
   }
 
   getMainContents = (result, running) => {
-    if (result === null || result === undefined) {
-      if (running) {
-        return (
-          <Loading
-            style={loaderStyle}
-          />
-        )
-      } else {
-        return (
-          <div></div>
-        )
-      }
-    } else {
 
-      const w = window.innerWidth - 450
-      const h = this.state.isMax ? window.innerHeight : window.innerHeight * 0.4
+    const w = window.innerWidth - 450
+    const h = this.state.isMax ? window.innerHeight : window.innerHeight * 0.4
 
-      const treeStyle = {
-        width: w,
-        height: h,
-        background: '#777777'
-      }
-
-      let dag = this.getDag(result)
-
-
-      // if(this.state.filterDag !== null) {
-      //   console.log("###################### FILTER***********************************")
-      //   dag = this.filter(dag, this.state.filterDag.source, this.state.filterDag.target)
-      // }
-
-      const queryType = this.props.queryGenes.get('queryType')
-
-      return (
-        <DAGViewer
-          queryType={queryType}
-          data={dag}
-          label="long_name"
-          style={treeStyle}
-          expand={this.state.expand}
-        />
-      )
+    const treeStyle = {
+      width: w,
+      height: h,
+      background: '#777777'
     }
+
+    let dag = this.getDag(result)
+
+
+    // if(this.state.filterDag !== null) {
+    //   console.log("###################### FILTER***********************************")
+    //   dag = this.filter(dag, this.state.filterDag.source, this.state.filterDag.target)
+    // }
+
+    const queryType = this.props.queryGenes.get('queryType')
+
+    return (
+      <DAGViewer
+        queryType={queryType}
+        data={dag}
+        label="long_name"
+        style={treeStyle}
+        expand={this.state.expand}
+      />
+    )
 
   }
 

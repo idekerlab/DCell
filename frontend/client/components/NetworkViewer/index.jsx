@@ -139,10 +139,10 @@ export default class NetworkViewer extends Component {
           />
 
         </div>
-        {
-          running ?
-            <RunningOverlay/> : <div></div>
-        }
+        {/*{*/}
+          {/*running ?*/}
+            {/*<RunningOverlay/> : <div></div>*/}
+        {/*}*/}
 
         <Errorbar
           className={style.errorbar}
