@@ -61,6 +61,11 @@ Genetic interaction and growth is at:
 
 - http://thecellmap.org/costanzo2016
 
+D-Cell predictions for Costanzo et al. 2010 dataset is at:
+
+- http://chianti.ucsd.edu/~kono/ci/data/deep-cell/predictions/prediction.tar.gz
+
+
 The running time on a standard Tesla K20 GPU takes <2 minutes for terms like "DNA repair", and 2-3 days for using the GO and ~7 millions training data.
 
 ## User Documentation
