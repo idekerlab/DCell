@@ -156,7 +156,7 @@ export const runDeletion = (serviceUrl, queryType, genesMap, geneMap) => {
 
             .then(result2 => {
               const ids = nodeIds.join(',')
-              const mapUrl = 'http://localhost:5000/map/' + ids
+              const mapUrl = 'http://deep-cell.dev.ucsd.edu:5000/map/' + ids
               fetch(mapUrl)
                 .then(response => (response.json()))
                 .then(idmap => {
