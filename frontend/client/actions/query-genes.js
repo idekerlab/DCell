@@ -3,6 +3,8 @@ import {Client} from 'elasticsearch'
 
 import config from '../assets/config.json'
 
+const GO_UTIL_URL = 'http://deep-cell-dev.ucsd.edu:5000/map/'
+
 
 const client = new Client({
   host: config.backendServices.db,
@@ -156,7 +158,7 @@ export const runDeletion = (serviceUrl, queryType, genesMap, geneMap) => {
 
             .then(result2 => {
               const ids = nodeIds.join(',')
-              const mapUrl = 'http://deep-cell.dev.ucsd.edu:5000/map/' + ids
+              const mapUrl = GO_UTIL_URL + ids
               fetch(mapUrl)
                 .then(response => (response.json()))
                 .then(idmap => {
