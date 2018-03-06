@@ -66,8 +66,6 @@ The running time on a standard Tesla K20 GPU takes <2 minutes for terms like "DN
 ## User Documentation
 Please visit our [wiki](https://github.com/idekerlab/DCell/wiki).
 
-(3/5/2018: we are still updating user documentation.)
-
 ----
 &copy; 2017-2018 UC, San Diego Trey Ideker Lab
 
