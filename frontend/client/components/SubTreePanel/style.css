@@ -2,7 +2,7 @@
     animation: fadeIn 1s ease 0s 1 normal;
     height: 100%;
     flex-grow: 1;
-    background: inherit;
+    background: #EFEFEF;
 }
 /* Tooltip container */
 .tooltip {
@@ -98,27 +98,31 @@
 }
 
 
-.arrowLogo {
-    width: 100%;
+.arrowWrapper {
+    width: 40em;
     height: 7em;
+    flex-grow: 1;
     display: inline-flex;
-    padding-left: 11em;
     justify-content: flex-start;
     align-items: center;
 }
 
-
-.message {
-    color: #252525;
-    padding-left: 4.5em;
-    font-weight: 100;
-    font-size: 1.8em;
+.arrowLogo {
 }
 
+
+.message {
+    color: #333333;
+    padding-left: 4.5em;
+    font-weight: 100;
+    font-size: 1.3em;
+}
+
+
 .arrow {
-    width: 1.5em;
-    height: 1.5em;
-    border: 0.5em solid;
+    width: 1.2em;
+    height: 1.2em;
+    border: 0.4em solid;
     border-color: #333333 transparent transparent #333333;
     transform: rotate(-45deg);
 }
@@ -153,15 +157,15 @@
 }
 
 @-webkit-keyframes slide {
-    0% { opacity:0; transform: translateX(5em); }
-    20% { opacity:1; transform: translateX(3em); }
-    80% { opacity:1; transform: translateX(-3em); }
-    100% { opacity:0; transform: translateX(-5em); }
+    0% { opacity:0; transform: translateX(4em); }
+    20% { opacity:1; transform: translateX(2em); }
+    80% { opacity:1; transform: translateX(-2em); }
+    100% { opacity:0; transform: translateX(-4em); }
 }
 @keyframes slide {
-    0% { opacity:0; transform: translateX(5em); }
-    20% { opacity:1; transform: translateX(3em); }
-    80% { opacity:1; transform: translateX(-3em); }
-    100% { opacity:0; transform: translateX(-5em); }
+    0% { opacity:0; transform: translateX(4em); }
+    20% { opacity:1; transform: translateX(2em); }
+    80% { opacity:1; transform: translateX(-2em); }
+    100% { opacity:0; transform: translateX(-4em); }
 }
 

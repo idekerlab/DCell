@@ -41,15 +41,6 @@ const muiTheme = getMuiTheme({
   }
 })
 
-const baseStyle = {
-  position: 'fixed',
-  left: 0,
-  top: 0,
-  zIndex: 0,
-  background: blueGrey50,
-  height: '100%',
-  width: '100%'
-}
 
 /**
  * Base component for the network viewer page.
@@ -64,7 +55,6 @@ class NetworkView extends Component {
         <NetworkViewer
           {...this.props}
           networkId={networkId}
-          style={baseStyle}
         />
       </MuiThemeProvider>
     )

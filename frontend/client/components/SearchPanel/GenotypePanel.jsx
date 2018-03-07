@@ -3,13 +3,22 @@ import Chip from 'material-ui/Chip';
 
 
 const style = {
-  background: 'white',
-  padding: '0.2em'
+  padding: 0,
+  margin: 0
 }
 
 const containerStyle = {
   display: 'flex',
   flexWrap: 'wrap',
+  maxHeight: '10em',
+  overflowY: 'scroll'
+}
+
+const titleStyle = {
+  fontSize: '1.2em',
+  paddingTop: '0.2em',
+  paddingBottom: '0.2em',
+  color: '#444444'
 }
 
 
@@ -22,7 +31,7 @@ class GenotypePanel extends Component {
     if(genes === undefined || genes.size === 0) {
       return (
         <div style={style}>
-          <h4>Genotype:</h4>
+          <div style={titleStyle}>Genotype:</div>
           <div style={containerStyle}>
 
           </div>
@@ -32,8 +41,7 @@ class GenotypePanel extends Component {
 
     return (
       <div style={style}>
-        <h4>Genotype:</h4>
-
+        <div style={titleStyle}>Genotype:</div>
         <div style={containerStyle}>
           {this.getGenes(this.props.genes.toJS())}
         </div>

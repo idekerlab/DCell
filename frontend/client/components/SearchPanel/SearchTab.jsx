@@ -27,9 +27,11 @@ const geneSet = new Set(geneList)
 const searchUiStyle = {
   display: 'flex',
   flexDirection: 'row',
-  alignItems: 'flex-end',
+  alignItems: 'center',
   justifyContent: 'flex-start',
   paddingBottom: '0.1em',
+  height: '7em'
+
 }
 
 const buttonStyle = {
@@ -43,6 +45,7 @@ const actionStyle = {
   alignItems: 'flex-start',
   justifyContent: 'flex-end',
   marginTop: '0.1em',
+  paddingBottom: '0.5em'
 }
 
 const baseStyle = {
@@ -206,8 +209,21 @@ class SearchTab extends Component {
 
     const genes = this.props.queryGenes.get('genes')
 
+
+    const wrapper = {
+      zIndex: 990,
+      overflow: 'scroll',
+      width: '450px',
+      minWidth: '450px',
+      padding: '0.5em',
+      display: 'inline-flex',
+      flexDirection: 'column',
+      background: '#FFFFFF'
+    }
+
     return (
-      <div style={this.props.style}>
+      <div style={wrapper}>
+
         <div style={searchUiStyle}>
           <TextField
             style={{width: '5em', flexGrow: 2}}

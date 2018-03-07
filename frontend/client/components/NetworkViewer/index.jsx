@@ -1,62 +1,39 @@
-import React, {Component} from 'react'
-import {browserHistory} from 'react-router'
-
-import NetworkPanel from '../NetworkPanel'
-import PropertyPanel from '../PropertyPanel'
-import Errorbar from 'material-ui/Snackbar';
+import React, { Component } from 'react'
+import { browserHistory } from 'react-router'
 import SearchPanel from '../SearchPanel'
-import RunningOverlay from '../RunningOverlay'
-
-import Commands from '../Commands'
-
-import style from './style.css'
 import SubTreePanel from '../SubTreePanel'
-import MessagePanel from '../MessagePanel'
-
-import AppBar from 'material-ui/AppBar';
-
 import TreeTitleBar from '../TreeTitleBar'
 
-import ErrorDialog from '../ErrorDialog'
-
-
-const containerStyle = {
-  display: 'flex',
-  height: '100%',
-  width: '100%'
-}
-
 export default class NetworkViewer extends Component {
-
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       autoHideDuration: 1000000,
       open: false,
       openErrorDialog: false,
       errorMessage: ''
-    };
+    }
   }
 
   handleActionTouchTap = () => {
     this.setState({
-      open: false,
-    });
+      open: false
+    })
     browserHistory.push('/')
-  };
+  }
 
   handleRequestClose = () => {
     this.setState({
-      open: false,
-    });
-  };
+      open: false
+    })
+  }
 
   openDialogAction = (open, message) => {
     this.setState({
       openErrorDialog: open,
       errorMessage: message
-    });
-  };
+    })
+  }
 
   componentWillReceiveProps(nextProps) {
     const error = nextProps.queryGenes.get('error')
@@ -67,23 +44,41 @@ export default class NetworkViewer extends Component {
       if (error.includes('Input Error')) {
         this.openDialogAction(true, 'Invalid input parameters.')
       } else {
-        this.openDialogAction(true, 'Simulator is running other jobs.  Please try again later.')
+        this.openDialogAction(
+          true,
+          'Simulator is running other jobs.  Please try again later.'
+        )
       }
     }
   }
 
   render() {
-
     const {
-      networks,
-      networkActions,
-      commands, commandActions,
-      events, eventActions, networkId, uiState, uiStateActions,
-      styles, currentVs, currentVsActions, backgroundColorActions,
-      backgroundColor, vsActions, datasource, currentProperty, propertyActions,
-      searchActions, search, network, config, message, messageActions
-
+      commandActions,
+      uiState,
+      uiStateActions,
+      searchActions,
+      search,
+      config
     } = this.props
+
+    const outerContainerStyle = {
+      zIndex: 0,
+      margin: 0,
+      padding: 0,
+      height: '100%',
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      background: '#FFFFFF'
+    }
+
+    const containerStyle = {
+      display: 'flex',
+      height: '100%',
+      width: '100%',
+      flexGrow: 2
+    }
 
     let errorMsg = null
     if (errorMsg === null || errorMsg === undefined) {
@@ -92,24 +87,14 @@ export default class NetworkViewer extends Component {
       errorMsg = 'ERROR: ' + errorMsg
     }
 
-
     const running = this.props.queryGenes.get('running')
     const genes = this.props.queryGenes.get('genes')
     const result = this.props.queryGenes.get('result')
 
     return (
+      <div style={outerContainerStyle}>
 
-      <div style={this.props.style}>
-        <TreeTitleBar
-          result={result}
-          genes={genes}
-        />
-
-        <ErrorDialog
-          openDialog={this.state.openErrorDialog}
-          openDialogAction={this.openDialogAction}
-          errorMessage={this.state.errorMessage}
-        />
+        <TreeTitleBar result={result} genes={genes} />
 
         <div style={containerStyle}>
           <SearchPanel
@@ -117,16 +102,12 @@ export default class NetworkViewer extends Component {
             searchActions={searchActions}
             uiStateActions={uiStateActions}
             commandActions={commandActions}
-
             backendServices={config.get('backendServices').toJS()}
             trees={config.get('trees').toJS()}
             currentNetwork={this.props.currentNetwork.toJS()}
-
             queryGenesActions={this.props.queryGenesActions}
             queryGenes={this.props.queryGenes}
-
             uiState={uiState}
-
             currentNetworkActions={this.props.currentNetworkActions}
             propertyActions={this.props.propertyActions}
           />
@@ -137,27 +118,7 @@ export default class NetworkViewer extends Component {
             queryGenesActions={this.props.queryGenesActions}
             queryGenes={this.props.queryGenes}
           />
-
         </div>
-        {/*{*/}
-          {/*running ?*/}
-            {/*<RunningOverlay/> : <div></div>*/}
-        {/*}*/}
-
-        <Errorbar
-          className={style.errorbar}
-          open={this.state.open}
-          message={errorMsg}
-          action='Back'
-          bodyStyle={{
-            backgroundColor: 'rgba(0,0,0,0)',
-            fontWeight: 700,
-          }}
-          autoHideDuration={this.state.autoHideDuration}
-          onActionTouchTap={this.handleActionTouchTap}
-          onRequestClose={this.handleRequestClose}
-        />
-
       </div>
     )
   }
