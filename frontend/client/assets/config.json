@@ -1,5 +1,5 @@
 {
-  "title": "DeepCell 1.0",
+  "title": "DCell 1.4",
   "backendServices": {
     "db": "http://deep-cell.ucsd.edu:9200",
     "simulator": "http://deep-cell.ucsd.edu:8888"
