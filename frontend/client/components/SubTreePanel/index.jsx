@@ -6,6 +6,8 @@ import {DAGViewer} from 'tree-viewer'
 
 import cytoscape from 'cytoscape'
 
+import Speedometer from '../Speedometer'
+
 import style from './style.css'
 
 
@@ -101,11 +103,21 @@ class SubTreePanel extends Component {
       fontSize: '0.8em'
     }
 
+    let dag = this.getDag(result)
+    const main = this.getMainContents(dag)
+
     return (
       <div className={style.container}>
 
+
+        <Speedometer
+          {...this.props}
+          growth={dag.data.growth.toFixed(4)}
+          gi={0}
+        />
+
         <div style={cardStyle}>
-          {this.getMainContents(result, running)}
+          {main}
         </div>
 
         <div style={titleStyle}>
@@ -148,7 +160,7 @@ class SubTreePanel extends Component {
     this.props.uiStateActions.showResult(false)
   }
 
-  getMainContents = (result, running) => {
+  getMainContents = (dag) => {
 
     const w = window.innerWidth - 450
     const h = this.state.isMax ? window.innerHeight : window.innerHeight * 0.4
@@ -159,7 +171,6 @@ class SubTreePanel extends Component {
       background: '#777777'
     }
 
-    let dag = this.getDag(result)
 
 
     // if(this.state.filterDag !== null) {
@@ -225,13 +236,10 @@ class SubTreePanel extends Component {
       },
     });
 
-    console.log(newNodes)
 
     const ndata = cy.collection(newNodes)
-    console.log(ndata)
 
     const newEdges = ndata.connectedEdges()
-    console.log(newEdges)
 
     const cy2 = cytoscape({
       headless: true
@@ -243,14 +251,10 @@ class SubTreePanel extends Component {
 
     const newNet = cy2.json()
 
-    console.log('========== New net')
-    console.log(newNet)
-
     return newNet
   }
 
   getDag = result => {
-    console.log('==================DAG *********************************************************************')
 
     const net = {
       data: {
@@ -269,6 +273,10 @@ class SubTreePanel extends Component {
     const nodes = result.data.nodes.map(node => {
 
       let nodeType = 'term'
+
+      if(node.id.endsWith('SUPER')) {
+        net.data.growth = node.importance
+      }
 
       if (node.id.startsWith('Y')) {
         nodeType = 'gene'
