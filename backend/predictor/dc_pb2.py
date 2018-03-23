@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='dc.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x08\x64\x63.proto\":\n\x07Request\x12\r\n\x05genes\x18\x02 \x03(\t\x12\x10\n\x08ontology\x18\x01 \x01(\t\x12\x0e\n\x06growth\x18\x03 \x01(\x08\"3\n\x05Reply\x12\x14\n\x05nodes\x18\x03 \x03(\x0b\x32\x05.Node\x12\x14\n\x05\x65\x64ges\x18\x04 \x03(\x0b\x32\x05.Edge\"k\n\x04Node\x12\n\n\x02id\x18\x01 \x01(\t\x12\x12\n\nimportance\x18\x02 \x01(\x01\x12\x11\n\tphenotype\x18\x03 \x01(\x01\x12\x0f\n\x07neurons\x18\x04 \x03(\x01\x12\x1f\n\ncoordinate\x18\x05 \x01(\x0b\x32\x0b.Coordinate\"\"\n\nCoordinate\x12\t\n\x01x\x18\x01 \x01(\x01\x12\t\n\x01y\x18\x02 \x01(\x01\"&\n\x04\x45\x64ge\x12\x0e\n\x06source\x18\x01 \x01(\t\x12\x0e\n\x06target\x18\x02 \x01(\t2%\n\x08\x44\x65\x65pCell\x12\x19\n\x03Run\x12\x08.Request\x1a\x06.Reply\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\x08\x64\x63.proto\":\n\x07Request\x12\r\n\x05genes\x18\x02 \x03(\t\x12\x10\n\x08ontology\x18\x01 \x01(\t\x12\x0e\n\x06growth\x18\x03 \x01(\x08\"3\n\x05Reply\x12\x14\n\x05nodes\x18\x03 \x03(\x0b\x32\x05.Node\x12\x14\n\x05\x65\x64ges\x18\x04 \x03(\x0b\x32\x05.Edge\"_\n\x04Node\x12\n\n\x02id\x18\x01 \x01(\t\x12\n\n\x02gi\x18\x02 \x01(\x01\x12\r\n\x05state\x18\x03 \x01(\x01\x12\x0f\n\x07neurons\x18\x04 \x03(\x01\x12\x1f\n\ncoordinate\x18\x05 \x01(\x0b\x32\x0b.Coordinate\"\"\n\nCoordinate\x12\t\n\x01x\x18\x01 \x01(\x01\x12\t\n\x01y\x18\x02 \x01(\x01\":\n\x04\x45\x64ge\x12\x0e\n\x06source\x18\x01 \x01(\t\x12\x0e\n\x06target\x18\x02 \x01(\t\x12\x12\n\nimportance\x18\x03 \x01(\x05\x32%\n\x08\x44\x65\x65pCell\x12\x19\n\x03Run\x12\x08.Request\x1a\x06.Reply\"\x00\x62\x06proto3')
 )
 
 
@@ -38,21 +38,21 @@ _REQUEST = _descriptor.Descriptor(
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='ontology', full_name='Request.ontology', index=1,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='growth', full_name='Request.growth', index=2,
       number=3, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -83,14 +83,14 @@ _REPLY = _descriptor.Descriptor(
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='edges', full_name='Reply.edges', index=1,
       number=4, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -121,35 +121,35 @@ _NODE = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='importance', full_name='Node.importance', index=1,
+      name='gi', full_name='Node.gi', index=1,
       number=2, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='phenotype', full_name='Node.phenotype', index=2,
+      name='state', full_name='Node.state', index=2,
       number=3, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='neurons', full_name='Node.neurons', index=3,
       number=4, type=1, cpp_type=5, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='coordinate', full_name='Node.coordinate', index=4,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -163,7 +163,7 @@ _NODE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=125,
-  serialized_end=232,
+  serialized_end=220,
 )
 
 
@@ -180,14 +180,14 @@ _COORDINATE = _descriptor.Descriptor(
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='y', full_name='Coordinate.y', index=1,
       number=2, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -200,8 +200,8 @@ _COORDINATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=234,
-  serialized_end=268,
+  serialized_start=222,
+  serialized_end=256,
 )
 
 
@@ -218,14 +218,21 @@ _EDGE = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='target', full_name='Edge.target', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='importance', full_name='Edge.importance', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -238,8 +245,8 @@ _EDGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=270,
-  serialized_end=308,
+  serialized_start=258,
+  serialized_end=316,
 )
 
 _REPLY.fields_by_name['nodes'].message_type = _NODE
@@ -288,123 +295,28 @@ Edge = _reflection.GeneratedProtocolMessageType('Edge', (_message.Message,), dic
 _sym_db.RegisterMessage(Edge)
 
 
-try:
-  # THESE ELEMENTS WILL BE DEPRECATED.
-  # Please use the generated *_pb2_grpc.py files instead.
-  import grpc
-  from grpc.beta import implementations as beta_implementations
-  from grpc.beta import interfaces as beta_interfaces
-  from grpc.framework.common import cardinality
-  from grpc.framework.interfaces.face import utilities as face_utilities
 
+_DEEPCELL = _descriptor.ServiceDescriptor(
+  name='DeepCell',
+  full_name='DeepCell',
+  file=DESCRIPTOR,
+  index=0,
+  options=None,
+  serialized_start=318,
+  serialized_end=355,
+  methods=[
+  _descriptor.MethodDescriptor(
+    name='Run',
+    full_name='DeepCell.Run',
+    index=0,
+    containing_service=None,
+    input_type=_REQUEST,
+    output_type=_REPLY,
+    options=None,
+  ),
+])
+_sym_db.RegisterServiceDescriptor(_DEEPCELL)
 
-  class DeepCellStub(object):
-    # missing associated documentation comment in .proto file
-    pass
+DESCRIPTOR.services_by_name['DeepCell'] = _DEEPCELL
 
-    def __init__(self, channel):
-      """Constructor.
-
-      Args:
-        channel: A grpc.Channel.
-      """
-      self.Run = channel.unary_unary(
-          '/DeepCell/Run',
-          request_serializer=Request.SerializeToString,
-          response_deserializer=Reply.FromString,
-          )
-
-
-  class DeepCellServicer(object):
-    # missing associated documentation comment in .proto file
-    pass
-
-    def Run(self, request, context):
-      # missing associated documentation comment in .proto file
-      pass
-      context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-      context.set_details('Method not implemented!')
-      raise NotImplementedError('Method not implemented!')
-
-
-  def add_DeepCellServicer_to_server(servicer, server):
-    rpc_method_handlers = {
-        'Run': grpc.unary_unary_rpc_method_handler(
-            servicer.Run,
-            request_deserializer=Request.FromString,
-            response_serializer=Reply.SerializeToString,
-        ),
-    }
-    generic_handler = grpc.method_handlers_generic_handler(
-        'DeepCell', rpc_method_handlers)
-    server.add_generic_rpc_handlers((generic_handler,))
-
-
-  class BetaDeepCellServicer(object):
-    """The Beta API is deprecated for 0.15.0 and later.
-
-    It is recommended to use the GA API (classes and functions in this
-    file not marked beta) for all further purposes. This class was generated
-    only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0."""
-    # missing associated documentation comment in .proto file
-    pass
-    def Run(self, request, context):
-      # missing associated documentation comment in .proto file
-      pass
-      context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
-
-
-  class BetaDeepCellStub(object):
-    """The Beta API is deprecated for 0.15.0 and later.
-
-    It is recommended to use the GA API (classes and functions in this
-    file not marked beta) for all further purposes. This class was generated
-    only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0."""
-    # missing associated documentation comment in .proto file
-    pass
-    def Run(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
-      # missing associated documentation comment in .proto file
-      pass
-      raise NotImplementedError()
-    Run.future = None
-
-
-  def beta_create_DeepCell_server(servicer, pool=None, pool_size=None, default_timeout=None, maximum_timeout=None):
-    """The Beta API is deprecated for 0.15.0 and later.
-
-    It is recommended to use the GA API (classes and functions in this
-    file not marked beta) for all further purposes. This function was
-    generated only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0"""
-    request_deserializers = {
-      ('DeepCell', 'Run'): Request.FromString,
-    }
-    response_serializers = {
-      ('DeepCell', 'Run'): Reply.SerializeToString,
-    }
-    method_implementations = {
-      ('DeepCell', 'Run'): face_utilities.unary_unary_inline(servicer.Run),
-    }
-    server_options = beta_implementations.server_options(request_deserializers=request_deserializers, response_serializers=response_serializers, thread_pool=pool, thread_pool_size=pool_size, default_timeout=default_timeout, maximum_timeout=maximum_timeout)
-    return beta_implementations.server(method_implementations, options=server_options)
-
-
-  def beta_create_DeepCell_stub(channel, host=None, metadata_transformer=None, pool=None, pool_size=None):
-    """The Beta API is deprecated for 0.15.0 and later.
-
-    It is recommended to use the GA API (classes and functions in this
-    file not marked beta) for all further purposes. This function was
-    generated only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0"""
-    request_serializers = {
-      ('DeepCell', 'Run'): Request.SerializeToString,
-    }
-    response_deserializers = {
-      ('DeepCell', 'Run'): Reply.FromString,
-    }
-    cardinalities = {
-      'Run': cardinality.Cardinality.UNARY_UNARY,
-    }
-    stub_options = beta_implementations.stub_options(host=host, metadata_transformer=metadata_transformer, request_serializers=request_serializers, response_deserializers=response_deserializers, thread_pool=pool, thread_pool_size=pool_size)
-    return beta_implementations.dynamic_stub(channel, 'DeepCell', cardinalities, options=stub_options)
-except ImportError:
-  pass
 # @@protoc_insertion_point(module_scope)

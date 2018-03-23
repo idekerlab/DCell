@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/ericsage/deepcell/dc"
+	"github.com/idekerlab/DCell/backend/predictor/dc"
 	"google.golang.org/grpc"
 
 	"github.com/rs/cors"
