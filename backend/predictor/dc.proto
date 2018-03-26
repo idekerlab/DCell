@@ -7,7 +7,10 @@ service DeepCell {
 message Request {
   repeated string genes = 2;
   string ontology = 1;
-  bool growth = 3; } 
+  bool growth = 3; 
+  int32 npaths = 4;
+  double request1 = 5;
+}
 
 message Reply {
   repeated Node nodes = 3;
@@ -20,6 +23,10 @@ message Node {
   double state = 3;
   repeated double neurons = 4;
   Coordinate coordinate = 5;
+  double growth = 6;
+  string feature1 = 7;
+  double feature2 = 8;
+  double feature3 = 9;
 }
 
 message Coordinate {
@@ -31,4 +38,8 @@ message Edge {
   string source = 1;
   string target = 2;
   int32 importance = 3;
+  int32 type = 4;
+  string feature1 = 5;
+  double feature2 = 6;
+  double feature3 = 7;
 }

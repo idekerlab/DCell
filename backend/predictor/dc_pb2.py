@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='dc.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x08\x64\x63.proto\":\n\x07Request\x12\r\n\x05genes\x18\x02 \x03(\t\x12\x10\n\x08ontology\x18\x01 \x01(\t\x12\x0e\n\x06growth\x18\x03 \x01(\x08\"3\n\x05Reply\x12\x14\n\x05nodes\x18\x03 \x03(\x0b\x32\x05.Node\x12\x14\n\x05\x65\x64ges\x18\x04 \x03(\x0b\x32\x05.Edge\"_\n\x04Node\x12\n\n\x02id\x18\x01 \x01(\t\x12\n\n\x02gi\x18\x02 \x01(\x01\x12\r\n\x05state\x18\x03 \x01(\x01\x12\x0f\n\x07neurons\x18\x04 \x03(\x01\x12\x1f\n\ncoordinate\x18\x05 \x01(\x0b\x32\x0b.Coordinate\"\"\n\nCoordinate\x12\t\n\x01x\x18\x01 \x01(\x01\x12\t\n\x01y\x18\x02 \x01(\x01\":\n\x04\x45\x64ge\x12\x0e\n\x06source\x18\x01 \x01(\t\x12\x0e\n\x06target\x18\x02 \x01(\t\x12\x12\n\nimportance\x18\x03 \x01(\x05\x32%\n\x08\x44\x65\x65pCell\x12\x19\n\x03Run\x12\x08.Request\x1a\x06.Reply\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\x08\x64\x63.proto\"\\\n\x07Request\x12\r\n\x05genes\x18\x02 \x03(\t\x12\x10\n\x08ontology\x18\x01 \x01(\t\x12\x0e\n\x06growth\x18\x03 \x01(\x08\x12\x0e\n\x06npaths\x18\x04 \x01(\x05\x12\x10\n\x08request1\x18\x05 \x01(\x01\"3\n\x05Reply\x12\x14\n\x05nodes\x18\x03 \x03(\x0b\x32\x05.Node\x12\x14\n\x05\x65\x64ges\x18\x04 \x03(\x0b\x32\x05.Edge\"\xa5\x01\n\x04Node\x12\n\n\x02id\x18\x01 \x01(\t\x12\n\n\x02gi\x18\x02 \x01(\x01\x12\r\n\x05state\x18\x03 \x01(\x01\x12\x0f\n\x07neurons\x18\x04 \x03(\x01\x12\x1f\n\ncoordinate\x18\x05 \x01(\x0b\x32\x0b.Coordinate\x12\x0e\n\x06growth\x18\x06 \x01(\x01\x12\x10\n\x08\x66\x65\x61ture1\x18\x07 \x01(\t\x12\x10\n\x08\x66\x65\x61ture2\x18\x08 \x01(\x01\x12\x10\n\x08\x66\x65\x61ture3\x18\t \x01(\x01\"\"\n\nCoordinate\x12\t\n\x01x\x18\x01 \x01(\x01\x12\t\n\x01y\x18\x02 \x01(\x01\"~\n\x04\x45\x64ge\x12\x0e\n\x06source\x18\x01 \x01(\t\x12\x0e\n\x06target\x18\x02 \x01(\t\x12\x12\n\nimportance\x18\x03 \x01(\x05\x12\x0c\n\x04type\x18\x04 \x01(\x05\x12\x10\n\x08\x66\x65\x61ture1\x18\x05 \x01(\t\x12\x10\n\x08\x66\x65\x61ture2\x18\x06 \x01(\x01\x12\x10\n\x08\x66\x65\x61ture3\x18\x07 \x01(\x01\x32%\n\x08\x44\x65\x65pCell\x12\x19\n\x03Run\x12\x08.Request\x1a\x06.Reply\"\x00\x62\x06proto3')
 )
 
 
@@ -53,6 +53,20 @@ _REQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='npaths', full_name='Request.npaths', index=3,
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='request1', full_name='Request.request1', index=4,
+      number=5, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -66,7 +80,7 @@ _REQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=12,
-  serialized_end=70,
+  serialized_end=104,
 )
 
 
@@ -103,8 +117,8 @@ _REPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=72,
-  serialized_end=123,
+  serialized_start=106,
+  serialized_end=157,
 )
 
 
@@ -150,6 +164,34 @@ _NODE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='growth', full_name='Node.growth', index=5,
+      number=6, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='feature1', full_name='Node.feature1', index=6,
+      number=7, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='feature2', full_name='Node.feature2', index=7,
+      number=8, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='feature3', full_name='Node.feature3', index=8,
+      number=9, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -162,8 +204,8 @@ _NODE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=125,
-  serialized_end=220,
+  serialized_start=160,
+  serialized_end=325,
 )
 
 
@@ -200,8 +242,8 @@ _COORDINATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=222,
-  serialized_end=256,
+  serialized_start=327,
+  serialized_end=361,
 )
 
 
@@ -233,6 +275,34 @@ _EDGE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='type', full_name='Edge.type', index=3,
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='feature1', full_name='Edge.feature1', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='feature2', full_name='Edge.feature2', index=5,
+      number=6, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='feature3', full_name='Edge.feature3', index=6,
+      number=7, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -245,8 +315,8 @@ _EDGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=258,
-  serialized_end=316,
+  serialized_start=363,
+  serialized_end=489,
 )
 
 _REPLY.fields_by_name['nodes'].message_type = _NODE
@@ -302,8 +372,8 @@ _DEEPCELL = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=318,
-  serialized_end=355,
+  serialized_start=491,
+  serialized_end=528,
   methods=[
   _descriptor.MethodDescriptor(
     name='Run',
