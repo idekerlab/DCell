@@ -74,7 +74,7 @@ class MinimalGauge extends Component {
 
         <text
           x={this.props.width / 2}
-          y={this.props.height / 8}
+          y={this.props.height / 8 + this.props.height * 0.15}
           textAnchor="middle"
           style={topLabelStyle}
         >

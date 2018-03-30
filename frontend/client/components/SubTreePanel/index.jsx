@@ -62,8 +62,6 @@ class SubTreePanel extends Component {
       )
     }
 
-
-
     const genesMap = this.props.queryGenes.get('genes')
     const genes = Object.values(genesMap.toJS())
 
@@ -106,14 +104,18 @@ class SubTreePanel extends Component {
     let dag = this.getDag(result)
     const main = this.getMainContents(dag)
 
+    console.log("RES8******************",this.props)
+
+    const growth = dag.data.growth 
+    const gi = dag.data.gi 
+
     return (
       <div className={style.container}>
 
-
         <Speedometer
           {...this.props}
-          growth={dag.data.growth.toFixed(4)}
-          gi={0}
+          growth={growth}
+          gi={gi}
         />
 
         <div style={cardStyle}>

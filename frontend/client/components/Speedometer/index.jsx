@@ -1,23 +1,6 @@
 import React, { Component } from 'react'
 import Gauge from './MinimalGauge'
 
-import Meter from './Meter'
-
-const baseStyle = {
-  width: '450px',
-  height: '200px',
-  background: '#FFFFFF',
-  position: 'fixed',
-  right: '1em',
-  top: '4.5em',
-  borderRadius: '20px',
-  zIndex: 1500,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexDirection: 'column'
-}
-
 const rowStyle = {
   display: 'inline-flex',
   alignItems: 'center',
@@ -25,49 +8,52 @@ const rowStyle = {
 }
 
 const titleStyle = {
-  color: '#666666',
-  fontSize: '0.6em'
+  color: '#777777',
+  fontSize: '1em',
+  fontWeight: 300,
+  fontFamily: 'roboto'
 }
 
 class Speedometer extends Component {
 
-
-  state = {
-    val1: Math.random() * 100,
-    val2: Math.random() * 100
-  }
-
-  componentDidMount() {
-    // Meter(this.meter, this.props)
-  }
-
-  handleClick = () => {
-    this.setState({
-      val1: Math.random() * 100,
-      val2: Math.random() * 100
-    })
-
-  }
-
   render() {
-    console.log(this.props)
 
-    const growth = this.props.growth
+    let growth = this.props.growth
     const gi = this.props.gi
 
-    let opts = {
-      size: 140,
-      tickColor: '#00aaFF',
-      progressColor: '#009688'
+    if (growth !== undefined) {
+      growth = growth.toFixed(3)
     }
+
+    const size = 180
+    let width = size * 2
+    if (gi === undefined) {
+      width = size + 50
+    }
+
+    const baseStyle = {
+      width: 450,
+      height: size * 0.9,
+      background: '#FAFAFA',
+      position: 'fixed',
+      left: 0,
+      bottom: 0,
+      zIndex: 5500,
+      paddingBottom: '1em',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+
+
+    const height = size
 
     return (
       <div style={baseStyle}>
-        <div
-          style={rowStyle}
-          onClick={this.handleClick}
-        >
+        <div style={rowStyle}>
           <Gauge
+            width={size}
+            height={height}
             value={growth}
             color={'#66BB6A'}
             label={'Cell Growth'}
@@ -75,13 +61,20 @@ class Speedometer extends Component {
             min={0}
             max={1.0}
           />
-          <Gauge
-            value={gi}
-            label={'Genetic Interaction'}
-            range={[0, 1]}
-            min={0}
-            max={1.0}
-          />
+
+          {gi === undefined ? (
+            <div />
+          ) : (
+            <Gauge
+              width={size}
+              height={height}
+              value={gi}
+              label={'Genetic Interaction'}
+              range={[0, 1]}
+              min={0}
+              max={1.0}
+            />
+          )}
         </div>
       </div>
     )
