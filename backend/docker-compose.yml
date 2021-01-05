@@ -2,27 +2,30 @@ version: '2'
 services:
   elasticsearch:
     build: ./elastic
+    restart: always
     ports:
       - "9200:9200"
       - "9300:9300"
     volumes:
-      - deep-cell:/usr/share/elasticsearch/data
+      - ./elastic/backend_deep-cell/_data:/usr/share/elasticsearch/data
 
   predictor:
     build: ./predictor
+    restart: always
     ports:
       - "8888:8888"
 
   go-util:
     build: ./gene-ontology
+    restart: always
     ports:
       - "5000:5000"
 
   static:
     build: ./webserver
+    restart: always
     ports:
       - "80:80"
-
 
 volumes:
   deep-cell:
