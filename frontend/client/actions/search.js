@@ -46,7 +46,7 @@ const sendQuery = (query, options) => {
     'Content-Type': 'application/json'
   };
 
-  return fetch("http://localhost:3001/search", {method, headers, body})
+  return fetch("http://d-cell-dev.ucsd.edu:3001/search", {method, headers, body})
 }
 
 
