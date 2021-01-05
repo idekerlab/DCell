@@ -223,3 +223,5 @@ deep-cell.iml
 #backend/webserver/static
 
 *.js.map
+
+backend/elastic/backend_deep-cell

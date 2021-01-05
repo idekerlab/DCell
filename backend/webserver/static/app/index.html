@@ -1,47 +1,42 @@
 <!doctype html>
 <html>
-
-<head>
+  <head>
     <meta charset="utf-8">
-    <title>DCell: a deep neural network simulating cell structure and function</title>
+    <title>DCell 1.4</title>
     <style>
-        html,
-        body {
-            min-width: 800px;
-            min-height: 600px;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-        }
-        
-        #root {
-            width: 100%;
-            height: 100%;
-        }
+      body {
+        min-width:800px;
+        min-height:600px;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+      #root {
+        width: 100%;
+        height: 100%;
+      }
     </style>
-</head>
-
-<body>
+  </head>
+  <body>
 
     <div id="root"></div>
 
     <!-- Web Font loading -->
     <script>
-        (function() {
-            var wf = document.createElement('script');
-            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-                '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-            wf.type = 'text/javascript';
-            wf.async = 'true';
+      (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+          '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
 
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(wf, s);
-        })();
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+      })();
     </script>
 
     <script src="vendor.bundle.js"></script>
     <script src="bundle.js"></script>
-</body>
-
+  </body>
 </html>

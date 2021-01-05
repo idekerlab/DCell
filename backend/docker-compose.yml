@@ -9,6 +9,12 @@ services:
     volumes:
       - ./elastic/backend_deep-cell/_data:/usr/share/elasticsearch/data
 
+  search-proxy:
+    build: ./search-proxy
+    restart: always
+    ports:
+      - "3001:3000"
+
   predictor:
     build: ./predictor
     restart: always

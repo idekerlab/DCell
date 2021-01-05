@@ -1,17 +1,3 @@
-import {Client} from 'elasticsearch'
-import config from '../assets/config.json'
-
-const client = new Client({
-  host: config.backendServices.db,
-  log: 'info'
-});
-
-const DEF_OPTIONS = {
-  index: 'genes',
-  type: 'gene'
-}
-
-
 export const SEARCH = 'SEARCH'
 const search = (query, options) => {
   return {
@@ -24,7 +10,6 @@ const search = (query, options) => {
 
 export const RECEIVE_SEARCH_RESULT = 'RECEIVE_SEARCH_RESULT'
 const receiveSearchResult = (query, json, searchType, options) => {
-
   return {
     type: RECEIVE_SEARCH_RESULT,
     query,
@@ -51,20 +36,18 @@ const sendQuery = (query, options) => {
     opt = DEF_OPTIONS
   }
 
-  return client.search({
-    index: opt.index,
-    type: opt.type,
-    size: 50,
-    body: {
-      query: {
-        match: {
-          _all: query
-        }
-      }
-    }
-  })
-}
+  const obj = {
+    query
+  };
+  const method = "POST";
+  const body = JSON.stringify(obj);
+  const headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  };
 
+  return fetch("http://localhost:3001/search", {method, headers, body})
+}
 
 
 export const clear = () => {
@@ -79,6 +62,7 @@ export const searchDatabase = (query, options) => {
     dispatch(search(query, options))
 
     return sendQuery(query, options)
+      .then((res)=> res.json())
       .then(json =>
         dispatch(receiveSearchResult(query, json, options.index))
       )
