@@ -5,7 +5,7 @@ var elasticsearch = require("elasticsearch");
 const bodyParser = require('body-parser');
 
 var client = new elasticsearch.Client({
-  host: "http://dcell.ucsd.edu:9200",
+  host: "http://elasticsearch:9200",
 });
 
 const DEF_OPTIONS = {

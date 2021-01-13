@@ -1,3 +1,8 @@
+import config from '../assets/config.json'
+const baseUrl = config.backendServices.search
+
+const searchUrl = `${baseUrl}/search`
+
 export const SEARCH = 'SEARCH'
 const search = (query, options) => {
   return {
@@ -46,7 +51,7 @@ const sendQuery = (query, options) => {
     'Content-Type': 'application/json'
   };
 
-  return fetch("http://dcell.ucsd.edu:3000/search", {method, headers, body})
+  return fetch(searchUrl, {method, headers, body})
 }
 
 

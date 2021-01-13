@@ -2,8 +2,9 @@ import {createAction} from 'redux-actions'
 import {Client} from 'elasticsearch'
 
 import config from '../assets/config.json'
+const baseUrl = config.backendServices.goUtil
 
-const GO_UTIL_URL = 'http://deep-cell-dev.ucsd.edu:5000/map/'
+const GO_UTIL_URL = `${baseUrl}/map/`
 
 
 const client = new Client({
@@ -128,6 +129,11 @@ export const runDeletion = (serviceUrl, queryType, genesMap, geneMap) => {
     return fetchResult(serviceUrl, genesMap)
 
       .then(response => {
+        if (!response.ok) {
+          console.error('Simulation failed:', response)
+          throw new Error('Simulator response was not ok');
+
+        }
         console.log(response)
         return response.json()
       })

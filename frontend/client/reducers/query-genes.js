@@ -1,14 +1,14 @@
 import {RUN_SIMULATION, RECEIVE_SIMULATION_RESULT, FETCH_CHILDREN, RECEIVE_CHILDREN,
   ADD_GENE, DELETE_GENE, CLEAR_GENES, CLEAR_RESULTS} from '../actions/query-genes'
 import {Map, Set} from 'immutable'
+import config from '../assets/config.json'
 
+const baseUrl = config.backendServices.simulator
 
 const RUNNING = 'running'
 
-const SERVICE_URL = 'http://localhost:8888'
-
 const defState = Map({
-  serviceURL: SERVICE_URL,
+  serviceURL: baseUrl,
   genes: Map(),
   queryType: 'genetic_interaction',
   running: false,

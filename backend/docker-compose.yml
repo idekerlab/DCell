@@ -4,8 +4,7 @@ services:
     build: ./elastic
     restart: always
     ports:
-      - "9200:9200"
-      - "9300:9300"
+      - "127.0.0.1:9200:9200"
     volumes:
       - ./elastic/backend_deep-cell/_data:/usr/share/elasticsearch/data
 

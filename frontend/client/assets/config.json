@@ -2,7 +2,9 @@
     "title": "DCell 1.4",
     "backendServices": {
         "db": "http://deep-cell.ucsd.edu:9200",
-        "simulator": "http://deep-cell.ucsd.edu:8888"
+        "simulator": "http://deep-cell.ucsd.edu:8888",
+        "search": "http://deep-cell.ucsd.edu:3000",
+        "goUtil": "http://deep-cell.ucsd.edu:5000"
     },
 
     "defaultNetwork": "go",
