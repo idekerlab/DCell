@@ -1,16 +1,11 @@
 import {createAction} from 'redux-actions'
-import {Client} from 'elasticsearch'
-
 import config from '../assets/config.json'
 const baseUrl = config.backendServices.goUtil
 
+const termMapUrl = config.backendServices.search
+const TERM_MAP_URL = `${termMapUrl}/map`
+
 const GO_UTIL_URL = `${baseUrl}/map/`
-
-
-const client = new Client({
-  host: config.backendServices.db,
-  log: 'info'
-});
 
 
 export const RUN_SIMULATION = 'RUN_SIMULATION'
@@ -244,19 +239,35 @@ const replaceNodeData = (nodes, docs, genesMap, geneMap) => {
 }
 
 
+
 const searchIdMapping = query => {
 
-  return client.mget(
-    {
-      index: 'terms',
-      type: 'go_term',
-      _source: ['name', 'namespace'],
-      body: {
-        ids: query
-      }
-    }
-  )
+  const obj = {
+    query
+  };
+  const method = "POST";
+  const body = JSON.stringify(obj);
+  const headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  };
+
+  console.log('Mapping terms:', query)
+
+  return fetch(TERM_MAP_URL, {method, headers, body})
 }
+
+//   return client.mget(
+//     {
+//       index: 'terms',
+//       type: 'go_term',
+//       _source: ['name', 'namespace'],
+//       body: {
+//         ids: query
+//       }
+//     }
+//   )
+// }
 
 
 export const ADD_GENE = 'ADD_GENE'
