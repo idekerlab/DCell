@@ -151,6 +151,7 @@ export const runDeletion = (serviceUrl, queryType, genesMap, geneMap) => {
           let newNodes = null
 
           searchIdMapping(nodeIds)
+            .then(res1 => res1.json())
             .then(res2 => {
               const docs = res2.docs
               const result = replaceNodeData(nodes, docs, genesMap, geneMap)
@@ -242,11 +243,8 @@ const replaceNodeData = (nodes, docs, genesMap, geneMap) => {
 
 const searchIdMapping = query => {
 
-  const obj = {
-    query
-  };
   const method = "POST";
-  const body = JSON.stringify(obj);
+  const body = JSON.stringify(query);
   const headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json'
