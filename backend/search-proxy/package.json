@@ -10,7 +10,7 @@
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "elasticsearch": "^16.7.2",
-    "express": "~4.16.1",
+    "express": "~4.17.3",
     "http-errors": "~1.6.3",
     "jade": "^0.29.0",
     "morgan": "~1.9.1"
